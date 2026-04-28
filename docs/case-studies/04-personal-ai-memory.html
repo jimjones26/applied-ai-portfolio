@@ -109,7 +109,7 @@
               roadmap.
             </li>
             <li>
-              <strong><code>aria</code> (2,981 commits, deployed)</strong> —
+              <strong><code>aria</code> (2,982 commits, deployed)</strong> —
               Python: Neo4j + Ollama + FastMCP MCP server (port 8765) + Docker
               Compose + macOS launchd. Eval harness with delta tracking and
               regression detection. Safety infrastructure: hook-based Docker
@@ -136,7 +136,7 @@
               complete.
             </li>
             <li>
-              <strong><code>neura-core-v2</code> (50 commits)</strong> —
+              <strong><code>neura-core-v2</code> (779 commits)</strong> —
               12-crate Cargo workspace with post-quantum crypto (ML-DSA, ML-KEM,
               Shamir), HMAC chronicle, async mailbox neuron system, CLI REPL.
               The 58KB <code>ARCHITECTURE-v3.md</code> documents the fundamental
@@ -218,14 +218,14 @@
           <h2>What each version learned</h2>
           <ul class="cs-versions">
             <li>
-              <strong>jarvis-core</strong>
+              <strong>jarvis-core (12 commits)</strong>
               The concept is buildable end-to-end (3D UI, graph, LLM, agentic
               execution); the monolithic SurrealDB + single-binary design made
               each new feature expensive.
             </li>
             <li>
               <strong
-                ><a href="https://github.com/jimjones26/aria" target="_blank" rel="noopener noreferrer">aria</a></strong
+                ><a href="https://github.com/jimjones26/aria" target="_blank" rel="noopener noreferrer">aria</a> (2,982 commits)</strong
               >
               A separate Python + Neo4j deployment, locally runnable on demand,
               while the Rust runtime matures. Documented the
@@ -233,14 +233,14 @@
               safety tooling around irreversible operations.
             </li>
             <li>
-              <strong>aria-v2</strong>
+              <strong>aria-v2 (220 commits)</strong>
               Pillared Rust architecture introduced explicit security/governance
               boundaries (SHIELD gatekeeper). Demonstrated the multi-pillar
               pattern is buildable but each pillar is a meaningful integration
               project.
             </li>
             <li>
-              <strong>nuera-core</strong>
+              <strong>nuera-core (207 commits)</strong>
               Append-only Chronicle from scratch proved the architecture.
               Single-crate sprawl (22KB main.rs, 25+ deps) created debt that
               blocked the next layer; v3's <code>CLAUDE.md</code> cited this
@@ -250,7 +250,8 @@
               <strong
                 ><a href="https://github.com/jimjones26/neura-core-v2" target="_blank" rel="noopener noreferrer"
                   >neura-core-v2</a
-                ></strong
+                >
+                (779 commits)</strong
               >
               Multi-crate workspace fixed the modularity problem. Post-quantum
               crypto, HMAC chronicle, and WASM tools proven. The O(history)
@@ -261,7 +262,8 @@
               <strong
                 ><a href="https://github.com/jimjones26/neura-core-v3" target="_blank" rel="noopener noreferrer"
                   >neura-core-v3</a
-                ></strong
+                >
+                (404 commits)</strong
               >
               Redesigned around persistent substrate (weights survive restart)
               vs. reconstructed state. Track 1 complete. Blocked on calibration
