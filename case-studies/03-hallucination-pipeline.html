@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hallucination Needs Its Own Pipeline Stage — Jimmy Jones</title>
+    <meta
+      name="description"
+      content="A 13-step LLM rebuild pipeline whose length is diagnostic — each extra stage is a failure mode encountered in production."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="cs-topbar">
+      <div class="wrap">
+        <a class="cs-back" href="../index.html">← Back to index</a>
+      </div>
+    </div>
+
+    <header class="cs-header">
+      <div class="wrap">
+        <p class="cs-num">Case Study #03</p>
+        <h1 class="cs-title">Hallucination Needs Its Own Pipeline Stage</h1>
+        <dl class="cs-meta">
+          <dt>Repos</dt>
+          <dd>
+            <a href="https://github.com/jimjones26/website-builder"
+              ><code>website-builder</code></a
+            >
+          </dd>
+          <dt>Stack</dt>
+          <dd>TypeScript + Puppeteer + Postgres + Claude API</dd>
+          <dt>Status</dt>
+          <dd>Paused</dd>
+          <dt>Last touched</dt>
+          <dd>2025-09-29</dd>
+        </dl>
+      </div>
+    </header>
+
+    <main class="cs-body">
+      <div class="wrap">
+        <section class="cs-section">
+          <h2>What I was trying to build</h2>
+          <p>
+            The mature TypeScript pipeline that crawls an existing business
+            website and outputs a rebuilt, deployable static version — Claude
+            generates semantically restructured HTML/CSS, content optimized for
+            the business. 314 commits.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>How far I got</h2>
+          <p>A 13-step slash-command pipeline:</p>
+          <ul>
+            <li>crawl</li>
+            <li>Lighthouse analysis</li>
+            <li>LLM content analysis</li>
+            <li>sitemap suggestion</li>
+            <li>content generation</li>
+            <li>template generation</li>
+            <li>rebuild (YAML content fragments)</li>
+            <li>template assembly (Handlebars)</li>
+            <li><strong>content validation</strong></li>
+            <li><strong>harmonization</strong></li>
+            <li>semantic CSS generation</li>
+            <li>image optimization</li>
+            <li>favicon generation</li>
+          </ul>
+          <p>
+            71.7KB Puppeteer-based crawler with robots.txt compliance, rate
+            limiting, SEO signal extraction. Real Claude API calls for content
+            generation, template generation, and analysis. <code>src/tools/</code>
+            with deploy-website, image-optimizer (AVIF/WebP), template-assembler
+            (Handlebars), favicon-generator, TailwindCSS integration. Postgres
+            schema + migrations for crawl data.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>Where it broke / why I stopped</h2>
+          <p>
+            Two failure modes were discovered during real pipeline runs and
+            required <em>new mandatory stages</em> to be added.
+          </p>
+
+          <h3>Step 9 — content validation</h3>
+          <p>
+            Slash command <code>/09-validate-content</code>, described as
+            "CRITICAL: prevent fabrication." LLM-generated content included
+            details not present in the source site. The commit "Streamline
+            content generation with strict fact verification" documents that
+            hallucination during site reconstruction was an
+            <em>operational</em> problem on real sites, not hypothetical. A
+            validation step was added to check every generated content element
+            against the source before assembly.
+          </p>
+
+          <h3>Step 10 — harmonization</h3>
+          <p>
+            Slash command <code>/10-harmonize-site</code>, marked "REQUIRED
+            before Step 11." LLM-generated HTML sections for different parts of
+            the same page had inconsistent structure. Each section was
+            internally coherent, but sections generated in <em>separate</em>
+            LLM calls didn't align structurally. A normalization pass was
+            required before CSS could be applied uniformly.
+          </p>
+
+          <p>
+            The 13-step pipeline length reflects accumulated patches to quality
+            failures rather than upfront design. The pipeline grew as each
+            failure mode was encountered and retrofitted.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>What this means for applied AI in production</h2>
+          <p>
+            When an LLM is asked to <em>reconstruct</em> something that already
+            exists (a website's content, in this case), as opposed to creating
+            something new, two distinct failure modes show up in production and
+            don't go away with better prompts:
+          </p>
+          <ol>
+            <li>
+              <strong>Factual hallucination</strong> — the model invents details
+              that weren't in the source. Closing this requires a stage that
+              compares each generated element against the source before
+              assembly. Prompt instructions like "use only details from the
+              input" reduce the rate but don't eliminate it.
+            </li>
+            <li>
+              <strong>Structural inconsistency</strong> — sections generated in
+              separate LLM calls are each internally coherent but don't compose.
+              The same page section coming back in two different shapes from
+              two different calls breaks downstream consumers (here, CSS
+              application). This requires a normalization stage that rewrites
+              all sections to a common shape after generation.
+            </li>
+          </ol>
+          <p>
+            Neither stage was in the original design; both were retrofitted
+            after the failure mode showed up on real sites.
+          </p>
+          <p class="cs-pullquote">
+            Pipeline length, after the fact, is diagnostic: every extra stage
+            is a production failure mode that the original design didn't
+            anticipate.
+          </p>
+          <p>
+            For applied AI engineering, this is worth taking seriously — the
+            cost of a pipeline you only know is correct after running it scales
+            with the number of stages you needed to add.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p class="footer-line">
+          <a href="mailto:jimmy@jonesweb.studio">jimmy@jonesweb.studio</a>
+          <span class="sep">/</span>
+          <a href="https://github.com/jimjones26">GitHub</a>
+          <span class="sep">/</span>
+          <a href="https://www.linkedin.com/in/the-jimmy-jones/">LinkedIn</a>
+          <span class="sep">/</span>
+          <a href="https://x.com/the_jimmy_jones">X</a>
+          <span class="sep">/</span>
+          <a href="../assets/resume.pdf">Resume (PDF)</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

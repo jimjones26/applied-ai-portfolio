@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Production AI Agents: Claude Agent SDK Stability — Jimmy Jones
+    </title>
+    <meta
+      name="description"
+      content="A complete multi-tenant AI agent for HVAC contractor leads. Treats fast-moving AI SDKs as a first-class dependency."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="cs-topbar">
+      <div class="wrap">
+        <a class="cs-back" href="../index.html">← Back to index</a>
+      </div>
+    </div>
+
+    <header class="cs-header">
+      <div class="wrap">
+        <p class="cs-num">Case Study #07</p>
+        <h1 class="cs-title">
+          Production AI Agents: Claude Agent SDK Stability as an Architectural
+          Risk
+        </h1>
+        <dl class="cs-meta">
+          <dt>Repos</dt>
+          <dd>
+            <a href="https://github.com/jimjones26/claude-agent-sdk"
+              ><code>claude-agent-sdk</code></a
+            >
+            +
+            <a href="https://github.com/jimjones26/lead-guardian"
+              ><code>lead-guardian</code></a
+            >
+          </dd>
+          <dt>Stack</dt>
+          <dd>Python / FastAPI + SvelteKit</dd>
+          <dt>Status</dt>
+          <dd>
+            Paused. <strong
+              >Complete codebase, never deployed in production with real
+              Vonage / Google Calendar credentials.</strong
+            >
+            Exists as a fully-built reference implementation, not a
+            tested-in-production system.
+          </dd>
+          <dt>Last touched</dt>
+          <dd><code>lead-guardian</code> 2026-03-10</dd>
+        </dl>
+      </div>
+    </header>
+
+    <main class="cs-body">
+      <div class="wrap">
+        <section class="cs-section">
+          <h2>What I was trying to build</h2>
+          <p>
+            A self-hosted, multi-tenant AI agent that responds to HVAC
+            contractor website leads in under 60 seconds, qualifies prospects
+            via SMS (Vonage), and books appointments on Google Calendar — with
+            persistent per-lead conversation state managed via the Claude
+            Agent SDK.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>How far I got</h2>
+          <ul>
+            <li>
+              <strong>Complete backend</strong> — FastAPI webhook receiver,
+              persistent per-lead Claude agent (25.5KB <code>core.py</code>),
+              full tool suite (SMS via Vonage, Google Calendar, email), Celery
+              tasks for follow-up scheduling and stale-session detection, SSE
+              endpoint with Redis pub/sub for live dashboard metrics, row-level
+              multi-tenancy.
+            </li>
+            <li>
+              <strong>Complete frontend</strong> — SvelteKit 5 with JWT auth,
+              dashboard with SSE-backed live metrics, lead list with
+              filtering/sorting, lead detail page showing conversation thread,
+              admin pages for client CRUD.
+            </li>
+            <li>
+              <strong>Production deployment config</strong> — Docker Compose,
+              Alembic auto-migration on startup, env var validation at boot.
+            </li>
+            <li>
+              <strong
+                ><code>claude-agent-sdk</code> exploration repo (prior
+                art)</strong
+              >
+              — 6-phase development orchestrator, SDK documentation
+              <strong>bundled locally</strong> because web searches return stale
+              results.
+            </li>
+            <li>
+              <strong>Honest scope note</strong> — codebase complete through
+              Phase 9; never run against real leads or real Vonage / Google
+              credentials. Reviewer-browseable as a reference implementation.
+            </li>
+          </ul>
+        </section>
+
+        <section class="cs-section">
+          <h2>Where it broke / why I stopped</h2>
+          <p>
+            The agent <code>core.py</code> at 25.5KB is the largest single file
+            in the backend — meaning the Claude Agent SDK integration is the
+            most complex and brittle layer. The <code>CLAUDE.md</code> carries
+            a mandatory warning copied verbatim from the prior exploration
+            repo:
+          </p>
+          <p class="cs-pullquote">
+            Do NOT rely on training data or web searches for SDK usage patterns
+            — they are frequently outdated or incorrect. Pull live SDK docs
+            before writing any Agent SDK code.
+          </p>
+          <p>
+            The SDK was changing fast enough during development that training
+            data and web search results were consistently wrong. The solution
+            adopted was bundling the official SDK docs locally as reference
+            files — a maintenance burden not required for stable libraries. No
+            integration test suite exists for the agent layer specifically,
+            suggesting the SDK's instability made automated testing of agent
+            behavior impractical.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>What this means for applied AI in production</h2>
+          <p>
+            Fast-moving AI SDKs (Anthropic's Agent SDK, OpenAI's Agent SDK)
+            require treating documentation as a
+            <strong>first-class dependency</strong> — bundling specific versions
+            locally and treating SDK updates as breaking changes rather than
+            patch improvements.
+          </p>
+          <p>
+            The production risk is real: outdated SDK usage patterns produce
+            behavior that is <em>subtly</em> wrong (tool invocation fails
+            silently, conversation state is lost, retries don't fire) rather
+            than loudly wrong, which makes regression detection harder.
+          </p>
+          <p>
+            The 25.5KB agent <code>core.py</code> also documents the complexity
+            cost of stateful per-lead AI agents: managing conversation state,
+            handling partial responses, implementing retry logic, and enforcing
+            tool-use constraints is substantially more code than the business
+            logic it serves.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p class="footer-line">
+          <a href="mailto:jimmy@jonesweb.studio">jimmy@jonesweb.studio</a>
+          <span class="sep">/</span>
+          <a href="https://github.com/jimjones26">GitHub</a>
+          <span class="sep">/</span>
+          <a href="https://www.linkedin.com/in/the-jimmy-jones/">LinkedIn</a>
+          <span class="sep">/</span>
+          <a href="https://x.com/the_jimmy_jones">X</a>
+          <span class="sep">/</span>
+          <a href="../assets/resume.pdf">Resume (PDF)</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

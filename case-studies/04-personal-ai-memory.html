@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal AI Memory: The O(history) Problem — Jimmy Jones</title>
+    <meta
+      name="description"
+      content="Six iterations of a personal AI assistant that accumulates memory across sessions. Two memory architectures, both with real costs. Memory turns out to be a safety problem."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="cs-topbar">
+      <div class="wrap">
+        <a class="cs-back" href="../index.html">← Back to index</a>
+      </div>
+    </div>
+
+    <header class="cs-header">
+      <div class="wrap">
+        <p class="cs-num">Case Study #04</p>
+        <h1 class="cs-title">Personal AI Memory: The O(history) Problem</h1>
+        <dl class="cs-meta">
+          <dt>Repos</dt>
+          <dd>
+            <a href="https://github.com/jimjones26/jarvis-core"
+              ><code>jarvis-core</code></a
+            >
+            →
+            <a href="https://github.com/jimjones26/aria"><code>aria</code></a> →
+            <a href="https://github.com/jimjones26/aria-v2"
+              ><code>aria-v2</code></a
+            >
+            →
+            <a href="https://github.com/jimjones26/nuera-core"
+              ><code>nuera-core</code></a
+            >
+            →
+            <a href="https://github.com/jimjones26/neura-core-v2"
+              ><code>neura-core-v2</code></a
+            >
+            →
+            <a href="https://github.com/jimjones26/neura-core-v3"
+              ><code>neura-core-v3</code></a
+            >
+            (one continuous arc)
+          </dd>
+          <dt>Stack</dt>
+          <dd>Rust (12+ then 15-crate Cargo workspaces) + Python (deployed <code>aria</code> instance)</dd>
+          <dt>Status</dt>
+          <dd>
+            Active (<code>neura-core-v3</code> last touched 2026-04-18);
+            <code>aria</code> is deployed locally and runnable on demand, not in
+            active daily use as of late April 2026.
+          </dd>
+          <dt>Last touched</dt>
+          <dd>
+            <code>neura-core-v3</code> 2026-04-18; <code>neura-core-v2</code>
+            2026-04-02; <code>aria</code> 2026-03-15
+          </dd>
+        </dl>
+      </div>
+    </header>
+
+    <main class="cs-body">
+      <div class="wrap">
+        <section class="cs-section">
+          <h2>A note on naming and architectural complexity</h2>
+          <p>
+            The same system has carried different names across iterations —
+            JARVIS in v1, ARIA in later versions. The Iron Man metaphor was
+            deliberate: it gave non-technical reviewers an immediate frame for
+            what the system was trying to be (a sovereign personal AI that
+            accumulates memory across sessions). That framing choice — using a
+            familiar reference to communicate technical architecture to a
+            non-technical audience — is itself part of the
+            <em>technical-liaison</em> skill the Applied AI Engineer role calls
+            out. JARVIS = ARIA. One arc, six iterations.
+          </p>
+          <p>
+            This arc is one of the most architecturally complex examples of
+            AI-orchestrated work in the portfolio: 12-crate then 15-crate Rust
+            Cargo workspaces with post-quantum crypto, HMAC chronicle, async
+            mailbox neuron systems, WASM-sandboxed hot-swappable skills, HNSW
+            vector indexes from scratch, and an MCP server fronting Neo4j +
+            Ollama embeddings. All of it specified, reviewed, and iterated
+            under my direction.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>What I was trying to build</h2>
+          <p>
+            A local-first personal AI assistant that accumulates memory across
+            sessions rather than starting from scratch on every conversation —
+            a system where long-term knowledge, preferences, and context
+            survive and compound rather than evaporating at session end.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>How far I got</h2>
+          <ul>
+            <li>
+              <strong><code>jarvis-core</code></strong> — full Tauri 2.0 desktop
+              app with 3D graph visualization, 7 completed phases, Ollama-backed
+              LLM, agentic execution, cinematic Svelte UI. Finished per its own
+              roadmap.
+            </li>
+            <li>
+              <strong><code>aria</code> (2,981 commits, deployed)</strong> —
+              Python: Neo4j + Ollama + FastMCP MCP server (port 8765) + Docker
+              Compose + macOS launchd. Eval harness with delta tracking and
+              regression detection. Safety infrastructure: hook-based Docker
+              command interception (the local Neo4j store was wiped multiple
+              times during development), contamination detection,
+              multi-confirmation flows. The Python memory layer, locally
+              deployed and runnable on demand while the Rust runtime matures;
+              not in active daily use today.
+            </li>
+            <li>
+              <strong><code>aria-v2</code></strong> — Rust workspace with seven
+              named pillars (SCA, SAGE, SHIELD, CORE, ECHO, SPEX, SENSE) and a
+              SHIELD <code>verify_and_execute</code> gatekeeper. Reached Phase
+              3.5.
+            </li>
+            <li>
+              <strong
+                ><code>nuera-core</code> (folder typo for neura-core, 207
+                commits)</strong
+              >
+              — single-binary Rust system with append-only Chronicle log as
+              sole source of truth, WASM-sandboxed hot-swappable skills,
+              IMAP/CalDAV listeners, HNSW vector index from scratch. Phase 4
+              complete.
+            </li>
+            <li>
+              <strong><code>neura-core-v2</code> (50 commits)</strong> —
+              12-crate Cargo workspace with post-quantum crypto (ML-DSA, ML-KEM,
+              Shamir), HMAC chronicle, async mailbox neuron system, CLI REPL.
+              The 58KB <code>ARCHITECTURE-v3.md</code> documents the fundamental
+              limitation.
+            </li>
+            <li>
+              <strong><code>neura-core-v3</code> (404 commits, active)</strong>
+              — 15-crate Cargo workspace, Track 1 (Substrate Lifecycle: 12
+              slices, 59 tasks) completed. Working REPL with cross-session
+              memory, input classification, proactive surfacing. Vertical
+              prototypes (P1–P4) confirmed memory, learning, delegation, and
+              proactive behavior.
+            </li>
+          </ul>
+        </section>
+
+        <section class="cs-section">
+          <h2>Where it broke / why I stopped</h2>
+          <p>
+            The <code>ARCHITECTURE-v3.md</code> (58KB) in
+            <code>neura-core-v2</code> names the core technical limitation
+            explicitly:
+          </p>
+          <p class="cs-pullquote">
+            Boot time grows linearly with history. After years of operation,
+            the system gets slower the longer it lives.
+          </p>
+          <p>
+            Chronicle-based identity reconstruction is
+            <strong>O(history length)</strong> at boot. The proposed v3 fix —
+            a micro-model neural substrate with Hebbian learning, where
+            identity lives in weight files (O(1) boot) rather than a replay
+            log — required building novel ML infrastructure (graph of small
+            MLPs, LSH routing, mmap-encrypted weight files) before integration.
+            This is genuinely open ML research, not a tooling problem.
+          </p>
+          <p>
+            A separate constraint discovered in <code>aria</code>:
+            <code>claude -p</code> (the Claude Code subprocess API for LLM
+            extraction) is host-only and cannot run inside Docker. This forced
+            a split deployment architecture — deterministic services in Docker
+            Compose, LLM-dependent services on macOS launchd daemons — creating
+            operational complexity that had to be managed with safety tooling.
+          </p>
+          <p>
+            For <code>neura-core-v3</code>: Track 1 is complete, but every
+            threshold parameter (activation levels, cosine recall cutoffs, decay
+            coefficients) is an uncalibrated guess.
+            <code>V3-NEXT-PHASE.md</code> explicitly states tuning without
+            real-usage telemetry will fail — and the system cannot generate
+            that telemetry until it's in real sustained use.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>What this means for applied AI in production</h2>
+          <p>
+            Event-sourced AI memory (replay-from-log) is auditable and correct
+            but fundamentally degrades with use — boot time scales with
+            history. Learned-weight memory (neural substrate) avoids the
+            O(history) problem but loses auditability.
+            <strong>Neither is a clean answer</strong>, and the tradeoff has to
+            be made consciously.
+          </p>
+          <p>
+            Additionally: AI memory systems require explicit safety
+            infrastructure around irreversible operations — the local Neo4j
+            store was accidentally deleted multiple times in <code>aria</code>
+            during development despite human oversight, requiring hook-based
+            interception as a mitigation.
+          </p>
+          <p class="cs-pullquote">
+            Memory systems for AI are not just storage problems; they are
+            safety architecture problems.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>What each version learned</h2>
+          <ul class="cs-versions">
+            <li>
+              <strong
+                ><a href="https://github.com/jimjones26/jarvis-core"
+                  >jarvis-core</a
+                ></strong
+              >
+              The concept is buildable end-to-end (3D UI, graph, LLM, agentic
+              execution); the monolithic SurrealDB + single-binary design made
+              each new feature expensive.
+            </li>
+            <li>
+              <strong
+                ><a href="https://github.com/jimjones26/aria">aria</a></strong
+              >
+              A separate Python + Neo4j deployment, locally runnable on demand,
+              while the Rust runtime matures. Documented the
+              <code>claude -p</code> host-only constraint and the need for
+              safety tooling around irreversible operations.
+            </li>
+            <li>
+              <strong
+                ><a href="https://github.com/jimjones26/aria-v2"
+                  >aria-v2</a
+                ></strong
+              >
+              Pillared Rust architecture introduced explicit security/governance
+              boundaries (SHIELD gatekeeper). Demonstrated the multi-pillar
+              pattern is buildable but each pillar is a meaningful integration
+              project.
+            </li>
+            <li>
+              <strong
+                ><a href="https://github.com/jimjones26/nuera-core"
+                  >nuera-core</a
+                ></strong
+              >
+              Append-only Chronicle from scratch proved the architecture.
+              Single-crate sprawl (22KB main.rs, 25+ deps) created debt that
+              blocked the next layer; v3's <code>CLAUDE.md</code> cited this
+              explicitly.
+            </li>
+            <li>
+              <strong
+                ><a href="https://github.com/jimjones26/neura-core-v2"
+                  >neura-core-v2</a
+                ></strong
+              >
+              Multi-crate workspace fixed the modularity problem. Post-quantum
+              crypto, HMAC chronicle, and WASM tools proven. The O(history)
+              boot cost documented as the fundamental limitation requiring a
+              different memory substrate.
+            </li>
+            <li>
+              <strong
+                ><a href="https://github.com/jimjones26/neura-core-v3"
+                  >neura-core-v3</a
+                ></strong
+              >
+              Redesigned around persistent substrate (weights survive restart)
+              vs. reconstructed state. Track 1 complete. Blocked on calibration
+              — can't tune without real usage data.
+            </li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p class="footer-line">
+          <a href="mailto:jimmy@jonesweb.studio">jimmy@jonesweb.studio</a>
+          <span class="sep">/</span>
+          <a href="https://github.com/jimjones26">GitHub</a>
+          <span class="sep">/</span>
+          <a href="https://www.linkedin.com/in/the-jimmy-jones/">LinkedIn</a>
+          <span class="sep">/</span>
+          <a href="https://x.com/the_jimmy_jones">X</a>
+          <span class="sep">/</span>
+          <a href="../assets/resume.pdf">Resume (PDF)</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

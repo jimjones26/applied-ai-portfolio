@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Two Experiments in "Let the LLM Run It" — Jimmy Jones</title>
+    <meta
+      name="description"
+      content="Two architectural experiments that pushed work onto the LLM directly, and the two distinct walls they hit."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="cs-topbar">
+      <div class="wrap">
+        <a class="cs-back" href="../index.html">← Back to index</a>
+      </div>
+    </div>
+
+    <header class="cs-header">
+      <div class="wrap">
+        <p class="cs-num">Case Study #02</p>
+        <h1 class="cs-title">
+          Two Experiments in "Let the LLM Run It" (and Where Each One Hit a
+          Wall)
+        </h1>
+        <dl class="cs-meta">
+          <dt>Repos</dt>
+          <dd>
+            <a href="https://github.com/jimjones26/natural-language-website-biz"
+              ><code>natural-language-website-biz</code></a
+            >,
+            <a href="https://github.com/jimjones26/website-rebuilder-failed"
+              ><code>website-rebuilder-failed</code></a
+            >,
+            <a href="https://github.com/jimjones26/automated-website-rebuilder"
+              ><code>automated-website-rebuilder</code></a
+            >,
+            <a href="https://github.com/jimjones26/website-builder-v2"
+              ><code>website-builder-v2</code></a
+            >
+          </dd>
+          <dt>Stack</dt>
+          <dd>TypeScript + Claude CLI + Markdown-as-runtime</dd>
+          <dt>Status</dt>
+          <dd>
+            Abandoned (<code>natural-language-website-biz</code>,
+            <code>website-rebuilder-failed</code>); paused
+            (<code>automated-website-rebuilder</code>)
+          </dd>
+          <dt>Last touched</dt>
+          <dd>2025-09</dd>
+        </dl>
+      </div>
+    </header>
+
+    <main class="cs-body">
+      <div class="wrap">
+        <section class="cs-section">
+          <h2>What I was trying to build</h2>
+          <p>
+            Two architecturally radical experiments aimed at compressing the
+            website-builder pipeline by pushing work directly onto the LLM. The
+            first treated the LLM as the runtime interpreter, with plain-English
+            markdown as the program. The second tried to invoke a swarm of
+            14 subagents from a bash orchestrator. The goal was to find out
+            whether either approach could replace a conventional TypeScript
+            orchestrator.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>How far I got</h2>
+          <ul>
+            <li>
+              <strong><code>website-rebuilder-failed</code></strong> — 14
+              subagent definitions, an orchestrator, an event emitter, a
+              "quality mesh," a PatternLearner, full architecture docs. A real
+              test run against <code>example.com</code> captured screenshots
+              and HTML.
+            </li>
+            <li>
+              <strong><code>natural-language-website-biz</code></strong> — a
+              prospect CRUD flow fully implemented as plain-English markdown
+              "modules" and tested. Live website crawl + Lighthouse +
+              screenshot pipeline added as the final step.
+            </li>
+            <li>
+              <strong><code>website-builder-v2</code></strong> — a complete
+              11-step pipeline specified as Claude Code slash commands.
+            </li>
+            <li>
+              <strong><code>automated-website-rebuilder</code></strong> — 4 of
+              12 TypeScript pipeline steps implemented with real Claude CLI
+              calls; Lighthouse iteratively hardened through multiple
+              reliability cycles.
+            </li>
+          </ul>
+        </section>
+
+        <section class="cs-section">
+          <h2>Where it broke / why I stopped</h2>
+          <p>Two distinct hard walls, discovered in sequence.</p>
+
+          <h3>Wall 1 — website-rebuilder-failed</h3>
+          <p>
+            The architecture was built around <code>claude --subagent=&lt;name&gt;</code>
+            as a bash invocation pattern that hadn't been validated — that
+            specific form isn't a valid Claude CLI command, so the orchestrator
+            and 14 subagent definitions had no way to spawn agents through the
+            path the design assumed. The <code>CLAUDE.md</code> self-assessed
+            "PRODUCTION READY" and "100% success rate" before this was tested
+            against a real site.
+          </p>
+          <p>
+            (Programmatic agent invocation through other mechanisms — the
+            Claude Agent SDK, tool-use loops, custom while-loop frameworks like
+            <code>caa-exploration</code> — is fine; the failure was committing
+            architecture to an unvalidated runtime primitive, not the
+            impossibility of programmatic agents.)
+          </p>
+
+          <h3>Wall 2 — natural-language-website-biz</h3>
+          <p>
+            Claude repeatedly broke the no-direct-file-write constraint despite
+            explicit <code>CLAUDE.md</code> rules. A real commit message reads:
+          </p>
+          <p class="cs-pullquote">remove files claude added on its own.</p>
+          <p>
+            Operations requiring deterministic I/O — datetime logging, file
+            rotation, crawl timeouts — kept failing in ways that natural-language
+            instructions couldn't express precisely. The LLM treated the
+            enforcement boundary as a suggestion, not a constraint.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>What this means for applied AI in production</h2>
+          <p>Two distinct lessons, often conflated:</p>
+          <ol>
+            <li>
+              <strong>Text instructions aren't enforcement boundaries.</strong>
+              A <code>CLAUDE.md</code> rule that says "do not write files
+              directly" is a hint, not a constraint. If a behavior must not
+              happen, the surrounding deterministic system has to make it
+              impossible — sandboxed file ops, capability-restricted tools,
+              validation layers — not a sentence the LLM is asked to honor.
+            </li>
+            <li>
+              <strong
+                >Validate runtime primitives before architecture commits to
+                them.</strong
+              >
+              The <code>website-rebuilder-failed</code> orchestrator was built
+              on top of a CLI invocation pattern that turned out not to exist
+              in that form. The mistake wasn't ambition; it was building 14
+              subagent definitions and a swarm coordinator before running the
+              simplest possible test of the primitive they all depended on.
+            </li>
+          </ol>
+          <p>
+            LLMs <em>can</em> orchestrate — orchestrator/worker patterns run
+            across this entire portfolio, and <code>caa-exploration</code> is a
+            reusable framework for exactly that. The lesson here isn't about the
+            LLM's role in the topology; it's about what kind of constraint can
+            live where. Constraints expressible as deterministic checks belong
+            in the surrounding system. Constraints expressible only as natural
+            language belong in prompts and review, not in places where
+            violation produces silent corruption.
+          </p>
+          <p>
+            The TypeScript pipeline (<code>automated-website-rebuilder</code>) —
+            built afterward with hard rules against mock code and real Claude
+            CLI calls — got to 4/12 steps before stalling on Lighthouse
+            reliability, which is a <em>correct</em> architecture failing on
+            operational complexity, not a conceptual failure.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>What each version learned</h2>
+          <ul class="cs-versions">
+            <li>
+              <strong
+                ><a href="https://github.com/jimjones26/website-rebuilder-failed"
+                  >website-rebuilder-failed</a
+                ></strong
+              >
+              The architecture was committed to a CLI invocation pattern that
+              hadn't been validated against the actual runtime. The fix is
+              "test the primitive first," not "don't use LLMs as orchestrators."
+            </li>
+            <li>
+              <strong
+                ><a
+                  href="https://github.com/jimjones26/natural-language-website-biz"
+                  >natural-language-website-biz</a
+                ></strong
+              >
+              LLMs cannot reliably self-constrain from write operations when
+              the constraint exists only as text instruction.
+            </li>
+            <li>
+              <strong
+                ><a href="https://github.com/jimjones26/website-builder-v2"
+                  >website-builder-v2</a
+                ></strong
+              >
+              Slash commands as <em>specification</em> (not runtime) was the
+              correct abstraction — define the pipeline shape, then implement
+              each step as real code.
+            </li>
+            <li>
+              <strong
+                ><a
+                  href="https://github.com/jimjones26/automated-website-rebuilder"
+                  >automated-website-rebuilder</a
+                ></strong
+              >
+              Real TypeScript + real Claude CLI calls + hard rules against mock
+              code = the correct architecture; stalled at step 5 on Lighthouse
+              complexity, not a conceptual flaw.
+            </li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p class="footer-line">
+          <a href="mailto:jimmy@jonesweb.studio">jimmy@jonesweb.studio</a>
+          <span class="sep">/</span>
+          <a href="https://github.com/jimjones26">GitHub</a>
+          <span class="sep">/</span>
+          <a href="https://www.linkedin.com/in/the-jimmy-jones/">LinkedIn</a>
+          <span class="sep">/</span>
+          <a href="https://x.com/the_jimmy_jones">X</a>
+          <span class="sep">/</span>
+          <a href="../assets/resume.pdf">Resume (PDF)</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

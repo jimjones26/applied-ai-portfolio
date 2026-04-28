@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Browser Automation Against Adversarial Targets — Jimmy Jones
+    </title>
+    <meta
+      name="description"
+      content="A procurement tool that fired browser-automation agents at supplier portals. Cloudflare bot protection broke it non-deterministically. The pivot to Argus was the correct move."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="cs-topbar">
+      <div class="wrap">
+        <a class="cs-back" href="../index.html">← Back to index</a>
+      </div>
+    </div>
+
+    <header class="cs-header">
+      <div class="wrap">
+        <p class="cs-num">Case Study #08</p>
+        <h1 class="cs-title">Browser Automation Against Adversarial Targets</h1>
+        <dl class="cs-meta">
+          <dt>Repos</dt>
+          <dd>
+            <a href="https://github.com/jimjones26/procure-forge"
+              ><code>procure-forge</code></a
+            >
+            →
+            <a href="https://github.com/jimjones26/tiny-fish-project"
+              ><code>tiny-fish-project</code></a
+            >
+            (Argus)
+          </dd>
+          <dt>Stack</dt>
+          <dd>TypeScript + SvelteKit + TinyFish API + OpenRouter</dd>
+          <dt>Status</dt>
+          <dd>Paused (both)</dd>
+          <dt>Last touched</dt>
+          <dd>
+            <code>tiny-fish-project</code> 2026-03-19;
+            <code>procure-forge</code> 2026-03-25
+          </dd>
+        </dl>
+      </div>
+    </header>
+
+    <main class="cs-body">
+      <div class="wrap">
+        <section class="cs-section">
+          <h2>What I was trying to build</h2>
+          <p>
+            A procurement tool that launched a swarm of TinyFish browser
+            automation agents to scrape supplier portals (DigiKey, LCSC,
+            Mouser, Arrow) in parallel, then used an LLM to rank results in a
+            live mission-control UI. Built for the TinyFish Accelerator Demo
+            Day.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>How far I got</h2>
+          <ul>
+            <li>
+              Full working demo: agentic orchestrator with concurrency queue,
+              SSE streaming, in-memory state recovery on server restart.
+            </li>
+            <li>
+              Live 4×4 iframe grid showing TinyFish agent streams, event
+              timeline, per-supplier audit trails.
+            </li>
+            <li>
+              LLM-powered result synthesis (OpenRouter), sortable results,
+              sequential RFQ submission, jsPDF export.
+            </li>
+            <li>
+              Fully containerized (Docker Compose), MIT licensed,
+              credential-stripped for open sourcing.
+            </li>
+          </ul>
+        </section>
+
+        <section class="cs-section">
+          <h2>Where it broke / why I stopped</h2>
+          <p>From the README's "Why I Stopped" section:</p>
+          <p class="cs-pullquote">
+            Cloudflare bot protection defeats TinyFish agents on DigiKey /
+            Mouser at unpredictable rates. Credential management doesn't scale
+            past a demo. Supplier UI fragility means any site redesign breaks
+            the agent goals.
+          </p>
+          <p>
+            The failure mode is <strong>non-deterministic</strong>: an agent
+            that works 90% of the time in controlled demo conditions fails
+            unpredictably in production because the anti-bot systems update
+            independently of the deployment. There is no mitigation that
+            doesn't require either supplier API access (which the suppliers
+            don't provide) or a continuous maintenance burden that exceeds the
+            tool's value.
+          </p>
+          <p>
+            The pivot to <strong>Argus</strong> (<code>tiny-fish-project</code>)
+            was the correct response: three-module B2B intelligence platform
+            (Sales, Competitive, Compliance) using browser automation against
+            targets that <em>don't actively fight it</em> (public business
+            intelligence). 170 commits, 7 full slices delivered.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>What this means for applied AI in production</h2>
+          <p>
+            Browser automation against sites deploying active bot protection
+            (Cloudflare, behavioral fingerprinting, CAPTCHAs)
+            <strong>is not productionizable</strong> without supplier API
+            access. Even if the agent works correctly today, the anti-bot
+            systems update independently and break the agent at unpredictable
+            intervals.
+          </p>
+          <p class="cs-pullquote">
+            The correct product decision is to pivot to targets that want to
+            be automated — internal tools, non-adversarial data sources —
+            which is what the Argus pivot did.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p class="footer-line">
+          <a href="mailto:jimmy@jonesweb.studio">jimmy@jonesweb.studio</a>
+          <span class="sep">/</span>
+          <a href="https://github.com/jimjones26">GitHub</a>
+          <span class="sep">/</span>
+          <a href="https://www.linkedin.com/in/the-jimmy-jones/">LinkedIn</a>
+          <span class="sep">/</span>
+          <a href="https://x.com/the_jimmy_jones">X</a>
+          <span class="sep">/</span>
+          <a href="../assets/resume.pdf">Resume (PDF)</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

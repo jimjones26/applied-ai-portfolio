@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      AI Development Methodology at Scale: When the LLM Can't Hold the Map —
+      Jimmy Jones
+    </title>
+    <meta
+      name="description"
+      content="Two AI-orchestrated development methodologies. The 9-module version finished cleanly; the 21-microservice version stalled at 1 of 21. Same methodology, different module count."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="cs-topbar">
+      <div class="wrap">
+        <a class="cs-back" href="../index.html">← Back to index</a>
+      </div>
+    </div>
+
+    <header class="cs-header">
+      <div class="wrap">
+        <p class="cs-num">Case Study #06</p>
+        <h1 class="cs-title">
+          AI Development Methodology at Scale: When the LLM Can't Hold the Map
+        </h1>
+        <dl class="cs-meta">
+          <dt>Repos</dt>
+          <dd>
+            <a href="https://github.com/jimjones26/iap-al"
+              ><code>iap-al</code></a
+            >
+            →
+            <a href="https://github.com/jimjones26/iap-al-v2"
+              ><code>iap-al-v2</code></a
+            >
+            →
+            <a href="https://github.com/jimjones26/web-scraping-service"
+              ><code>web-scraping-service</code></a
+            >
+            (one-shot output) →
+            <a
+              href="https://github.com/jimjones26/microservice-oriented-ai-orchestrated-development-"
+              ><code>microservice-oriented-ai-orchestrated-development-</code></a
+            >
+            (MOAD) →
+            <a href="https://github.com/jimjones26/maod-framework"
+              ><code>maod-framework</code></a
+            >
+            (MAOD)
+          </dd>
+          <dt>Stack</dt>
+          <dd>Go (MOAD) + TypeScript (MAOD)</dd>
+          <dt>Status</dt>
+          <dd>
+            Paused (<code>maod-framework</code>, 9-module version functional);
+            abandoned (MOAD, 1/21 services).
+          </dd>
+          <dt>Last touched</dt>
+          <dd>
+            <code>maod-framework</code> 2025-07-17; MOAD 2025-07-19
+          </dd>
+        </dl>
+      </div>
+    </header>
+
+    <main class="cs-body">
+      <div class="wrap">
+        <section class="cs-section">
+          <h2>What I was trying to build</h2>
+          <p>
+            A repeatable AI-orchestrated development methodology — Claude Code
+            commands and process constraints that enable solo developers to
+            build complex multi-module systems with LLM assistance without
+            losing architectural coherence.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>How far I got</h2>
+          <ul>
+            <li>
+              <strong><code>iap-al</code> / <code>iap-al-v2</code></strong> —
+              methodology definition and empirical iteration. 8+ phase prompt
+              templates. Experiment-001 ran on a web scraper test case and
+              discovered sub-agent coordination issues.
+            </li>
+            <li>
+              <strong><code>web-scraping-service</code></strong> — one-shot
+              generation output of experiment-001. 8 TypeScript modules each
+              with test suites, integrated by an integration agent.
+              <code>FINAL_SUMMARY_REPORT.md</code> declared completion.
+            </li>
+            <li>
+              <strong
+                ><code>microservice-oriented-ai-orchestrated-development-</code>
+                (MOAD)</strong
+              >
+              — TDD-first <strong>Go</strong> platform for website analysis,
+              <strong>21 microservices planned</strong>, 7 CLAUDE.md phase
+              command files. <strong
+                >Only the Data Persistence Service was implemented</strong
+              >
+              out of 21 before stopping.
+            </li>
+            <li>
+              <strong><code>maod-framework</code> (MAOD)</strong> — renamed
+              "<strong>M</strong>inimal AI-Orchestrated Development," a
+              philosophical correction to MOAD. TypeScript,
+              <strong>9 modules</strong>, 107+ Vitest tests, live SQLite
+              databases showing the system was actually run,
+              <strong>all 9 modules complete</strong>.
+            </li>
+          </ul>
+        </section>
+
+        <section class="cs-section">
+          <h2>Where it broke / why I stopped</h2>
+          <p>
+            The same methodology succeeded at 9 modules and failed at 21. The
+            MOAD project stopped after 1/21 services — 20 services remaining.
+          </p>
+          <p>
+            The constraint is not LLM capability but
+            <strong>context coherence</strong>: at 21 services, the LLM cannot
+            hold the full set of interface contracts in working context while
+            implementing a new service. Each new service requires knowing the
+            interface of every service it interacts with; as the service count
+            grows, the context required to maintain coherence grows faster
+            than the context window.
+          </p>
+          <p>
+            The <code>web-scraping-service</code> experiment revealed a second
+            failure mode: "FINAL_SUMMARY_REPORT declared complete" is not the
+            same as "tests pass in a real environment." The one-shot generation
+            produced structurally complete modules that <em>claimed</em>
+            passing tests — but whether the integration actually worked was
+            never verified post-generation.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>What this means for applied AI in production</h2>
+          <p>
+            AI-orchestrated development has a
+            <strong>context-coherence ceiling</strong>: it works at small
+            module counts (≤9) where interface contracts fit in context and
+            fails at large module counts (21+) where they don't. This is a
+            fundamental LLM constraint that scales with
+            <strong>architectural complexity</strong>, not code volume.
+          </p>
+          <p class="cs-pullquote">
+            For production AI-assisted development: decompose systems into
+            independently verifiable modules with narrow interfaces, and treat
+            the LLM as a module implementer, not a system architect.
+          </p>
+          <p>
+            MAOD's "atomicity, single responsibility, markdown-first outputs"
+            is a practical response to this ceiling.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>What each version learned</h2>
+          <ul class="cs-versions">
+            <li>
+              <strong
+                ><a href="https://github.com/jimjones26/iap-al">iap-al</a> /
+                <a href="https://github.com/jimjones26/iap-al-v2">iap-al-v2</a>
+                /
+                <a href="https://github.com/jimjones26/web-scraping-service"
+                  >web-scraping-service</a
+                ></strong
+              >
+              "Declared complete" by the orchestrating agent is optimistic
+              self-assessment; real-environment validation is required.
+            </li>
+            <li>
+              <strong
+                ><a
+                  href="https://github.com/jimjones26/microservice-oriented-ai-orchestrated-development-"
+                  >MOAD (21 services)</a
+                ></strong
+              >
+              Scope was too large to sustain context coherence; TDD-first was
+              correct but the finish line was invisible.
+            </li>
+            <li>
+              <strong
+                ><a href="https://github.com/jimjones26/maod-framework"
+                  >MAOD (9 modules)</a
+                ></strong
+              >
+              Constraining scope to single-responsibility modules with narrow
+              interfaces made the project finishable. The "Minimal" framing was
+              the architectural insight.
+            </li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p class="footer-line">
+          <a href="mailto:jimmy@jonesweb.studio">jimmy@jonesweb.studio</a>
+          <span class="sep">/</span>
+          <a href="https://github.com/jimjones26">GitHub</a>
+          <span class="sep">/</span>
+          <a href="https://www.linkedin.com/in/the-jimmy-jones/">LinkedIn</a>
+          <span class="sep">/</span>
+          <a href="https://x.com/the_jimmy_jones">X</a>
+          <span class="sep">/</span>
+          <a href="../assets/resume.pdf">Resume (PDF)</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Build Half Worked — Jimmy Jones</title>
+    <meta
+      name="description"
+      content="AI-orchestrated build of 70 rebuilt websites in 4 weeks. One paying client closed; build pipeline outpaced a one-person sales motion."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="cs-topbar">
+      <div class="wrap">
+        <a class="cs-back" href="../index.html">← Back to index</a>
+      </div>
+    </div>
+
+    <header class="cs-header">
+      <div class="wrap">
+        <p class="cs-num">Case Study #01</p>
+        <h1 class="cs-title">
+          The Build Half Worked: AI-Generated 70 Websites in 4 Weeks → 1 Paying
+          Client + Active Pipeline
+        </h1>
+        <dl class="cs-meta">
+          <dt>Repos</dt>
+          <dd>
+            <a href="https://github.com/jimjones26/website-builder-test"
+              ><code>website-builder-test</code></a
+            >
+            (primary),
+            <a href="https://github.com/jimjones26/life-saver-biz"
+              ><code>life-saver-biz</code></a
+            >,
+            <a href="https://github.com/jimjones26/life-saver-biz-v2"
+              ><code>life-saver-biz-v2</code></a
+            >,
+            <a href="https://github.com/jimjones26/life-saver-biz-v3"
+              ><code>life-saver-biz-v3</code></a
+            >
+          </dd>
+          <dt>Stack</dt>
+          <dd>SvelteKit + Python (FastAPI / Neo4j / Haystack)</dd>
+          <dt>Status</dt>
+          <dd>
+            Shipped, paused. Build pipeline functioning end-to-end; conversion
+            loop is the open problem.
+          </dd>
+          <dt>Last touched</dt>
+          <dd>
+            <code>website-builder-test</code> 2026-03;
+            <code>life-saver-biz-v3</code> 2025-08
+          </dd>
+        </dl>
+      </div>
+    </header>
+
+    <main class="cs-body">
+      <div class="wrap">
+        <section class="cs-section">
+          <h2>What I was trying to build</h2>
+          <p>
+            A speculative website rebuild service for local businesses: AI
+            crawls the existing site, generates a rebuilt version, and outreach
+            lands the rebuilt site as a sales artifact — without requiring
+            client buy-in before the work is done. Both halves of the system —
+            the build side and the outreach side — were AI-orchestrated. My
+            role was direction: refining the vision, designing the pipeline,
+            reviewing output, and iterating on what wasn't working.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>How far I got</h2>
+          <p>
+            <strong>~70 websites built in ~4 weeks</strong>, with very little
+            ongoing involvement from me. AI handled the crawl, the analysis,
+            content generation, semantic HTML output, image optimization, and
+            template assembly. A SQLite campaigns DB (1.3MB) records real
+            campaign data across 15+ active domains.
+          </p>
+          <p>
+            <strong>Email outreach campaigns ran end-to-end.</strong> Three-email
+            sequences across multiple domain groups, Gmail thread sync, a
+            SvelteKit dashboard for monitoring.
+          </p>
+          <p>
+            <strong>Outcomes</strong>: 1 paying client closed; 1 in active talks;
+            1 fresh prospect from work delivered last week.
+          </p>
+          <p>
+            The accompanying <code>life-saver-biz</code> arc (3 versions, 1,188
+            commits combined) built progressively more sophisticated analysis
+            tooling: an async stealth crawler, Lighthouse + accessibility +
+            security analysis, LLM-driven business-impact translation, evidence
+            banks. v2 added a full multi-service SaaS architecture (FastAPI +
+            Neo4j + Redis + ARQ + Haystack + SvelteKit). v3 is the most
+            invested codebase (613 commits, comprehensive pytest suite).
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>Where it broke / why I stopped</h2>
+          <p>
+            The build half worked.
+            <strong
+              >The bottleneck was sales conversion, not LLM capability.</strong
+            >
+            AI-orchestrated build produced 70 production-ready rebuilt sites
+            faster than a one-person sales motion could move them.
+          </p>
+          <p>
+            The <code>life-saver-biz</code> arc kept refining the analysis side
+            (always a tractable LLM problem) instead of closing the conversion
+            loop (which depends on a sales motion the build side was
+            outpacing). The migration scripts in
+            <code>website-builder-test</code>
+            (<code>migrate_to_report_page.py</code>,
+            <code>migrate_social_links.py</code>) document model pivots being
+            applied retroactively to already-built sites — the AI-driven build
+            pipeline was outrunning the human-managed pricing strategy.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>What this means for applied AI in production</h2>
+          <p>
+            Build capacity scales independently of go-to-market capacity.
+            AI-driven build pipelines can hand a one-person business 70
+            production-grade artifacts in a month — but only if the downstream
+            conversion motion can absorb that throughput. For applied AI in
+            production: pair AI build pipelines with sales / distribution
+            motions sized to match the throughput, or the value sits idle.
+          </p>
+          <p class="cs-pullquote">
+            AI tools amplify the bottleneck rather than relieve it.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>What each version learned</h2>
+          <ul class="cs-versions">
+            <li>
+              <strong
+                ><a href="https://github.com/jimjones26/life-saver-biz"
+                  >life-saver-biz</a
+                >
+                (v1, 254 commits)</strong
+              >
+              Validated AI could do site analysis end-to-end. Pipeline steps 3–9
+              (redesign → outreach) never started; tooling outpaced workflow.
+            </li>
+            <li>
+              <strong
+                ><a href="https://github.com/jimjones26/life-saver-biz-v2"
+                  >life-saver-biz-v2</a
+                >
+                (321 commits)</strong
+              >
+              Rebuilt as proper SaaS: FastAPI + Neo4j + Redis + Haystack.
+              Lesson: Neo4j was overkill for a CRM-shaped data model, adding
+              infrastructure overhead for no retrieval benefit.
+            </li>
+            <li>
+              <strong
+                ><a href="https://github.com/jimjones26/life-saver-biz-v3"
+                  >life-saver-biz-v3</a
+                >
+                (613 commits)</strong
+              >
+              Most invested. Async stealth crawler, multi-layer analysis, LLM
+              reporting. Same pattern as before: tooling kept growing, the
+              conversion loop never closed.
+            </li>
+            <li>
+              <strong
+                ><a href="https://github.com/jimjones26/website-builder-test"
+                  >website-builder-test</a
+                >
+                (310 commits)</strong
+              >
+              Stopped building the SaaS, started running the actual business.
+              AI-orchestrated build pipeline + email outreach. Build side
+              scaled. Sales motion was the bottleneck.
+            </li>
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p class="footer-line">
+          <a href="mailto:jimmy@jonesweb.studio">jimmy@jonesweb.studio</a>
+          <span class="sep">/</span>
+          <a href="https://github.com/jimjones26">GitHub</a>
+          <span class="sep">/</span>
+          <a href="https://www.linkedin.com/in/the-jimmy-jones/">LinkedIn</a>
+          <span class="sep">/</span>
+          <a href="https://x.com/the_jimmy_jones">X</a>
+          <span class="sep">/</span>
+          <a href="../assets/resume.pdf">Resume (PDF)</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

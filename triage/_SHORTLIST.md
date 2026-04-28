@@ -91,7 +91,7 @@ Build capacity scales independently of go-to-market capacity. AI-driven build pi
 - **life-saver-biz** (v1, 254 commits): Validated AI could do site analysis end-to-end. Pipeline steps 3–9 (redesign → outreach) never started; tooling outpaced workflow.
 - **life-saver-biz-v2** (321 commits): Rebuilt as proper SaaS (FastAPI + Neo4j + Redis + Haystack). Lesson: Neo4j was overkill for a CRM-shaped data model, adding infrastructure overhead for no retrieval benefit.
 - **life-saver-biz-v3** (613 commits): Most invested. Async stealth crawler, multi-layer analysis, LLM reporting. Same pattern: tooling kept growing; conversion loop never closed.
-- **website-builder-test**: Stopped building the SaaS, started running the actual business. AI-orchestrated build pipeline + email outreach. Build side scaled. Sales motion was the bottleneck.
+- **website-builder-test** (310 commits): Stopped building the SaaS, started running the actual business. AI-orchestrated build pipeline + email outreach. Build side scaled. Sales motion was the bottleneck.
 
 ---
 
@@ -117,24 +117,31 @@ Two architecturally radical experiments — one with the LLM as runtime interpre
 
 Two distinct hard walls, discovered in sequence.
 
-**Wall 1 — website-rebuilder-failed**: `claude --subagent=<name>` is not a valid CLI invocation. Subagents only work in interactive Claude Code sessions, not from bash scripts. The CLAUDE.md self-assessed "PRODUCTION READY" and "100% success rate" before this constraint was tested against a real site. The orchestrator and all swarm logic had no way to actually spawn agents programmatically.
+**Wall 1 — website-rebuilder-failed**: the architecture was built around `claude --subagent=<name>` as a bash invocation pattern that hadn't been validated — that specific form isn't a valid Claude CLI command, so the orchestrator and 14 subagent definitions had no way to spawn agents through the path the design assumed. The CLAUDE.md self-assessed "PRODUCTION READY" and "100% success rate" before this was tested against a real site. (Programmatic agent invocation through other mechanisms — the Claude Agent SDK, tool-use loops, custom while-loop frameworks like `caa-exploration` — is fine; the failure was committing architecture to an unvalidated runtime primitive, not the impossibility of programmatic agents.)
 
 **Wall 2 — natural-language-website-biz**: Claude repeatedly broke the no-direct-file-write constraint despite explicit CLAUDE.md rules. Commit message: *"remove files claude added on its own."* Operations requiring deterministic I/O — datetime logging, file rotation, crawl timeouts — kept failing in ways that natural-language instructions couldn't express precisely. The LLM treated the enforcement boundary as a suggestion, not a constraint.
 
 ### What this means for applied AI in production
 
-There is a hard boundary between operations where LLMs add value (synthesis, content generation, analysis) and operations where they are a liability (deterministic I/O, stateful file management, inter-process coordination). For applied AI engineering: **the LLM is a leaf node in a deterministic DAG, not the orchestrator.** When allowed to orchestrate, it will hallucinate its own permissions. The TypeScript pipeline (`automated-website-rebuilder`) — built afterward with hard rules against mock code and real Claude CLI calls — got to 4/12 steps before stalling on Lighthouse reliability, which is a *correct* architecture failing on operational complexity, not a conceptual failure.
+Two distinct lessons, often conflated:
+
+1. **Text instructions aren't enforcement boundaries.** A `CLAUDE.md` rule that says "do not write files directly" is a hint, not a constraint. If a behavior must not happen, the surrounding deterministic system has to make it impossible — sandboxed file ops, capability-restricted tools, validation layers — not a sentence the LLM is asked to honor.
+2. **Validate runtime primitives before architecture commits to them.** The website-rebuilder-failed orchestrator was built on top of a CLI invocation pattern that turned out not to exist in that form. The mistake wasn't ambition; it was building 14 subagent definitions and a swarm coordinator before running the simplest possible test of the primitive they all depended on. This is the same pattern as cogni-shift's "100% complete!" preceding a 7-session refactor — AI-generated structural completeness is not the same as tested correctness.
+
+LLMs *can* orchestrate — orchestrator/worker patterns run across this entire portfolio, and `caa-exploration` is a reusable framework for exactly that. The lesson here isn't about the LLM's role in the topology; it's about what kind of constraint can live where. Constraints expressible as deterministic checks belong in the surrounding system. Constraints expressible only as natural language belong in prompts and review, not in places where violation produces silent corruption.
+
+The TypeScript pipeline (`automated-website-rebuilder`) — built afterward with hard rules against mock code and real Claude CLI calls — got to 4/12 steps before stalling on Lighthouse reliability, which is a *correct* architecture failing on operational complexity, not a conceptual failure.
 
 ### For iteration arcs: what each version learned
 
-- **website-rebuilder-failed**: LLM-defined subagents are not programmatically invokable — the execution model was wrong at the foundation.
+- **website-rebuilder-failed**: the architecture was committed to a CLI invocation pattern that hadn't been validated against the actual runtime. The fix is "test the primitive first," not "don't use LLMs as orchestrators."
 - **natural-language-website-biz**: LLMs cannot reliably self-constrain from write operations when the constraint exists only as text instruction.
 - **website-builder-v2**: Slash commands as *specification* (not runtime) was the correct abstraction — define the pipeline shape, then implement each step as real code.
 - **automated-website-rebuilder**: Real TypeScript + real Claude CLI calls + hard rules against mock code = the correct architecture; stalled at step 5 on Lighthouse complexity, not a conceptual flaw.
 
 ---
 
-## #3. Hallucination as a Pipeline Stage, Not a One-Time Fix
+## #3. Hallucination Needs Its Own Pipeline Stage
 
 **Repos**: website-builder
 **Stack**: TypeScript + Puppeteer + Postgres + Claude API
@@ -161,7 +168,12 @@ The 13-step pipeline length reflects accumulated patches to quality failures rat
 
 ### What this means for applied AI in production
 
-LLM content generation for *reconstruction* tasks (not pure creation) produces two distinct failure modes that require explicit pipeline stages: factual hallucination (inventing details absent from source) and structural inconsistency (sequential LLM calls produce outputs that don't compose). Neither can be fixed by prompt engineering alone — they require validation and normalization stages with actual checks against ground truth. **In any pipeline where LLM outputs feed downstream consumers, the pipeline length is diagnostic: each extra stage is a failure mode that was encountered in production.**
+When an LLM is asked to *reconstruct* something that already exists (a website's content, in this case), as opposed to creating something new, two distinct failure modes show up in production and don't go away with better prompts:
+
+1. **Factual hallucination** — the model invents details that weren't in the source. Closing this requires a stage that compares each generated element against the source before assembly. Prompt instructions like "use only details from the input" reduce the rate but don't eliminate it.
+2. **Structural inconsistency** — sections generated in separate LLM calls are each internally coherent but don't compose. The same page section coming back in two different shapes from two different calls breaks downstream consumers (here, CSS application). This requires a normalization stage that rewrites all sections to a common shape after generation.
+
+Neither stage was in the original design; both were retrofitted after the failure mode showed up on real sites. **Pipeline length, after the fact, is diagnostic: every extra stage is a production failure mode that the original design didn't anticipate.** For applied AI engineering, this is worth taking seriously — the cost of a pipeline you only know is correct after running it scales with the number of stages you needed to add.
 
 ---
 

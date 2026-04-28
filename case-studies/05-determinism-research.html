@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Active Research: Mixing Determinism and Non-Determinism — Jimmy Jones
+    </title>
+    <meta
+      name="description"
+      content="An active research thread on combining deterministic and non-deterministic execution so an LLM-powered system stays consistent and correct."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../assets/styles.css" />
+  </head>
+  <body>
+    <div class="cs-topbar">
+      <div class="wrap">
+        <a class="cs-back" href="../index.html">← Back to index</a>
+      </div>
+    </div>
+
+    <header class="cs-header">
+      <div class="wrap">
+        <p class="cs-num">Case Study #05</p>
+        <h1 class="cs-title">
+          Active Research: Mixing Determinism and Non-Determinism for
+          Consistent, Correct Results
+        </h1>
+        <dl class="cs-meta">
+          <dt>Repos</dt>
+          <dd>
+            <a href="https://github.com/jimjones26/pi-harness"
+              ><code>pi-harness</code></a
+            >
+            +
+            <a href="https://github.com/jimjones26/pi-exploration"
+              ><code>pi-exploration</code></a
+            >
+            +
+            <a href="https://github.com/jimjones26/first-principles"
+              ><code>first-principles</code></a
+            >
+            +
+            <a href="https://github.com/jimjones26/rllms-exploration"
+              ><code>rllms-exploration</code></a
+            >
+            →
+            <a href="https://github.com/jimjones26/real-transactions"
+              ><code>real-transactions</code></a
+            >
+            Phase 2 (production target)
+          </dd>
+          <dt>Stack</dt>
+          <dd>Python + Rust</dd>
+          <dt>Status</dt>
+          <dd>
+            <strong>Active</strong> — all four research repos and the
+            production target had commits within the last 8 days.
+          </dd>
+        </dl>
+      </div>
+    </header>
+
+    <main class="cs-body">
+      <div class="wrap">
+        <section class="cs-section">
+          <h2>What I was trying to build</h2>
+          <p>
+            A research thread targeting the question: <strong
+              >how do we mix deterministic and non-deterministic execution to
+              produce LLM-powered systems that are both consistent and
+              correct?</strong
+            >
+            This is a current problem, not a finished one.
+          </p>
+          <p>
+            The thread has both an architectural face
+            (<code>pi-harness</code>'s "Stoic Architecture" gating workflow)
+            and a research face (<code>first-principles</code> empirically
+            comparing RAG vs. open RLM vs. Lambda-RLM patterns), with
+            <code>real-transactions</code> Phase 2 as the in-flight production
+            application.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>How far I got</h2>
+          <ul>
+            <li>
+              <strong><code>pi-harness</code> (active, 81 commits)</strong> —
+              "Stoic Architecture" workflow tooling: five Claude Code slash
+              commands (<code>/stoic-start</code>, <code>/stoic-design</code>,
+              <code>/stoic-check</code>, <code>/stoic-status</code>,
+              <code>/stoic-implement</code>) that <strong
+                >force deterministic vs. non-deterministic boundary decisions
+                before implementation is unlocked</strong
+              >. Phase 6 complete.
+            </li>
+            <li>
+              <strong><code>pi-exploration</code> (active, 1 commit, today)</strong>
+              — 119KB <code>neura-core-v4-hlad-v0.6.md</code>: a
+              language-agnostic architecture blueprint. Designed to be processed
+              through the <code>pi-harness</code> Stoic workflow before
+              implementation begins.
+            </li>
+            <li>
+              <strong><code>first-principles</code> (active, 1 commit)</strong>
+              — Python prototype empirically comparing
+              <strong>RAG baseline vs. open RLM loop vs. Lambda-RLM pipeline</strong>.
+              Baseline RAG and open RLM both score 9/10 on the test suite.
+              Discovered a concrete LLM behavioral ceiling for the open-RLM
+              approach: Gemini frequently emits invalid single-quoted multiline
+              strings in REPL blocks, causing SyntaxError loops; structured
+              report generation hits provider read timeouts before producing a
+              final answer.
+            </li>
+            <li>
+              <strong><code>rllms-exploration</code> (active, 1 commit)</strong>
+              — Lambda-RLM architecture research. Deterministic spine + LLM leaf
+              calls. Session log notes the lambda-calculus-LLM GitHub repo is
+              the academic paper codebase, not a companion blog repo — the
+              planner has to be built from scratch.
+            </li>
+            <li>
+              <strong
+                ><code>real-transactions</code> / MyTeeCee (764 commits, last
+                touched 2026-04-21, active)</strong
+              >
+              — Phase 1: chat-first mobile PWA AI transaction coordinator for
+              real estate agents. AI persona "Debbie" handles outbound/inbound
+              email conversationally and manages transaction milestones. 7 of
+              8 slices complete. <strong
+                >Phase 1 surfaced additional requirements that Phase 2 will
+                incorporate using the determinism + non-determinism research
+                above.</strong
+              >
+              This is the in-flight production target for the research.
+            </li>
+          </ul>
+        </section>
+
+        <section class="cs-section">
+          <h2>Where the research currently sits</h2>
+          <p>
+            This is the only "active research thread you could observe in real
+            time" in the portfolio. The research is converging on the same
+            answer from two directions:
+          </p>
+          <ol>
+            <li>
+              <strong>Architecturally</strong> (<code>pi-harness</code>): force
+              the engineer to declare what's deterministic and what's
+              non-deterministic before implementation — make the boundary
+              explicit, not implicit.
+            </li>
+            <li>
+              <strong>Empirically</strong> (<code>first-principles</code>,
+              <code>rllms-exploration</code>): open-loop LLM agents (RLM) hit
+              specific behavioral failures (syntax-error loops, timeout
+              failures) that closed-loop pipelines (Lambda-RLM: deterministic
+              spine, LLM leaves) avoid by constraining where the LLM is allowed
+              to be non-deterministic.
+            </li>
+          </ol>
+          <p>
+            <code>real-transactions</code> Phase 2 is where this research will
+            be field-tested in a high-stakes business workflow (real estate
+            transactions) — exactly the kind of context where uncontrolled LLM
+            non-determinism is unacceptable.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>What this means for applied AI in production</h2>
+          <p>
+            The hardest question in production AI is not "can the model do the
+            task" — it's "can the system produce consistent, correct output
+            when the model is sometimes wrong." The pattern emerging from this
+            research thread (deterministic spine + constrained LLM leaves, with
+            explicit boundary declarations) is one practical answer.
+          </p>
+          <p class="cs-pullquote">
+            An applied AI engineer's job is, in large part, drawing that
+            boundary: deciding which steps must be deterministic, which can be
+            non-deterministic, and how to validate the outputs of the latter
+            before they propagate.
+          </p>
+        </section>
+
+        <section class="cs-section">
+          <h2>For the hiring audience</h2>
+          <p>
+            This is the "watch me work in real time" thread. A reviewer can
+            clone the repos and see commits flowing this week. The architecture
+            blueprint, the empirical experiments, and the production
+            application are all in flight, with cross-references between them.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <p class="footer-line">
+          <a href="mailto:jimmy@jonesweb.studio">jimmy@jonesweb.studio</a>
+          <span class="sep">/</span>
+          <a href="https://github.com/jimjones26">GitHub</a>
+          <span class="sep">/</span>
+          <a href="https://www.linkedin.com/in/the-jimmy-jones/">LinkedIn</a>
+          <span class="sep">/</span>
+          <a href="https://x.com/the_jimmy_jones">X</a>
+          <span class="sep">/</span>
+          <a href="../assets/resume.pdf">Resume (PDF)</a>
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
