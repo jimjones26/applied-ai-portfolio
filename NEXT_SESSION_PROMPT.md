@@ -18,14 +18,22 @@ Jimmy Jones (jimmy@uxfx.io, GitHub: jimjones26). I'm building a portfolio site t
 
 This is honest and verifiable. Don't inflate. Treat AI-built code as the **work sample**, not a confession.
 
-## What's been done (in a prior session)
+## What's been done (across two prior sessions)
 
-I inventoried, triaged, and synthesized ~83 project repos with you. All triage outputs live in `triage/`:
+The triage and synthesis pass is **complete**. The last session also reorganized the triage outputs and corrected the aria framing.
+
+### Triage outputs (in `triage/`)
 
 - **`triage/_SHORTLIST.md`** — 8 picked case studies + cross-portfolio frame + "Additional AI-orchestrated work" table + cuts. **Source of truth for what goes on the site.** Read this first.
 - **`triage/_LINEAGES.md`** — full lineage map: 13 arcs, standalones, and cuts. Companion to the shortlist.
-- **`triage/<repo-name>.md`** (83 files) — per-repo triage notes used to build the synthesis above.
-- **`potential-project-showcase.md`** — the original raw list of repo names I gave you.
+- **`triage/_INDEX.md`** — repo → arc/case-study/category lookup table. The reorg map.
+- **`triage/<arc-dir>/<repo>.md`** (83 files, organized into subdirs):
+  - `00-origin/` (1) — `framework-story-gen`
+  - `01-build-half-worked/` through `08-adversarial-browser-automation/` (29 total) — case-study repos
+  - `arcs/<slug>/` (29) — multi-repo arcs not anchoring a case study
+  - `standalones/` (10) — single-repo entries cited in shortlist's Additional table
+  - `cuts/` (14) — cut from the site (narrow lessons, scaffolds, planning-only)
+- **`potential-project-showcase.md`** — the original raw list of repo names.
 
 ### The 8 case studies (validated)
 
@@ -42,38 +50,52 @@ I inventoried, triaged, and synthesized ~83 project repos with you. All triage o
 
 `framework-story-gen` — 1,111 commits, ~34 distinct AI-orchestration approaches tested against structured story generation. The learning lab where the methodology was built.
 
-## What's next
+### Resolved questions
 
-In order:
+- **aria operational status**: aria is **deployed locally and runnable on demand, but not in active daily use** (last used several weeks before late April 2026). Case study #4 framing in `_SHORTLIST.md` and `_LINEAGES.md` reflects this honestly — *not* "operational" or "running in production." Voice rules forbid fabricated shipped status.
+- **lead-guardian deployment**: never deployed in production. Case study #7 reflects this.
+- **questionnaire-copilot** and **create-deliverables-mcp** (previously unclassified): now placed (`standalones/` and `cuts/` respectively); both have rows in `_SHORTLIST.md` Additional and/or `_LINEAGES.md` cuts.
 
-### 1. Reorganize triage files into arc subdirs
+## What's next: site design and build
 
-83 flat `triage/<name>.md` files. Move into subdirs grouped by arc (e.g. `triage/01-build-half-worked/`, `triage/04-personal-ai-memory/`). Add `triage/_INDEX.md` mapping repo → arc.
+### Decisions already made
 
-### 2. Resolve the one outstanding question
-
-In `_LINEAGES.md` "Still open" section, one question remains:
-
-- **`aria` operational status today**: is the MCP server (port 8765) still running on my host machine? If yes, it's the only continuously-deployed AI system in the portfolio. If no, the framing in case study #4 should reflect that. **Ask me at the start of the session.**
-
-(`lead-guardian` deployment was already resolved: never deployed in production; case study #7 reflects this.)
-
-### 3. Site design and build
-
-The actual portfolio site. Open decisions:
-
-- **Tech stack**: my fluency is SvelteKit. Probably SvelteKit + Tailwind 4 + shadcn-svelte. Confirm with me before scaffolding.
-- **Hosting**: Vercel / Cloudflare Pages / GitHub Pages — ask my preference.
+- **Stack**: vanilla HTML/CSS, **no framework**. Author was explicit: "I'm not sure we need to get crazy and use a framework." Just static files.
+- **Design reference**: pattern after `design-reference/neura-core-v2-landing.html` (copied into this repo for reference). The aesthetic to inherit:
+  - Light cream surface (`#fcf8f8`) + deep orange accent (`#FF6700`) + dark inverted sections
+  - Three fonts: Space Grotesk (display), Inter (body), JetBrains Mono (mono)
+  - Sharp edges (`border-radius: 0` everywhere)
+  - Mono numbered kickers ("01 / Sovereign Intelligence" style)
+  - Editorial card grids with 1px gaps
+  - Stats panels with mono numerals and uppercase labels
 - **Resume**: link to a downloadable PDF (do NOT inline).
-- **Wireframes / copy decisions**: design first, copy second.
-- Voice rules below are non-negotiable.
+- **Hosting**: deferred — author may use GitHub Pages or a private server. Don't block on this; just build the static files such that they work from any static host.
+
+### Open decisions for the next session
+
+1. **Information architecture: one-page vs. multi-page?** Most likely answer: `index.html` (landing — hero, practice, case-study cards, additional grid, contact) + `case-studies/<NN-slug>.html` per case study (each a deep dive, linked from the index card). Confirm with author before scaffolding.
+2. **Case-study card content** on the index — full lesson + status + stack? Or just title + one-liner + "Read the full breakdown →"? The shortlist has the long-form content; the question is how much of it lives on the index vs. the deep-dive page.
+3. **The "Additional AI-orchestrated work" presentation** — the shortlist has 14 rows in a markdown table. On the site this could be:
+   - A clean data-grid (mono numerals, uppercase labels, like the hero stats panel)
+   - A compact card grid
+   - A scrollable table styled with mono type
+4. **Contact section** — email + GitHub + LinkedIn + resume PDF link. Confirm what to include.
+5. **Hero stats** — what 4 numbers? Candidates: `~83` (projects), `~2 yr` (timespan), `12+` (stacks worked in via AI orchestration), `0` (lines hand-written). Confirm or substitute.
+
+### Build approach (recommended, but confirm first)
+
+- `index.html` — landing page
+- `case-studies/01-build-half-worked.html` through `08-adversarial-browser-automation.html` — one file per case study
+- `assets/resume.pdf` — author to provide
+- `assets/styles.css` — extracted from `design-reference/neura-core-v2-landing.html` design tokens (or kept inline per page if simpler)
+- No build step. No framework. Pure static. Should work from any static host (GitHub Pages, Cloudflare Pages, S3, the author's private server, `python -m http.server`, etc.).
 
 ## Voice rules (non-negotiable)
 
 - ✅ "I stopped because the embedding approach couldn't disambiguate X"
 - ❌ "I gave up" / "got busy" / "lost interest"
 - Each project ends on a **transferable lesson**, not a status.
-- Don't fabricate progress or shipped status.
+- Don't fabricate progress or shipped status. (See aria framing — author corrected "operational" → "deployed locally, runnable on demand, not in active daily use.")
 - Curation is part of the signal. Respect the cuts in `_SHORTLIST.md`.
 - Don't bolt the resume into the page — link to PDF.
 
@@ -91,8 +113,12 @@ The actual portfolio site. Open decisions:
 
 ## How to start
 
-Read `triage/_SHORTLIST.md` end-to-end. Then skim `triage/_LINEAGES.md` for the full repo map. Ask me about `aria`'s operational status. Then ask any other clarifying questions before touching anything.
+1. Read `triage/_SHORTLIST.md` end-to-end (it's the content source of truth).
+2. Skim `triage/_INDEX.md` to see the reorg layout. Optional: skim `triage/_LINEAGES.md` for full repo map.
+3. Open `design-reference/neura-core-v2-landing.html` in a browser (or read the file) — this is the visual target.
+4. Confirm the open decisions above with me (IA, hero stats, additional-work presentation, contact links).
+5. Then scaffold `index.html` and the case-study pages. Build static, no framework, no build step.
 
 ---
 
-*This file was generated by the previous session. Update it as work progresses so subsequent sessions stay oriented.*
+*Updated by previous sessions as work progressed. Triage + synthesis + reorg + aria reframing are done; site build is next.*
