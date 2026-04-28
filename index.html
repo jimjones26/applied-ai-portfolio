@@ -1,494 +1,803 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jimmy Jones — Applied AI Engineer</title>
-    <meta
-      name="description"
-      content="Applied AI engineer. ~83 AI-orchestrated projects in two years, zero hand-written code."
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="assets/styles.css" />
-  </head>
-  <body>
-    <header class="site-header">
-      <div class="wrap">
-        <h1 class="name">Jimmy Jones</h1>
-        <p class="role">Applied AI Engineer</p>
-        <p class="contact">
-          <a href="mailto:jimmy@jonesweb.studio">jimmy@jonesweb.studio</a>
-          <span class="sep">/</span>
-          <a href="https://github.com/jimjones26">GitHub</a>
-          <span class="sep">/</span>
-          <a href="https://www.linkedin.com/in/the-jimmy-jones/">LinkedIn</a>
-          <span class="sep">/</span>
-          <a href="https://x.com/the_jimmy_jones">X</a>
-          <span class="sep">/</span>
-          <a href="assets/resume.pdf">Resume (PDF)</a>
-        </p>
-      </div>
-    </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Jimmy Jones — Applied AI Engineer</title>
+        <meta
+            name="description"
+            content="Applied AI engineer. ~83 AI-orchestrated projects in two years, zero hand-written code."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="assets/styles.css" />
+    </head>
+    <body>
+        <header class="site-header">
+            <div class="wrap">
+                <h1 class="name">Jimmy Jones</h1>
+                <p class="role">Applied AI Engineer</p>
+                <p class="contact">
+                    <a href="mailto:jimmy@jonesweb.studio"
+                        >jimmy@jonesweb.studio</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="tel:+18284073415">(828) 407-3415</a>
+                    <span class="sep">/</span>
+                    <a href="https://github.com/jimjones26" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <span class="sep">/</span>
+                    <a href="https://www.linkedin.com/in/the-jimmy-jones/" target="_blank" rel="noopener noreferrer"
+                        >LinkedIn</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="https://x.com/the_jimmy_jones" target="_blank" rel="noopener noreferrer">X</a>
+                    <span class="sep">/</span>
+                    <a href="resume.html">Resume</a>
+                </p>
+            </div>
+        </header>
 
-    <section class="lead">
-      <div class="wrap">
-        <p>
-          <em>I haven't hand-written a line of code in two years.</em> Across that
-          span I've directed AI through ~83 projects — refining fuzzy ideas into
-          testable problem statements, exploring architectures in parallel,
-          producing implementation plans, and executing them through
-          orchestrator/worker patterns and custom Claude Code skills. The work is
-          the orchestration: where the LLM can hold the architecture, where it
-          can't, what review strategy each stack demands, and how to draw the
-          boundary between deterministic spine and non-deterministic leaves so
-          the system stays correct.
-        </p>
-        <p>
-          The practice spans stacks I review fluently — JavaScript, TypeScript,
-          SvelteKit — and stacks I don't write but have shipped through AI
-          orchestration: Rust, Go, Java + Spring Boot, Unity C#, Python. The
-          eight case studies below each pick one specific lesson from that body
-          of work: what broke, what held, and what it means for putting AI in
-          production.
-        </p>
-      </div>
-    </section>
+        <section class="lead">
+            <div class="wrap">
+                <p>
+                    Twenty-five years building software products as a
+                    UX/integration consultant — including fintech work at
+                    <strong>MarketAxess</strong>
+                    (electronic fixed-income trading), nine years of WPF /
+                    Silverlight enterprise consulting at Veracity Solutions, and
+                    a long stretch at IdentityMine literally bridging the gap
+                    between designers and developers. The last two years: a
+                    deliberate R&amp;D program —
+                    <strong>~83 experiments</strong> at varying stages of
+                    completion, aimed end-to-end at a single question:
+                    <em
+                        >what does it actually take to direct AI through
+                        complete software builds &mdash; consistently,
+                        accurately, with minimal human intervention, and
+                        without inventing facts?</em
+                    >
+                </p>
+                <p>
+                    For those two years I haven't hand-written a line of code.
+                    Every line in the R&amp;D program was generated by an LLM
+                    under my direction — orchestrator/worker patterns, custom
+                    Claude Code skills, deterministic spine with LLM at the
+                    leaves. The work is the orchestration: where the LLM can
+                    hold the architecture, where it can't, what review strategy
+                    each stack demands, and how to draw the boundary so the
+                    system stays correct.
+                </p>
+                <p>
+                    The eight case studies below each pick one specific lesson
+                    from that R&amp;D &mdash; what broke, what held, what each
+                    one taught about where AI delivers reliable work and where
+                    it breaks. A representative slice of the rest of the ~83
+                    experiments follows, with live commit counts.
+                </p>
+            </div>
+        </section>
 
-    <section id="work">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="section-kicker">Selected Work</p>
-          <h2 class="section-title">Eight case studies</h2>
-        </div>
+        <section id="background">
+            <div class="wrap">
+                <div class="section-head">
+                    <p class="section-kicker">Background</p>
+                    <h2 class="section-title">
+                        25+ years before the AI program
+                    </h2>
+                </div>
+                <ul class="bg-list">
+                    <li>
+                        <span class="bg-where"
+                            ><strong>MarketAxess</strong> via XLR8
+                            Software</span
+                        >
+                        <span class="bg-when">2018&ndash;2019</span>
+                        <span class="bg-what">
+                            Senior UX integrator on a fixed-income
+                            electronic-trading platform. WPF client performance
+                            + UX, C# code base contributions, Angular POC for a
+                            web port.
+                        </span>
+                    </li>
+                    <li>
+                        <span class="bg-where"
+                            ><strong>Veracity Solutions</strong></span
+                        >
+                        <span class="bg-when">2009&ndash;2018</span>
+                        <span class="bg-what">
+                            Nine years of WPF / Silverlight / WinForms / visual
+                            design consulting across multiple enterprise
+                            clients.
+                        </span>
+                    </li>
+                    <li>
+                        <span class="bg-where"
+                            ><strong>IdentityMine</strong></span
+                        >
+                        <span class="bg-when">2005&ndash;2008</span>
+                        <span class="bg-what">
+                            UX design + WPF integration. The role description
+                            was &ldquo;bridging the gap between the designer and
+                            the developer&rdquo; &mdash; the literal liaison
+                            job.
+                        </span>
+                    </li>
+                    <li>
+                        <span class="bg-where"
+                            ><strong>Independent business owner</strong></span
+                        >
+                        <span class="bg-when">2010&ndash;2020</span>
+                        <span class="bg-what">
+                            Ten years of independent UX / integration training
+                            and expertise consulting practice.
+                        </span>
+                    </li>
+                    <li>
+                        <span class="bg-where"
+                            ><strong>UXFX.io</strong> (own consulting
+                            practice)</span
+                        >
+                        <span class="bg-when">2022&ndash;present</span>
+                        <span class="bg-what">
+                            Design tokens, Figma component automation, design
+                            system documentation. The AI assistant project that
+                            started here is what germinated into the R&amp;D
+                            program below.
+                        </span>
+                    </li>
+                </ul>
+                <p class="bg-note">
+                    Plus print/web/Flash/ActionScript work going back to 1997.
+                    Full history: <a href="resume.html">Resume</a>.
+                </p>
+            </div>
+        </section>
 
-        <div class="cards">
-          <article class="card">
-            <p class="card-num">#01</p>
-            <h3 class="card-title">The Build Half Worked</h3>
-            <p class="card-lesson">
-              I AI-built 70 rebuilt websites in 4 weeks, mostly hands-off. One
-              paying client closed; two more in talks. But the build pipeline
-              finished sites faster than a one-person sales motion could place
-              them — AI didn't relieve the bottleneck, it moved the bottleneck
-              downstream.
-            </p>
-            <div class="card-meta">
-              <span class="tag">SvelteKit</span>
-              <span class="tag">Python</span>
-              <span class="tag">FastAPI</span>
-              <span class="tag">Neo4j</span>
-            </div>
-            <div class="card-footer">
-              <span class="card-status">Shipped, paused</span>
-              <a class="card-link" href="case-studies/01-build-half-worked.html"
-                >Read →</a
-              >
-            </div>
-          </article>
+        <section id="work">
+            <div class="wrap">
+                <div class="section-head">
+                    <p class="section-kicker">From the R&amp;D program</p>
+                    <h2 class="section-title">
+                        Eight case studies from ~83 experiments
+                    </h2>
+                </div>
 
-          <article class="card">
-            <p class="card-num">#02</p>
-            <h3 class="card-title">Two Experiments in "Let the LLM Run It"</h3>
-            <p class="card-lesson">
-              Two architectures that pushed work onto the LLM directly. One
-              built an orchestrator and 14 subagent definitions on top of a
-              <code>claude --subagent=&lt;name&gt;</code> bash invocation that
-              turned out not to exist in that form. The other tried plain-English
-              <code>CLAUDE.md</code> rules ("do not write files directly") as
-              runtime constraints; the LLM treated them as suggestions and wrote
-              files anyway. Text instructions aren't enforcement boundaries, and
-              runtime primitives need validation before architecture commits to
-              them.
-            </p>
-            <div class="card-meta">
-              <span class="tag">TypeScript</span>
-              <span class="tag">Claude CLI</span>
-            </div>
-            <div class="card-footer">
-              <span class="card-status">Abandoned</span>
-              <a class="card-link" href="case-studies/02-llm-as-runtime.html"
-                >Read →</a
-              >
-            </div>
-          </article>
+                <div class="cards">
+                    <article class="card">
+                        <p class="card-num">#01</p>
+                        <h3 class="card-title">The Build Half Worked</h3>
+                        <p class="card-lesson">
+                            <strong
+                                >70 production websites built in 4 weeks</strong
+                            >, mostly hands-off. 1 paying client closed, 2 in
+                            active talks; the build half worked.
+                            <strong>R&amp;D finding:</strong> AI-orchestrated
+                            build outpaces a one-person sales motion —
+                            throughput moves the bottleneck downstream rather
+                            than relieving it.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">FastAPI</span>
+                            <span class="tag">Neo4j</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-status"
+                                >Pipeline shipped; bottleneck mapped</span
+                            >
+                            <a
+                                class="card-link"
+                                href="case-studies/01-build-half-worked.html"
+                                >Read →</a
+                            >
+                        </div>
+                    </article>
 
-          <article class="card">
-            <p class="card-num">#03</p>
-            <h3 class="card-title">Hallucination Needs Its Own Pipeline Stage</h3>
-            <p class="card-lesson">
-              Rebuilding a business website section-by-section with an LLM
-              surfaced two failure modes prompt engineering couldn't close: the
-              model invented details that weren't on the source site, and
-              sections generated in separate calls didn't structurally compose.
-              Each needed its own dedicated pipeline stage — a fact-check pass
-              and a structural-normalization pass. Pipeline length ends up
-              diagnostic: every extra stage is a failure mode you discovered by
-              running, not by designing.
-            </p>
-            <div class="card-meta">
-              <span class="tag">TypeScript</span>
-              <span class="tag">Puppeteer</span>
-              <span class="tag">Postgres</span>
-              <span class="tag">Claude API</span>
-            </div>
-            <div class="card-footer">
-              <span class="card-status">Paused</span>
-              <a
-                class="card-link"
-                href="case-studies/03-hallucination-pipeline.html"
-                >Read →</a
-              >
-            </div>
-          </article>
+                    <article class="card">
+                        <p class="card-num">#02</p>
+                        <h3 class="card-title">
+                            Two Experiments in "Let the LLM Run It"
+                        </h3>
+                        <p class="card-lesson">
+                            <strong
+                                >Two experiments pushing work directly onto the
+                                LLM at runtime:</strong
+                            >
+                            a 14-subagent bash orchestrator, and plain-English
+                            <code>CLAUDE.md</code> rules treated as constraints.
+                            Both hit hard walls.
+                            <strong>R&amp;D finding:</strong>
+                            text instructions aren't enforcement boundaries, and
+                            runtime primitives need validation before
+                            architecture commits to them.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">Claude CLI</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-status">Lesson captured</span>
+                            <a
+                                class="card-link"
+                                href="case-studies/02-llm-as-runtime.html"
+                                >Read →</a
+                            >
+                        </div>
+                    </article>
 
-          <article class="card">
-            <p class="card-num">#04</p>
-            <h3 class="card-title">Personal AI Memory: The O(history) Problem</h3>
-            <p class="card-lesson">
-              Six iterations of a personal AI assistant that accumulates memory
-              across sessions instead of resetting each time
-              (<code>jarvis-core</code> → <code>neura-core-v3</code>, 15-crate
-              Rust workspace, 404 commits, plus a deployed Python instance). Two
-              memory architectures, both with real costs: replaying a chronicle
-              of past events is auditable but boot time grows with history;
-              storing memory in learned weights avoids that but you can't audit
-              what it remembers. The harder problem turned out to be safety —
-              the local memory store got wiped multiple times in development
-              before I added hooks to intercept irreversible commands.
-            </p>
-            <div class="card-meta">
-              <span class="tag">Rust</span>
-              <span class="tag">Python</span>
-              <span class="tag">Neo4j</span>
-              <span class="tag">Ollama</span>
-              <span class="tag">MCP</span>
-            </div>
-            <div class="card-footer">
-              <span class="card-status">Active</span>
-              <a class="card-link" href="case-studies/04-personal-ai-memory.html"
-                >Read →</a
-              >
-            </div>
-          </article>
+                    <article class="card">
+                        <p class="card-num">#03</p>
+                        <h3 class="card-title">
+                            Hallucination Needs Its Own Pipeline Stage
+                        </h3>
+                        <p class="card-lesson">
+                            <strong
+                                >A 13-step LLM website-rebuild pipeline in
+                                TypeScript.</strong
+                            >
+                            Two production failure modes — content hallucination
+                            and structural drift between separately-generated
+                            sections — couldn't be closed by prompt engineering;
+                            each needed its own dedicated pipeline stage.
+                            <strong>R&amp;D finding:</strong>
+                            pipeline length is diagnostic — every extra stage is
+                            a failure mode you discovered by running, not by
+                            designing.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">Puppeteer</span>
+                            <span class="tag">Postgres</span>
+                            <span class="tag">Claude API</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-status"
+                                >Failure modes characterized</span
+                            >
+                            <a
+                                class="card-link"
+                                href="case-studies/03-hallucination-pipeline.html"
+                                >Read →</a
+                            >
+                        </div>
+                    </article>
 
-          <article class="card">
-            <p class="card-num">#05</p>
-            <h3 class="card-title">
-              Active Research: Mixing Determinism and Non-Determinism
-            </h3>
-            <p class="card-lesson">
-              An open research thread on how to combine deterministic and
-              non-deterministic execution so an LLM-powered system stays
-              consistent and correct. Two faces: workflow tooling
-              (<code>pi-harness</code> — slash commands that force you to
-              declare what's deterministic before you can write code) and
-              empirical comparison (<code>first-principles</code> — RAG vs.
-              open RLM vs. Lambda-RLM against the same test suite). The pattern
-              emerging: deterministic spine, LLM only at the leaves, boundary
-              declared explicitly. About to be field-tested in
-              <code>real-transactions</code> Phase 2 — a real-estate transaction
-              coordinator where uncontrolled LLM non-determinism isn't
-              acceptable.
-            </p>
-            <div class="card-meta">
-              <span class="tag">Python</span>
-              <span class="tag">Rust</span>
-            </div>
-            <div class="card-footer">
-              <span class="card-status">Active</span>
-              <a
-                class="card-link"
-                href="case-studies/05-determinism-research.html"
-                >Read →</a
-              >
-            </div>
-          </article>
+                    <article class="card">
+                        <p class="card-num">#04</p>
+                        <h3 class="card-title">
+                            Personal AI Memory: The O(history) Problem
+                        </h3>
+                        <p class="card-lesson">
+                            <strong
+                                >Six iterations of a long-running R&amp;D track
+                                on AI assistants that accumulate memory across
+                                sessions</strong
+                            >
+                            (15-crate Rust workspace at the latest, 404 commits,
+                            plus a deployed Python instance). Two memory
+                            architectures explored, both with real costs.
+                            <strong>R&amp;D finding:</strong> AI memory isn't a
+                            storage problem — it's a safety architecture
+                            problem. The local memory store got wiped multiple
+                            times in development before I added hooks to
+                            intercept irreversible commands.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Rust</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Neo4j</span>
+                            <span class="tag">Ollama</span>
+                            <span class="tag">MCP</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-status">Active</span>
+                            <a
+                                class="card-link"
+                                href="case-studies/04-personal-ai-memory.html"
+                                >Read →</a
+                            >
+                        </div>
+                    </article>
 
-          <article class="card">
-            <p class="card-num">#06</p>
-            <h3 class="card-title">AI Development Methodology at Scale</h3>
-            <p class="card-lesson">
-              Two AI-orchestrated development methodologies — process
-              constraints, slash commands, prompt templates — built to test how
-              far solo + LLM can scale. The 9-module TypeScript version (MAOD)
-              finished cleanly. The 21-microservice Go version (MOAD) stalled
-              at 1 service implemented. Same methodology, different module
-              count. The ceiling isn't LLM capability — it's that the interface
-              contracts between modules have to fit in the LLM's working
-              context to stay coherent, and at 21 they don't.
-            </p>
-            <div class="card-meta">
-              <span class="tag">Go</span>
-              <span class="tag">TypeScript</span>
-            </div>
-            <div class="card-footer">
-              <span class="card-status">Paused / Abandoned</span>
-              <a
-                class="card-link"
-                href="case-studies/06-methodology-at-scale.html"
-                >Read →</a
-              >
-            </div>
-          </article>
+                    <article class="card">
+                        <p class="card-num">#05</p>
+                        <h3 class="card-title">
+                            Active Research: Mixing Determinism and
+                            Non-Determinism
+                        </h3>
+                        <p class="card-lesson">
+                            <strong
+                                >An open research thread on combining
+                                deterministic and non-deterministic
+                                execution</strong
+                            >
+                            so an LLM-powered system stays consistent and
+                            correct. Workflow tooling (<code>pi-harness</code>
+                            slash commands forcing explicit boundary decisions)
+                            plus empirical comparison (<code
+                                >first-principles</code
+                            >
+                            &mdash; RAG vs. open RLM vs. Lambda-RLM, same test
+                            suite). About to be field-tested in
+                            <code>real-transactions</code> Phase 2 &mdash; an AI
+                            real-estate transaction coordinator where
+                            uncontrolled LLM non-determinism isn't acceptable.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Python</span>
+                            <span class="tag">Rust</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-status">Active</span>
+                            <a
+                                class="card-link"
+                                href="case-studies/05-determinism-research.html"
+                                >Read →</a
+                            >
+                        </div>
+                    </article>
 
-          <article class="card">
-            <p class="card-num">#07</p>
-            <h3 class="card-title">
-              Production AI Agents: Claude Agent SDK Stability as an
-              Architectural Risk
-            </h3>
-            <p class="card-lesson">
-              A complete multi-tenant lead-response system for HVAC contractors:
-              a webhook receives a lead, an AI agent qualifies it over SMS
-              (Vonage), books an appointment on Google Calendar, and a live
-              dashboard streams metrics. Backend, frontend, and infrastructure
-              all built — but never run against real credentials in production.
-              Two findings: the Claude Agent SDK was changing fast enough that
-              web-search results were consistently wrong, so I bundled the
-              official docs locally as a first-class dependency. And the
-              stateful agent layer (<code>core.py</code>, 25.5KB) is the largest
-              file in the backend — managing conversation state, retries, and
-              tool-use constraints is more code than the business logic it
-              serves.
-            </p>
-            <div class="card-meta">
-              <span class="tag">Python</span>
-              <span class="tag">FastAPI</span>
-              <span class="tag">SvelteKit</span>
-              <span class="tag">Claude Agent SDK</span>
-            </div>
-            <div class="card-footer">
-              <span class="card-status">Built, not deployed</span>
-              <a
-                class="card-link"
-                href="case-studies/07-agent-sdk-stability.html"
-                >Read →</a
-              >
-            </div>
-          </article>
+                    <article class="card">
+                        <p class="card-num">#06</p>
+                        <h3 class="card-title">
+                            AI Development Methodology at Scale
+                        </h3>
+                        <p class="card-lesson">
+                            <strong
+                                >Two AI-orchestrated development
+                                methodologies</strong
+                            >
+                            &mdash; process constraints, slash commands, prompt
+                            templates. The 9-module TypeScript version (MAOD)
+                            finished cleanly. The 21-microservice Go version
+                            (MOAD) stalled at 1 service implemented. Same
+                            methodology, different module count.
+                            <strong>R&amp;D finding:</strong> the ceiling isn't
+                            LLM capability &mdash; it's whether interface
+                            contracts between modules fit in the LLM's working
+                            context.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Go</span>
+                            <span class="tag">TypeScript</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-status"
+                                >Validated at 9 modules; ceiling at 21</span
+                            >
+                            <a
+                                class="card-link"
+                                href="case-studies/06-methodology-at-scale.html"
+                                >Read →</a
+                            >
+                        </div>
+                    </article>
 
-          <article class="card">
-            <p class="card-num">#08</p>
-            <h3 class="card-title">Browser Automation Against Adversarial Targets</h3>
-            <p class="card-lesson">
-              A procurement tool that fired a swarm of browser-automation agents
-              at electronics supplier portals (DigiKey, LCSC, Mouser, Arrow) in
-              parallel, then ranked the results with an LLM. Built end-to-end
-              for the TinyFish Accelerator demo. Failed in the wild because
-              Cloudflare bot protection broke agents non-deterministically —
-              works-90%-then-silently-fails behavior, with no fix short of
-              supplier API access (which suppliers don't offer). The pivot to
-              Argus — the same browser-automation skill aimed at public
-              business-intelligence sources that <em>want</em> to be automated —
-              was the correct move.
-            </p>
-            <div class="card-meta">
-              <span class="tag">TypeScript</span>
-              <span class="tag">SvelteKit</span>
-              <span class="tag">TinyFish</span>
-              <span class="tag">OpenRouter</span>
+                    <article class="card">
+                        <p class="card-num">#07</p>
+                        <h3 class="card-title">
+                            Production AI Agents: Claude Agent SDK Stability as
+                            an Architectural Risk
+                        </h3>
+                        <p class="card-lesson">
+                            <strong
+                                >A complete multi-tenant lead-response system
+                                for HVAC contractors:</strong
+                            >
+                            webhook receives a lead, AI agent qualifies it over
+                            SMS (Vonage), books on Google Calendar, live
+                            dashboard streams metrics. Backend, frontend, and
+                            infrastructure all built end-to-end.
+                            <strong>R&amp;D findings:</strong>
+                            fast-moving AI SDKs need their docs bundled locally
+                            as a first-class dependency; and the stateful agent
+                            layer (<code>core.py</code>, 25.5KB) ends up the
+                            largest file in the backend &mdash; managing
+                            conversation state, retries, and tool-use
+                            constraints is more code than the business logic it
+                            serves.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Python</span>
+                            <span class="tag">FastAPI</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">Claude Agent SDK</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-status"
+                                >Reference implementation complete</span
+                            >
+                            <a
+                                class="card-link"
+                                href="case-studies/07-agent-sdk-stability.html"
+                                >Read →</a
+                            >
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <p class="card-num">#08</p>
+                        <h3 class="card-title">
+                            Browser Automation Against Adversarial Targets
+                        </h3>
+                        <p class="card-lesson">
+                            <strong
+                                >A procurement tool that fired
+                                browser-automation agents at electronics
+                                supplier portals</strong
+                            >
+                            (DigiKey, LCSC, Mouser, Arrow) in parallel, then
+                            ranked results with an LLM. Built end-to-end for the
+                            TinyFish Accelerator demo. Cloudflare bot protection
+                            broke agents non-deterministically &mdash;
+                            works-90%-then-silent-fail.
+                            <strong>R&amp;D finding:</strong> browser automation
+                            against adversarial targets isn't productionizable;
+                            the pivot to Argus (same skill, public
+                            business-intelligence targets that <em>want</em> to
+                            be automated) was the correct move.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">TinyFish</span>
+                            <span class="tag">OpenRouter</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-status"
+                                >Architecture validated; pivoted to Argus</span
+                            >
+                            <a
+                                class="card-link"
+                                href="case-studies/08-adversarial-browser-automation.html"
+                                >Read →</a
+                            >
+                        </div>
+                    </article>
+                </div>
             </div>
-            <div class="card-footer">
-              <span class="card-status">Paused</span>
-              <a
-                class="card-link"
-                href="case-studies/08-adversarial-browser-automation.html"
-                >Read →</a
-              >
+        </section>
+
+        <section id="additional">
+            <div class="wrap">
+                <div class="section-head">
+                    <p class="section-kicker">
+                        Additional AI-orchestrated work
+                    </p>
+                    <h2 class="section-title">A representative slice</h2>
+                </div>
+
+                <table class="work-table">
+                    <thead>
+                        <tr>
+                            <th>Repo</th>
+                            <th>Stack</th>
+                            <th>Commits</th>
+                            <th>What it is</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="repo">
+                                <a
+                                    href="https://github.com/jimjones26/framework-story-gen" target="_blank" rel="noopener noreferrer"
+                                    >framework-story-gen</a
+                                >
+                            </td>
+                            <td class="stack">Python</td>
+                            <td class="commits">1,111</td>
+                            <td class="desc">
+                                The learning lab where the practice started. ~34
+                                different AI-orchestration approaches, each
+                                scored against the previous, tried against the
+                                same problem (structured story generation).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="repo">
+                                <a
+                                    href="https://github.com/jimjones26/user-management" target="_blank" rel="noopener noreferrer"
+                                    >user-management</a
+                                >
+                            </td>
+                            <td class="stack">Java + Spring Boot + React</td>
+                            <td class="commits">167</td>
+                            <td class="desc">
+                                An end-to-end Java enterprise stack — login,
+                                user CRUD, admin pages — built entirely through
+                                AI orchestration. Java + Spring Boot is a stack
+                                I don't write by hand.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="repo">
+                                <a
+                                    href="https://github.com/jimjones26/SpaceTravelRepairMan" target="_blank" rel="noopener noreferrer"
+                                    >SpaceTravelRepairMan</a
+                                >
+                            </td>
+                            <td class="stack">Unity C#</td>
+                            <td class="commits">59</td>
+                            <td class="desc">
+                                AI-driven test-driven development of a
+                                power-allocation mechanic in a Unity game. A
+                                stack and domain (game engine, statically-typed
+                                C#) far from anything I write by hand.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="repo">
+                                <a
+                                    href="https://github.com/jimjones26/performance_tracker" target="_blank" rel="noopener noreferrer"
+                                    >performance_tracker</a
+                                >
+                            </td>
+                            <td class="stack">SvelteKit + Drizzle + Oslo</td>
+                            <td class="commits">54</td>
+                            <td class="desc">
+                                Misnamed: not a tracker, a complete AI-built
+                                auth system. Login, signup, email verification,
+                                TOTP two-factor, recovery codes, password reset
+                                — production-grade auth, all AI-built.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="repo">
+                                <a
+                                    href="https://github.com/jimjones26?tab=repositories&amp;q=simple-todo" target="_blank" rel="noopener noreferrer"
+                                    >simple-todo arc (8 repos)</a
+                                >
+                            </td>
+                            <td class="stack">
+                                SvelteKit + multiple auth libraries
+                            </td>
+                            <td class="commits">262</td>
+                            <td class="desc">
+                                Eight repos searching for a SvelteKit auth stack
+                                that wouldn't break. Documented a Lucia v3 /
+                                Prisma 6 peer-dependency failure; converged on
+                                Drizzle + Oslo. The productionized version is
+                                <code>lead-guardian</code> (#07).
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="repo">
+                                <a
+                                    href="https://github.com/jimjones26/cogni-shift" target="_blank" rel="noopener noreferrer"
+                                    >cogni-shift</a
+                                >
+                            </td>
+                            <td class="stack">SvelteKit + PWA</td>
+                            <td class="commits">2</td>
+                            <td class="desc">
+                                An AI-built neuroscience PWA. A commit declaring
+                                "100% complete!" came right before a 7-session
+                                refactor — a concrete record of AI calling
+                                something done when the structure was finished
+                                but the architecture wasn't.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="repo">
+                                <a
+                                    href="https://github.com/jimjones26/claro-sight" target="_blank" rel="noopener noreferrer"
+                                    >claro-sight</a
+                                >
+                            </td>
+                            <td class="stack">docs only</td>
+                            <td class="commits">117</td>
+                            <td class="desc">
+                                Docs only — no code. 117 commits of AI-driven
+                                design walkthroughs, 75+ user flows worked
+                                through with structured AI review.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="repo">
+                                <a
+                                    href="https://github.com/jimjones26/digital-identity-kg" target="_blank" rel="noopener noreferrer"
+                                    >digital-identity-kg</a
+                                >
+                            </td>
+                            <td class="stack">Python + Neo4j + MCP</td>
+                            <td class="commits">56</td>
+                            <td class="desc">
+                                An AI-built knowledge-graph pipeline (Neo4j)
+                                with an MCP server in front of it. Pipeline
+                                finished across 26+ sessions; never deployed as
+                                a usable tool.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="repo">
+                                <a
+                                    href="https://github.com/jimjones26/caa-exploration" target="_blank" rel="noopener noreferrer"
+                                    >caa-exploration</a
+                                >
+                                /
+                                <a href="https://github.com/jimjones26/caa-test" target="_blank" rel="noopener noreferrer"
+                                    >caa-test</a
+                                >
+                            </td>
+                            <td class="stack">TypeScript</td>
+                            <td class="commits">96 + 8</td>
+                            <td class="desc">
+                                Canonical Agent Architecture — a reusable
+                                while-loop agent framework I built and published
+                                as <code>caa-core@0.2.0</code>. Includes a
+                                span-based SQLite tracer and a Svelte 5 trace UI
+                                for inspecting agent runs.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="repo">
+                                <a href="https://github.com/jimjones26/taskflow" target="_blank" rel="noopener noreferrer"
+                                    >taskflow</a
+                                >
+                            </td>
+                            <td class="stack">TypeScript + MCP</td>
+                            <td class="commits">108</td>
+                            <td class="desc">
+                                An MCP-native task manager. Multi-turn tool
+                                chaining (one LLM call's tool result feeds the
+                                next), with handling for Ollama's idiosyncratic
+                                tool-call response shapes.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="repo">
+                                <a
+                                    href="https://github.com/jimjones26/metis-theia" target="_blank" rel="noopener noreferrer"
+                                    >metis-theia</a
+                                >
+                            </td>
+                            <td class="stack">FastAPI + SvelteKit</td>
+                            <td class="commits">31</td>
+                            <td class="desc">
+                                A FastAPI + SvelteKit application shell — one of
+                                several cross-stack practice builds.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="repo">
+                                <a
+                                    href="https://github.com/jimjones26/architecting-agent-memory" target="_blank" rel="noopener noreferrer"
+                                    >architecting-agent-memory</a
+                                >
+                            </td>
+                            <td class="stack">Python + Neo4j + Celery</td>
+                            <td class="commits">34</td>
+                            <td class="desc">
+                                A standalone agent-memory backend — FastAPI
+                                service, Neo4j storage, async enrichment,
+                                natural-language query, even a forgetting
+                                mechanism. Complete; never wired into a consumer
+                                that actually used it.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="repo">
+                                <a
+                                    href="https://github.com/jimjones26/voltfolio" target="_blank" rel="noopener noreferrer"
+                                    >voltfolio</a
+                                >
+                            </td>
+                            <td class="stack">TypeScript + crypto APIs</td>
+                            <td class="commits">9</td>
+                            <td class="desc">
+                                A crypto portfolio tracker. End-to-end build in
+                                a stack I review fluently.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="repo">
+                                <a
+                                    href="https://github.com/jimjones26/questionnaire-copilot" target="_blank" rel="noopener noreferrer"
+                                    >questionnaire-copilot</a
+                                >
+                            </td>
+                            <td class="stack">
+                                FastAPI + Next.js 14 + Postgres + Stripe
+                            </td>
+                            <td class="commits">56</td>
+                            <td class="desc">
+                                A multi-tenant SaaS for security and vendor
+                                compliance questionnaires, with LLM-assisted
+                                answer retrieval. Eleven sprints of
+                                AI-orchestrated build: full backend (JWT, RBAC,
+                                Stripe billing, Prometheus), Next.js frontend
+                                through dashboard, upload, review, and export.
+                                Stalled when test reliability decayed and CI was
+                                disabled rather than fixed — a concrete example
+                                of the "wide feature surface, brittle test
+                                foundation" failure mode.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-          </article>
-        </div>
-      </div>
-    </section>
+        </section>
 
-    <section id="additional">
-      <div class="wrap">
-        <div class="section-head">
-          <p class="section-kicker">Additional AI-orchestrated work</p>
-          <h2 class="section-title">A representative slice</h2>
-        </div>
+        <section id="how-i-work">
+            <div class="wrap">
+                <div class="section-head">
+                    <p class="section-kicker">How I work</p>
+                    <h2 class="section-title">What I bring beyond the code</h2>
+                </div>
+                <div class="hiw-grid">
+                    <div class="hiw-item">
+                        <h3>Translating between business and AI</h3>
+                        <p>
+                            Twenty-five years of consulting has been about
+                            bridging gaps &mdash; designer to developer,
+                            business stakeholder to engineer, customer goal to
+                            technical architecture. The AI work is the same job
+                            at a new layer: business problem to AI architecture,
+                            AI behavior to non-technical decision-maker. I
+                            default to plain language and keep jargon
+                            load-bearing.
+                        </p>
+                    </div>
+                    <div class="hiw-item">
+                        <h3>Methodology built to be reused</h3>
+                        <p>
+                            The R&amp;D program produced reusable methodology
+                            artifacts: MAOD/MOAD AI-orchestrated development
+                            methodologies, the Stoic Architecture workflow
+                            tooling (<code>pi-harness</code> slash commands),
+                            the canonical agent framework
+                            (<code>caa-core@0.2.0</code>). Plus ten years of
+                            independent training and expertise consulting before
+                            the AI program. Built to be transferred, not
+                            hoarded.
+                        </p>
+                    </div>
+                    <div class="hiw-item">
+                        <h3>Findings, not finished products</h3>
+                        <p>
+                            None of the R&amp;D builds have been deployed to
+                            sustained production with paying users &mdash; the
+                            goal is mapping how AI actually works, not landing
+                            a product. Test beds are real problem domains
+                            (real-estate transaction coordination, HVAC lead
+                            response, supplier-portal procurement, site
+                            rebuilds for small businesses), so what's learned
+                            transfers to real engineering, not toy demos. Each
+                            case study captures one specific finding about
+                            where AI delivers reliable work and where it
+                            breaks.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <table class="work-table">
-          <thead>
-            <tr>
-              <th>Repo</th>
-              <th>Stack</th>
-              <th>Commits</th>
-              <th>What it is</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="repo"><a href="https://github.com/jimjones26/framework-story-gen">framework-story-gen</a></td>
-              <td class="stack">Python</td>
-              <td class="commits">1,111</td>
-              <td class="desc">
-                The learning lab where the practice started. ~34 different
-                AI-orchestration approaches, each scored against the previous,
-                tried against the same problem (structured story generation).
-              </td>
-            </tr>
-            <tr>
-              <td class="repo"><a href="https://github.com/jimjones26/user-management">user-management</a></td>
-              <td class="stack">Java + Spring Boot + React</td>
-              <td class="commits">167</td>
-              <td class="desc">
-                An end-to-end Java enterprise stack — login, user CRUD, admin
-                pages — built entirely through AI orchestration. Java + Spring
-                Boot is a stack I don't write by hand.
-              </td>
-            </tr>
-            <tr>
-              <td class="repo"><a href="https://github.com/jimjones26/SpaceTravelRepairMan">SpaceTravelRepairMan</a></td>
-              <td class="stack">Unity C#</td>
-              <td class="commits">59</td>
-              <td class="desc">
-                AI-driven test-driven development of a power-allocation mechanic
-                in a Unity game. A stack and domain (game engine, statically-typed
-                C#) far from anything I write by hand.
-              </td>
-            </tr>
-            <tr>
-              <td class="repo"><a href="https://github.com/jimjones26/performance_tracker">performance_tracker</a></td>
-              <td class="stack">SvelteKit + Drizzle + Oslo</td>
-              <td class="commits">54</td>
-              <td class="desc">
-                Misnamed: not a tracker, a complete AI-built auth system. Login,
-                signup, email verification, TOTP two-factor, recovery codes,
-                password reset — production-grade auth, all AI-built.
-              </td>
-            </tr>
-            <tr>
-              <td class="repo"><a href="https://github.com/jimjones26?tab=repositories&amp;q=simple-todo">simple-todo arc (8 repos)</a></td>
-              <td class="stack">SvelteKit + multiple auth libraries</td>
-              <td class="commits">262</td>
-              <td class="desc">
-                Eight repos searching for a SvelteKit auth stack that wouldn't
-                break. Documented a Lucia v3 / Prisma 6 peer-dependency failure;
-                converged on Drizzle + Oslo. The productionized version is
-                <code>lead-guardian</code> (#07).
-              </td>
-            </tr>
-            <tr>
-              <td class="repo"><a href="https://github.com/jimjones26/cogni-shift">cogni-shift</a></td>
-              <td class="stack">SvelteKit + PWA</td>
-              <td class="commits">2</td>
-              <td class="desc">
-                An AI-built neuroscience PWA. A commit declaring "100% complete!"
-                came right before a 7-session refactor — a concrete record of
-                AI calling something done when the structure was finished but
-                the architecture wasn't.
-              </td>
-            </tr>
-            <tr>
-              <td class="repo"><a href="https://github.com/jimjones26/claro-sight">claro-sight</a></td>
-              <td class="stack">docs only</td>
-              <td class="commits">117</td>
-              <td class="desc">
-                Docs only — no code. 117 commits of AI-driven design
-                walkthroughs, 75+ user flows worked through with structured AI
-                review.
-              </td>
-            </tr>
-            <tr>
-              <td class="repo"><a href="https://github.com/jimjones26/digital-identity-kg">digital-identity-kg</a></td>
-              <td class="stack">Python + Neo4j + MCP</td>
-              <td class="commits">56</td>
-              <td class="desc">
-                An AI-built knowledge-graph pipeline (Neo4j) with an MCP server
-                in front of it. Pipeline finished across 26+ sessions; never
-                deployed as a usable tool.
-              </td>
-            </tr>
-            <tr>
-              <td class="repo"><a href="https://github.com/jimjones26/caa-exploration">caa-exploration</a> / <a href="https://github.com/jimjones26/caa-test">caa-test</a></td>
-              <td class="stack">TypeScript</td>
-              <td class="commits">96 + 8</td>
-              <td class="desc">
-                Canonical Agent Architecture — a reusable while-loop agent
-                framework I built and published as <code>caa-core@0.2.0</code>.
-                Includes a span-based SQLite tracer and a Svelte 5 trace UI for
-                inspecting agent runs.
-              </td>
-            </tr>
-            <tr>
-              <td class="repo"><a href="https://github.com/jimjones26/taskflow">taskflow</a></td>
-              <td class="stack">TypeScript + MCP</td>
-              <td class="commits">108</td>
-              <td class="desc">
-                An MCP-native task manager. Multi-turn tool chaining (one LLM
-                call's tool result feeds the next), with handling for Ollama's
-                idiosyncratic tool-call response shapes.
-              </td>
-            </tr>
-            <tr>
-              <td class="repo"><a href="https://github.com/jimjones26/metis-theia">metis-theia</a></td>
-              <td class="stack">FastAPI + SvelteKit</td>
-              <td class="commits">31</td>
-              <td class="desc">
-                A FastAPI + SvelteKit application shell — one of several
-                cross-stack practice builds.
-              </td>
-            </tr>
-            <tr>
-              <td class="repo"><a href="https://github.com/jimjones26/architecting-agent-memory">architecting-agent-memory</a></td>
-              <td class="stack">Python + Neo4j + Celery</td>
-              <td class="commits">34</td>
-              <td class="desc">
-                A standalone agent-memory backend — FastAPI service, Neo4j
-                storage, async enrichment, natural-language query, even a
-                forgetting mechanism. Complete; never wired into a consumer
-                that actually used it.
-              </td>
-            </tr>
-            <tr>
-              <td class="repo"><a href="https://github.com/jimjones26/voltfolio">voltfolio</a></td>
-              <td class="stack">TypeScript + crypto APIs</td>
-              <td class="commits">9</td>
-              <td class="desc">
-                A crypto portfolio tracker. End-to-end build in a stack I review
-                fluently.
-              </td>
-            </tr>
-            <tr>
-              <td class="repo"><a href="https://github.com/jimjones26/questionnaire-copilot">questionnaire-copilot</a></td>
-              <td class="stack">FastAPI + Next.js 14 + Postgres + Stripe</td>
-              <td class="commits">56</td>
-              <td class="desc">
-                A multi-tenant SaaS for security and vendor compliance
-                questionnaires, with LLM-assisted answer retrieval. Eleven
-                sprints of AI-orchestrated build: full backend (JWT, RBAC,
-                Stripe billing, Prometheus), Next.js frontend through dashboard,
-                upload, review, and export. Stalled when test reliability
-                decayed and CI was disabled rather than fixed — a concrete
-                example of the "wide feature surface, brittle test foundation"
-                failure mode.
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <footer class="site-footer">
-      <div class="wrap">
-        <p class="footer-line">
-          <a href="mailto:jimmy@jonesweb.studio">jimmy@jonesweb.studio</a>
-          <span class="sep">/</span>
-          <a href="https://github.com/jimjones26">GitHub</a>
-          <span class="sep">/</span>
-          <a href="https://www.linkedin.com/in/the-jimmy-jones/">LinkedIn</a>
-          <span class="sep">/</span>
-          <a href="https://x.com/the_jimmy_jones">X</a>
-          <span class="sep">/</span>
-          <a href="assets/resume.pdf">Resume (PDF)</a>
-        </p>
-      </div>
-    </footer>
-  </body>
+        <footer class="site-footer">
+            <div class="wrap">
+                <p class="footer-cta">Open to Applied AI Engineer roles.</p>
+                <p class="footer-line">
+                    <a href="mailto:jimmy@jonesweb.studio"
+                        >jimmy@jonesweb.studio</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="tel:+18284073415">(828) 407-3415</a>
+                    <span class="sep">/</span>
+                    <a href="https://github.com/jimjones26" target="_blank" rel="noopener noreferrer">GitHub</a>
+                    <span class="sep">/</span>
+                    <a href="https://www.linkedin.com/in/the-jimmy-jones/" target="_blank" rel="noopener noreferrer"
+                        >LinkedIn</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="https://x.com/the_jimmy_jones" target="_blank" rel="noopener noreferrer">X</a>
+                    <span class="sep">/</span>
+                    <a href="resume.html">Resume</a>
+                </p>
+            </div>
+        </footer>
+    </body>
 </html>

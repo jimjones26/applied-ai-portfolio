@@ -126,6 +126,60 @@ section {
     color: var(--on-surface);
     font-weight: 500;
 }
+.lead strong {
+    color: var(--on-surface);
+    font-weight: 600;
+}
+
+/* ── Background ────────────────────────────────────────────── */
+#background {
+    padding-top: 0;
+    padding-bottom: 4rem;
+}
+.bg-list {
+    list-style: none;
+    border-top: 1px solid var(--outline);
+}
+.bg-list li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        "where when"
+        "what  what";
+    column-gap: 1.5rem;
+    row-gap: 0.5rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--outline);
+}
+.bg-where {
+    grid-area: where;
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--on-surface);
+}
+.bg-where strong {
+    color: var(--on-surface);
+    font-weight: 600;
+}
+.bg-when {
+    grid-area: when;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--on-surface-variant);
+    white-space: nowrap;
+}
+.bg-what {
+    grid-area: what;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--on-surface-variant);
+}
+.bg-note {
+    margin-top: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--on-surface-variant);
+}
 
 /* ── Section heads ─────────────────────────────────────────── */
 .section-head {
@@ -329,10 +383,49 @@ section {
     width: 1%;
 }
 
+/* ── How I work ────────────────────────────────────────────── */
+.hiw-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+.hiw-item {
+    background: var(--surface-lowest);
+    border: 1px solid var(--outline);
+    padding: 1.75rem 1.5rem;
+}
+.hiw-item h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--on-surface);
+    margin-bottom: 0.875rem;
+}
+.hiw-item p {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--on-surface-variant);
+}
+
 /* ── Footer ────────────────────────────────────────────────── */
 .site-footer {
     padding: 2.5rem 0;
     border-top: 1px solid var(--outline);
+}
+
+.footer-cta {
+    font-family: var(--font-body);
+    font-size: 0.9375rem;
+    color: var(--on-surface);
+    margin-bottom: 1.25rem;
+}
+.footer-cta a {
+    color: var(--accent);
+    border-bottom: 1px solid var(--outline);
+}
+.footer-cta a:hover {
+    border-bottom-color: var(--accent);
 }
 
 .footer-line {
@@ -628,4 +721,150 @@ ul.cs-versions a:hover {
     .cs-meta dt:first-child {
         margin-top: 0;
     }
+
+    .hiw-grid {
+        grid-template-columns: 1fr;
+    }
+    .bg-list li {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "where"
+            "when"
+            "what";
+        row-gap: 0.375rem;
+    }
+    .resume-job-head {
+        grid-template-columns: 1fr;
+        row-gap: 0.25rem;
+    }
+}
+
+/* ── Resume ────────────────────────────────────────────────── */
+.resume-header {
+    padding: 4rem 0 2.5rem;
+    border-bottom: 1px solid var(--outline);
+}
+.resume-body {
+    padding: 3rem 0 4rem;
+}
+
+.resume-section {
+    margin-bottom: 3rem;
+}
+.resume-section:last-child {
+    margin-bottom: 0;
+}
+.resume-section > h2 {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-bottom: 0.625rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--outline);
+}
+.resume-section > p {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--on-surface-variant);
+    margin-bottom: 1rem;
+}
+.resume-section > p:last-child {
+    margin-bottom: 0;
+}
+.resume-section h3 {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--on-surface);
+    margin-top: 1.5rem;
+    margin-bottom: 0.625rem;
+}
+.resume-section strong {
+    color: var(--on-surface);
+    font-weight: 600;
+}
+
+.resume-job {
+    margin-bottom: 1.75rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--outline);
+}
+.resume-job:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.resume-job-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 1.5rem;
+    align-items: baseline;
+    margin-bottom: 0.625rem;
+}
+.resume-job-head h3 {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--on-surface);
+    margin: 0;
+}
+.resume-job p {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--on-surface-variant);
+}
+
+.resume-when,
+.resume-when-block {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--on-surface-variant);
+    white-space: nowrap;
+    margin: 0 !important;
+}
+.resume-when-block {
+    margin-bottom: 1rem !important;
+    color: var(--accent);
+    font-weight: 500;
+}
+
+.resume-list {
+    list-style: none;
+    margin: 0.5rem 0;
+}
+.resume-list li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.625rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--on-surface-variant);
+}
+.resume-list li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--accent);
+    font-size: 0.6875rem;
+    line-height: 1.6;
+}
+.resume-list li:last-child {
+    margin-bottom: 0;
+}
+.resume-list strong {
+    color: var(--on-surface);
+    font-weight: 600;
+}
+
+.resume-mono {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem !important;
+    color: var(--on-surface-variant);
+    line-height: 1.7 !important;
 }
