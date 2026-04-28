@@ -56,7 +56,7 @@ triage/
 | cogni-shift | `arcs/cogni-shift/` | planning sibling |
 | cognishift | `arcs/cogni-shift/` | implementation |
 | content-framework-poc | `cuts/` | docs-only concept |
-| create-deliverables-mcp | `standalones/` | **uncategorized by prior session** — referenced once in cuts table as parent of game-dev-design output. 18 commits, MCP server for HTML deliverables. Review before site copy. |
+| create-deliverables-mcp | `cuts/` | MCP server for HTML deliverables (1150-line `src/index.ts`, 6 deliverable types, 4 CSS themes). Stalled on tool-schema vs. AI-Fast-Framework spec drift. Parent of `game-dev-design`. |
 | digital-identity-kg | `standalones/` | shortlist Additional + _LINEAGES.md standalone |
 | docs-graph-db | `arcs/knowledge-graph-context/` | KG arc |
 | docs-kb-manager-mcp | `arcs/mcp-docs-rag/` | MCP docs-RAG arc |
@@ -97,7 +97,7 @@ triage/
 | project-viewer | `arcs/auth-stack-research/` | auth arc |
 | proof_vitality_chatbot | `arcs/proof-vitality-rag/` | RAG arc v1 |
 | proof_vitality_chatbot_v2 | `arcs/proof-vitality-rag/` | RAG arc v2 |
-| questionnaire-copilot | `standalones/` | **uncategorized by prior session** — not in `_LINEAGES.md` or `_SHORTLIST.md`. 56 commits, paused. Multi-tenant SaaS for security/vendor compliance questionnaires with LLM-assisted answer retrieval. Review before site copy. |
+| questionnaire-copilot | `standalones/` | Multi-tenant SaaS for security/vendor compliance questionnaires (FastAPI + Next.js + Stripe, 56 commits). Cited in shortlist Additional table; lesson is the "wide feature surface, brittle test foundation" failure mode. |
 | real-transactions | `05-determinism-research/` | case study #5 (production target for the research) |
 | rllms-exploration | `05-determinism-research/` | case study #5 |
 | simple-task-v5 | `arcs/auth-stack-research/` | auth arc |
@@ -140,11 +140,9 @@ A handful of repos belong to multiple arcs in `_LINEAGES.md`. The triage file li
 
 ---
 
-## Items needing post-hoc review
+## Classification decisions for previously-unclassified repos
 
-Two repos were not classified in `_LINEAGES.md` by the prior session:
+Two repos were not classified by the prior session and have now been resolved:
 
-- **`questionnaire-copilot`** (56 commits, paused) — multi-tenant SaaS, security/vendor compliance questionnaires with LLM-assisted answer retrieval. Real product ambition. Not cut, not in Additional. Currently in `standalones/`. Decision needed: cite in Additional? cut? case study material?
-- **`create-deliverables-mcp`** (18 commits, paused) — MCP server generating styled HTML deliverables (lean canvas, project brief, user stories, etc.). Referenced once in lineage cuts as parent of `game-dev-design` output but never given its own classification. Currently in `standalones/`.
-
-Both should be reviewed before site copy is finalized.
+- **`questionnaire-copilot`** → `standalones/` + cited in shortlist Additional table + cuts row in `_LINEAGES.md`. Same shape as `voltfolio` / `metis-theia` / `user-management`: real cross-stack AI-orchestrated product attempt where the lesson is the practice itself, plus a concrete instance of the "wide feature surface, brittle test foundation" failure mode (CI disabled rather than fixed).
+- **`create-deliverables-mcp`** → `cuts/` + cuts row in `_LINEAGES.md`. 18 commits, working but small-scope MCP utility that stalled on a tool-schema-vs-spec mismatch. Lesson is narrow (bottom-up tool design drifts from top-down framework spec). Already cross-referenced as parent of `game-dev-design`.

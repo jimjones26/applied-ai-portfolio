@@ -379,6 +379,7 @@ These didn't anchor case studies — the lessons are either too narrow for a por
 | `metis-theia` | FastAPI + SvelteKit | n/a | AI-built application shell. Cross-stack practice. |
 | `architecting-agent-memory` | Python + Neo4j + Celery | n/a | AI-built agent memory backend. Complete (FastAPI service, Neo4j storage, async enrichment, NL query, forgetting mechanism); never integrated with a consumer. |
 | `voltfolio` | TypeScript + crypto APIs | n/a | AI-built crypto portfolio tracker. Fluent-stack full-stack delivery. |
+| `questionnaire-copilot` | FastAPI + Next.js 14 + Postgres + Stripe | 56 | Multi-tenant SaaS for security/vendor compliance questionnaires with LLM-assisted answer retrieval. 11 sprints of AI-orchestrated delivery: full backend (JWT + RBAC + Stripe billing + Prometheus), Next.js frontend through dashboard/upload/review/export. Stalled when test reliability degraded and CI was disabled rather than fixed — concrete instance of the AI-orchestrated "wide feature surface, brittle test foundation" failure mode. |
 
 This is a representative slice — `_LINEAGES.md` has every repo and arc in full.
 
