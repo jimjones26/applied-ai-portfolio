@@ -18,6 +18,21 @@ Jimmy Jones (jimmy@uxfx.io, GitHub: jimjones26). I'm building a portfolio site t
 
 This is honest and verifiable. Don't inflate. Treat AI-built code as the **work sample**, not a confession.
 
+## The job target — read this before writing any copy
+
+`JOB_TARGET.md` (top-level) holds the verbatim Applied AI Engineer JD plus a six-anchor breakdown and a mapping of each anchor to specific case studies and repos. **Every section of site copy must advance at least one of those anchors.** Sections that don't — cut them, reframe them, or accept they're depth evidence only.
+
+The six anchors:
+
+1. Hands-on technical development of AI
+2. Applying AI technologies to specific use cases
+3. Integrating with internal systems (including Gen AI infrastructure)
+4. Integrating with external platforms
+5. Providing technical expertise to the team and training efforts
+6. Acting as technical liaison between Marketing, Technology, and AI teams
+
+The hero/practice frame should explicitly hit #1, #5, #6. The case-study cards should hit #2, #3, #4. The Additional table extends #2 and #4.
+
 ## What's been done (across two prior sessions)
 
 The triage and synthesis pass is **complete**. The last session also reorganized the triage outputs and corrected the aria framing.
@@ -113,11 +128,12 @@ The triage and synthesis pass is **complete**. The last session also reorganized
 
 ## How to start
 
-1. Read `triage/_SHORTLIST.md` end-to-end (it's the content source of truth).
-2. Skim `triage/_INDEX.md` to see the reorg layout. Optional: skim `triage/_LINEAGES.md` for full repo map.
-3. Open `design-reference/neura-core-v2-landing.html` in a browser (or read the file) — this is the visual target.
-4. Confirm the open decisions above with me (IA, hero stats, additional-work presentation, contact links).
-5. Then scaffold `index.html` and the case-study pages. Build static, no framework, no build step.
+1. **Read `JOB_TARGET.md` first.** Six anchors. Every site section must advance at least one.
+2. Read `triage/_SHORTLIST.md` end-to-end (it's the content source of truth).
+3. Skim `triage/_INDEX.md` to see the reorg layout. Optional: skim `triage/_LINEAGES.md` for full repo map.
+4. Open `design-reference/neura-core-v2-landing.html` in a browser (or read the file) — this is the visual target.
+5. Confirm the open decisions above with me (IA, hero stats, additional-work presentation, contact links).
+6. Then scaffold `index.html` and the case-study pages. Build static, no framework, no build step.
 
 ---
 
