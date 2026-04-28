@@ -168,8 +168,8 @@ LLM content generation for *reconstruction* tasks (not pure creation) produces t
 ## #4. Personal AI Memory: The O(history) Problem
 
 **Repos**: jarvis-core → aria → aria-v2 → nuera-core → neura-core-v2 → neura-core-v3 (one continuous arc)
-**Stack**: Rust (12+ then 15-crate Cargo workspaces) + Python (operational `aria` instance)
-**Status**: active (neura-core-v3 last touched 2026-04-18); aria runs as the operational instance
+**Stack**: Rust (12+ then 15-crate Cargo workspaces) + Python (deployed `aria` instance)
+**Status**: active (neura-core-v3 last touched 2026-04-18); aria is deployed locally and runnable on demand, not in active daily use as of late April 2026
 **Last touched**: neura-core-v3 2026-04-18; neura-core-v2 2026-04-02; aria 2026-03-15
 
 ### A note on naming and architectural complexity
@@ -185,7 +185,7 @@ A local-first personal AI assistant that accumulates memory across sessions rath
 ### How far I got
 
 - **jarvis-core**: Full Tauri 2.0 desktop app with 3D graph visualization, 7 completed phases, Ollama-backed LLM, agentic execution, cinematic Svelte UI. Finished per its own roadmap.
-- **aria** (2,981 commits, operational): Python — Neo4j + Ollama + FastMCP MCP server (port 8765) + Docker Compose + macOS launchd. Eval harness with delta tracking and regression detection. Safety infrastructure: hook-based Docker command interception (production data was wiped multiple times during development), contamination detection, multi-confirmation flows. The memory layer that runs while the Rust runtime matures.
+- **aria** (2,981 commits, deployed): Python — Neo4j + Ollama + FastMCP MCP server (port 8765) + Docker Compose + macOS launchd. Eval harness with delta tracking and regression detection. Safety infrastructure: hook-based Docker command interception (the local Neo4j store was wiped multiple times during development), contamination detection, multi-confirmation flows. The Python memory layer, locally deployed and runnable on demand while the Rust runtime matures; not in active daily use today.
 - **aria-v2**: Rust workspace with seven named pillars (SCA, SAGE, SHIELD, CORE, ECHO, SPEX, SENSE) and a SHIELD `verify_and_execute` gatekeeper. Reached Phase 3.5.
 - **nuera-core** (folder typo for neura-core, 207 commits): Single-binary Rust system with append-only Chronicle log as sole source of truth, WASM-sandboxed hot-swappable skills, IMAP/CalDAV listeners, HNSW vector index from scratch. Phase 4 complete.
 - **neura-core-v2** (50 commits): 12-crate Cargo workspace with post-quantum crypto (ML-DSA, ML-KEM, Shamir), HMAC chronicle, async mailbox neuron system, CLI REPL. The 58KB `ARCHITECTURE-v3.md` documents the fundamental limitation.
@@ -205,12 +205,12 @@ For neura-core-v3: Track 1 is complete, but every threshold parameter (activatio
 
 ### What this means for applied AI in production
 
-Event-sourced AI memory (replay-from-log) is auditable and correct but fundamentally degrades with use — boot time scales with history. Learned-weight memory (neural substrate) avoids the O(history) problem but loses auditability. **Neither is a clean answer**, and the tradeoff has to be made consciously. Additionally: AI memory systems require explicit safety infrastructure around irreversible operations — production data was accidentally deleted multiple times in aria despite human oversight, requiring hook-based interception as a mitigation. **Memory systems for AI are not just storage problems; they are safety architecture problems.**
+Event-sourced AI memory (replay-from-log) is auditable and correct but fundamentally degrades with use — boot time scales with history. Learned-weight memory (neural substrate) avoids the O(history) problem but loses auditability. **Neither is a clean answer**, and the tradeoff has to be made consciously. Additionally: AI memory systems require explicit safety infrastructure around irreversible operations — the local Neo4j store was accidentally deleted multiple times in aria during development despite human oversight, requiring hook-based interception as a mitigation. **Memory systems for AI are not just storage problems; they are safety architecture problems.**
 
 ### For iteration arcs: what each version learned
 
 - **jarvis-core**: The concept is buildable end-to-end (3D UI, graph, LLM, agentic execution); the monolithic SurrealDB + single-binary design made each new feature expensive.
-- **aria**: A separate operational deployment (Python + Neo4j) running in production while the Rust runtime matures. Documented the `claude -p` host-only constraint and the need for safety tooling around irreversible operations.
+- **aria**: A separate Python + Neo4j deployment, locally runnable on demand, while the Rust runtime matures. Documented the `claude -p` host-only constraint and the need for safety tooling around irreversible operations.
 - **aria-v2**: Pillared Rust architecture introduced explicit security/governance boundaries (SHIELD gatekeeper). Demonstrated the multi-pillar pattern is buildable but each pillar is a meaningful integration project.
 - **nuera-core**: Append-only Chronicle from scratch proved the architecture. Single-crate sprawl (22KB main.rs, 25+ deps) created debt that blocked the next layer; v3's CLAUDE.md cited this explicitly.
 - **neura-core-v2**: Multi-crate workspace fixed the modularity problem. Post-quantum crypto, HMAC chronicle, and WASM tools proven. The O(history) boot cost documented as the fundamental limitation requiring a different memory substrate.
