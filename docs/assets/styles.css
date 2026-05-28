@@ -621,6 +621,107 @@ section {
     color: var(--on-surface);
 }
 
+/* ── Case-study figures ────────────────────────────────────── */
+.cs-figure {
+    margin: 2rem 0;
+    max-width: 760px;
+}
+.cs-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--outline);
+    background: var(--surface-lowest);
+}
+.cs-figure figcaption {
+    margin-top: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--on-surface-variant);
+}
+.cs-figure figcaption code {
+    font-size: 0.9em;
+    background: var(--surface-low);
+    border: 1px solid var(--outline);
+    padding: 1px 4px;
+    color: var(--on-surface);
+}
+
+/* ── Case-study "what this proves" callout ─────────────────── */
+.cs-proof {
+    border-left: 2px solid var(--accent);
+    background: var(--surface-low);
+    padding: 1.25rem 1.5rem;
+    margin: 1.75rem 0;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--on-surface-variant);
+}
+.cs-proof .cs-proof-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.625rem;
+}
+.cs-proof strong {
+    color: var(--on-surface);
+    font-weight: 600;
+}
+.cs-proof code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background: var(--surface);
+    border: 1px solid var(--outline);
+    padding: 1px 5px;
+    color: var(--on-surface);
+}
+
+/* ── Case-study summary table ──────────────────────────────── */
+.cs-table {
+    width: 100%;
+    max-width: 760px;
+    border-collapse: collapse;
+    border: 1px solid var(--outline);
+    background: var(--surface-lowest);
+    margin: 1.5rem 0;
+}
+.cs-table th {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--on-surface-variant);
+    text-align: left;
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid var(--outline);
+    background: var(--surface-low);
+}
+.cs-table td {
+    padding: 0.875rem 1.25rem;
+    border-bottom: 1px solid var(--outline);
+    vertical-align: top;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: var(--on-surface-variant);
+}
+.cs-table tr:last-child td {
+    border-bottom: none;
+}
+.cs-table .cs-table-move {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--accent);
+    font-weight: 500;
+    white-space: nowrap;
+    width: 1%;
+}
+
 ul.cs-versions {
     list-style: none;
     padding: 0;

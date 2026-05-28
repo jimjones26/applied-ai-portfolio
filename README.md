@@ -23,28 +23,29 @@ docs/
   assets/
     styles.css         — Site-wide styles
   case-studies/
-    01-build-half-worked.html
-    02-llm-as-runtime.html
-    03-hallucination-pipeline.html
-    04-personal-ai-memory.html
-    05-determinism-research.html
-    06-methodology-at-scale.html
-    07-agent-sdk-stability.html
-    08-adversarial-browser-automation.html
+    01-substrate-governance.html
+    02-build-half-worked.html
+    03-llm-as-runtime.html
+    04-hallucination-pipeline.html
+    05-personal-ai-memory.html
+    06-determinism-research.html
+    07-methodology-at-scale.html
+    08-agent-sdk-stability.html
+    images/                — Case-study screenshots
 ```
 
 ## Case Studies
 
 | # | Title | Key Theme |
 |---|-------|-----------|
-| 1 | Build Half Worked | Speculative AI website rebuild service; 70 sites, 1 paying client |
-| 2 | LLM as Runtime | Using LLMs as the primary execution layer in pipelines |
-| 3 | Hallucination Pipeline | Detection and mitigation patterns for LLM hallucinations |
-| 4 | Personal AI Memory | Full Neo4j + Ollama + FastMCP stack; sovereign personal AI (ARIA/JARVIS) |
-| 5 | Determinism Research | Empirical RAG vs. LLM comparison; Stoic Architecture workflow tooling |
-| 6 | Methodology at Scale | AI development methodology; Claude Code slash commands as training artifacts |
-| 7 | Agent SDK Stability | Claude Agent SDK integration; HVAC lead-response agent with Vonage SMS |
-| 8 | Adversarial Browser Automation | B2B procurement automation; TinyFish API; OpenRouter multi-model routing |
+| 1 | Substrate — Prelude | Partial test of Substrate's structural-governance model: an AI-native pre-need planning scenario probing whether the ungoverned path is unconstructable, run end-to-end via one customer's decades-long record (Zig + SvelteKit + SQLite + OpenRouter) |
+| 2 | Build Half Worked | Speculative AI website rebuild service; 70 sites, 1 paying client |
+| 3 | LLM as Runtime | Using LLMs as the primary execution layer in pipelines |
+| 4 | Hallucination Pipeline | Detection and mitigation patterns for LLM hallucinations |
+| 5 | Personal AI Memory | Full Neo4j + Ollama + FastMCP stack; sovereign personal AI (ARIA/JARVIS) |
+| 6 | Determinism Research | Empirical RAG vs. LLM comparison; Stoic Architecture workflow tooling |
+| 7 | Methodology at Scale | AI development methodology; Claude Code slash commands as training artifacts |
+| 8 | Agent SDK Stability | Claude Agent SDK integration; HVAC lead-response agent with Vonage SMS |
 
 ## AI/ML Highlights
 
@@ -54,7 +55,7 @@ The portfolio documents the full applied AI development arc:
 - **Memory and RAG:** Neo4j knowledge graph memory, Ollama local embeddings, FastMCP MCP server, recall regression detection
 - **Observability:** Span-based tracing, eval harness with delta tracking, SQLite trace storage
 - **Infrastructure integration:** Docker Compose, macOS launchd, Coolify deployments, PostgreSQL + JSONB
-- **External platform integration:** Vonage SMS, Google Calendar, Postmark email, OpenRouter, TinyFish API
+- **External platform integration:** Vonage SMS, Google Calendar, Postmark email, OpenRouter
 - **Methodology:** MAOD/MOAD (AI-orchestrated development), Stoic Architecture five slash commands enforcing deterministic boundary decisions
 
 ## Viewing the Site
