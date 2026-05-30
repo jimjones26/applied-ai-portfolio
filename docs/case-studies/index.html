@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>All case studies — Jimmy Jones</title>
+        <meta
+            name="description"
+            content="Case studies from roughly 83 experiments — a three-year R&D program of AI-orchestrated software builds. What broke, what held, and what it taught about where AI delivers reliable work."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../assets/styles.css" />
+    </head>
+    <body>
+        <div class="cs-topbar">
+            <div class="wrap">
+                <a class="cs-back" href="../index.html">← Back to index</a>
+            </div>
+        </div>
+
+        <header class="cs-header">
+            <div class="wrap">
+                <p class="cs-num">All case studies</p>
+                <h1 class="cs-title">Case studies from ~83 experiments</h1>
+                <p class="cs-intro">
+                    Each one picks a single lesson from a three-year R&amp;D
+                    program of AI-orchestrated software builds &mdash; what
+                    broke, what held, and what it taught about where AI delivers
+                    reliable work and where it breaks.
+                </p>
+            </div>
+        </header>
+
+        <main class="cs-body">
+            <div class="wrap">
+                <ul class="cs-list">
+                    <li class="cs-list-item">
+                        <h3 class="cs-list-title">
+                            <a href="governed-by-construction.html"
+                                >Governed by Construction</a
+                            >
+                        </h3>
+                        <p class="cs-list-teaser">
+                            A complete multi-tenant authentication product
+                            &mdash; landing, sign-in, self-service org signup,
+                            an operator console, role dashboards, and a full
+                            audit trail &mdash; built as a single slice on
+                            Substrate. Every governance guarantee
+                            (tamper-evident audit, hard tenant isolation, a
+                            policy engine, unforgeable attribution) is
+                            structural, inherited from the substrate rather than
+                            written by the team.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Zig</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">SQLite</span>
+                            <span class="tag">Substrate</span>
+                        </div>
+                        <div class="cs-list-footer">
+                            <span class="cs-list-status"
+                                >Complete slice on Substrate</span
+                            >
+                            <a
+                                class="cs-list-read"
+                                href="governed-by-construction.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </li>
+
+                    <li class="cs-list-item">
+                        <h3 class="cs-list-title">
+                            <a href="substrate-governance.html"
+                                >Substrate &mdash; Prelude</a
+                            >
+                        </h3>
+                        <p class="cs-list-teaser">
+                            A partial test of Substrate&rsquo;s bet that
+                            governance is a structural property, not a policy
+                            layer bolted on. One pre-need-planning customer
+                            carried end to end &mdash; AI agents that can only
+                            propose, every seam policy-gated and audited, a
+                            decades-long lifecycle, and a regulator who
+                            reconstructs the entire record from one audit log.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Zig</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">SQLite</span>
+                            <span class="tag">OpenRouter</span>
+                        </div>
+                        <div class="cs-list-footer">
+                            <span class="cs-list-status"
+                                >Partial test of Substrate</span
+                            >
+                            <a
+                                class="cs-list-read"
+                                href="substrate-governance.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </li>
+
+                    <li class="cs-list-item">
+                        <h3 class="cs-list-title">
+                            <a href="build-half-worked.html"
+                                >The Build Half Worked</a
+                            >
+                        </h3>
+                        <p class="cs-list-teaser">
+                            70 production websites built in 4 weeks, mostly
+                            hands-off &mdash; 1 paying client closed. The
+                            finding: AI-orchestrated build outpaces a one-person
+                            sales motion, so throughput just moves the
+                            bottleneck downstream rather than relieving it.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">FastAPI</span>
+                            <span class="tag">Neo4j</span>
+                        </div>
+                        <div class="cs-list-footer">
+                            <span class="cs-list-status"
+                                >Pipeline shipped; bottleneck mapped</span
+                            >
+                            <a
+                                class="cs-list-read"
+                                href="build-half-worked.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </li>
+
+                    <li class="cs-list-item">
+                        <h3 class="cs-list-title">
+                            <a href="llm-as-runtime.html"
+                                >Two Experiments in "Let the LLM Run It"</a
+                            >
+                        </h3>
+                        <p class="cs-list-teaser">
+                            Two experiments pushing work directly onto the LLM
+                            at runtime &mdash; a 14-subagent bash orchestrator,
+                            and plain-English rule files treated as constraints.
+                            Both hit hard walls: text instructions aren&rsquo;t
+                            enforcement boundaries, and runtime primitives need
+                            validation before architecture commits to them.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">Claude CLI</span>
+                        </div>
+                        <div class="cs-list-footer">
+                            <span class="cs-list-status">Lesson captured</span>
+                            <a class="cs-list-read" href="llm-as-runtime.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </li>
+
+                    <li class="cs-list-item">
+                        <h3 class="cs-list-title">
+                            <a href="hallucination-pipeline.html"
+                                >Hallucination Needs Its Own Pipeline Stage</a
+                            >
+                        </h3>
+                        <p class="cs-list-teaser">
+                            A 13-step LLM website-rebuild pipeline where content
+                            hallucination and structural drift each needed their
+                            own dedicated stage &mdash; prompt engineering
+                            couldn&rsquo;t close them. Pipeline length turned
+                            out to be diagnostic: every extra stage is a failure
+                            mode you discover by running, not by designing.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">TypeScript</span>
+                            <span class="tag">Puppeteer</span>
+                            <span class="tag">Postgres</span>
+                            <span class="tag">Claude API</span>
+                        </div>
+                        <div class="cs-list-footer">
+                            <span class="cs-list-status"
+                                >Failure modes characterized</span
+                            >
+                            <a
+                                class="cs-list-read"
+                                href="hallucination-pipeline.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </li>
+
+                    <li class="cs-list-item">
+                        <h3 class="cs-list-title">
+                            <a href="personal-ai-memory.html"
+                                >Personal AI Memory: The O(history) Problem</a
+                            >
+                        </h3>
+                        <p class="cs-list-teaser">
+                            Six iterations of AI assistants that accumulate
+                            memory across sessions (a 15-crate Rust workspace at
+                            the latest, 404 commits, plus a deployed Python
+                            instance). The finding: AI memory isn&rsquo;t a
+                            storage problem, it&rsquo;s a safety-architecture
+                            problem &mdash; the store got wiped repeatedly until
+                            I added hooks to intercept irreversible commands.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Rust</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">Neo4j</span>
+                            <span class="tag">Ollama</span>
+                            <span class="tag">MCP</span>
+                        </div>
+                        <div class="cs-list-footer">
+                            <span class="cs-list-status">Active</span>
+                            <a
+                                class="cs-list-read"
+                                href="personal-ai-memory.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </li>
+
+                    <li class="cs-list-item">
+                        <h3 class="cs-list-title">
+                            <a href="determinism-research.html"
+                                >Active Research: Mixing Determinism and
+                                Non-Determinism</a
+                            >
+                        </h3>
+                        <p class="cs-list-teaser">
+                            An open research thread on combining deterministic
+                            and non-deterministic execution so an LLM-powered
+                            system stays consistent and correct &mdash; workflow
+                            tooling that forces explicit boundary decisions,
+                            plus an empirical RAG-vs-RLM comparison on one test
+                            suite. About to be field-tested in an AI real-estate
+                            transaction coordinator.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Python</span>
+                            <span class="tag">Rust</span>
+                        </div>
+                        <div class="cs-list-footer">
+                            <span class="cs-list-status">Active</span>
+                            <a
+                                class="cs-list-read"
+                                href="determinism-research.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </li>
+
+                    <li class="cs-list-item">
+                        <h3 class="cs-list-title">
+                            <a href="methodology-at-scale.html"
+                                >AI Development Methodology at Scale</a
+                            >
+                        </h3>
+                        <p class="cs-list-teaser">
+                            Two AI-orchestrated development methodologies. The
+                            9-module TypeScript version finished cleanly; the
+                            21-microservice Go version stalled at one service.
+                            The ceiling isn&rsquo;t LLM capability &mdash;
+                            it&rsquo;s whether the interface contracts between
+                            modules fit in the LLM&rsquo;s working context.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Go</span>
+                            <span class="tag">TypeScript</span>
+                        </div>
+                        <div class="cs-list-footer">
+                            <span class="cs-list-status"
+                                >Validated at 9 modules; ceiling at 21</span
+                            >
+                            <a
+                                class="cs-list-read"
+                                href="methodology-at-scale.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </li>
+
+                    <li class="cs-list-item">
+                        <h3 class="cs-list-title">
+                            <a href="agent-sdk-stability.html"
+                                >Production AI Agents: Claude Agent SDK
+                                Stability</a
+                            >
+                        </h3>
+                        <p class="cs-list-teaser">
+                            A complete multi-tenant lead-response system for
+                            HVAC contractors: a webhook receives a lead, an AI
+                            agent qualifies it over SMS, books on Google
+                            Calendar, and a live dashboard streams metrics. Two
+                            findings: fast-moving AI SDKs need their docs
+                            bundled locally, and the stateful agent layer ends
+                            up larger than the business logic it serves.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Python</span>
+                            <span class="tag">FastAPI</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">Claude Agent SDK</span>
+                        </div>
+                        <div class="cs-list-footer">
+                            <span class="cs-list-status"
+                                >Reference implementation complete</span
+                            >
+                            <a
+                                class="cs-list-read"
+                                href="agent-sdk-stability.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="wrap">
+                <p class="footer-line">
+                    <a href="mailto:jimmy@jonesweb.studio"
+                        >jimmy@jonesweb.studio</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="tel:+18284073415">(828) 407-3415</a>
+                    <span class="sep">/</span>
+                    <a
+                        href="https://github.com/jimjones26"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >GitHub</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://www.linkedin.com/in/the-jimmy-jones/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >LinkedIn</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://x.com/the_jimmy_jones"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >X</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="../resume.html">Resume</a>
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>

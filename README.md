@@ -18,34 +18,39 @@ The site is published via GitHub Pages from the `docs/` directory.
 
 ```
 docs/
-  index.html           — Portfolio landing page with case-study cards
+  index.html           — Portfolio landing page; features six case studies plus a "View all case studies" link to the dedicated list page
   resume.html          — HTML resume
   assets/
     styles.css         — Site-wide styles
   case-studies/
-    01-substrate-governance.html
-    02-build-half-worked.html
-    03-llm-as-runtime.html
-    04-hallucination-pipeline.html
-    05-personal-ai-memory.html
-    06-determinism-research.html
-    07-methodology-at-scale.html
-    08-agent-sdk-stability.html
-    images/                — Case-study screenshots
+    index.html                      -- Dedicated "all case studies" list page
+    governed-by-construction.html
+    substrate-governance.html
+    build-half-worked.html
+    llm-as-runtime.html
+    hallucination-pipeline.html
+    personal-ai-memory.html
+    determinism-research.html
+    methodology-at-scale.html
+    agent-sdk-stability.html
+    images/                         -- Case-study screenshots
 ```
 
 ## Case Studies
 
-| # | Title | Key Theme |
-|---|-------|-----------|
-| 1 | Substrate — Prelude | Partial test of Substrate's structural-governance model: an AI-native pre-need planning scenario probing whether the ungoverned path is unconstructable, run end-to-end via one customer's decades-long record (Zig + SvelteKit + SQLite + OpenRouter) |
-| 2 | Build Half Worked | Speculative AI website rebuild service; 70 sites, 1 paying client |
-| 3 | LLM as Runtime | Using LLMs as the primary execution layer in pipelines |
-| 4 | Hallucination Pipeline | Detection and mitigation patterns for LLM hallucinations |
-| 5 | Personal AI Memory | Full Neo4j + Ollama + FastMCP stack; sovereign personal AI (ARIA/JARVIS) |
-| 6 | Determinism Research | Empirical RAG vs. LLM comparison; Stoic Architecture workflow tooling |
-| 7 | Methodology at Scale | AI development methodology; Claude Code slash commands as training artifacts |
-| 8 | Agent SDK Stability | Claude Agent SDK integration; HVAC lead-response agent with Vonage SMS |
+The portfolio includes nine case studies. The home page features six; all nine are listed on the dedicated case-studies page (`case-studies/index.html`), reachable via the "View all case studies" link from the home page.
+
+| Title | Key Theme |
+|-------|-----------|
+| Governed by Construction | A complete multi-tenant authentication product built as a single slice on Substrate; every governance guarantee (tamper-evident audit log, tenant isolation, policy engine, verified attribution) is structural -- inherited from the substrate, not written by the team (Zig + SvelteKit + SQLite). |
+| Substrate — Prelude | Partial test of Substrate's structural-governance model: an AI-native pre-need planning scenario probing whether the ungoverned path is unconstructable, run end-to-end via one customer's decades-long record (Zig + SvelteKit + SQLite + OpenRouter) |
+| Build Half Worked | Speculative AI website rebuild service; 70 sites, 1 paying client |
+| LLM as Runtime | Using LLMs as the primary execution layer in pipelines |
+| Hallucination Pipeline | Detection and mitigation patterns for LLM hallucinations |
+| Personal AI Memory | Full Neo4j + Ollama + FastMCP stack; sovereign personal AI (ARIA/JARVIS) |
+| Determinism Research | Empirical RAG vs. LLM comparison; Stoic Architecture workflow tooling |
+| Methodology at Scale | AI development methodology; Claude Code slash commands as training artifacts |
+| Agent SDK Stability | Claude Agent SDK integration; HVAC lead-response agent with Vonage SMS |
 
 ## AI/ML Highlights
 

@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            Substrate — Prelude: One Life, Every Crossing Governed — Jimmy Jones
+        </title>
+        <meta
+            name="description"
+            content="A partial test of Substrate. Governance as a structural property: the Prelude scenario carries one customer end-to-end — AI proposals, gated seams, a decades-long lifecycle, erasure, and audit — to test whether the ungoverned path is unconstructable."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../assets/styles.css" />
+    </head>
+    <body>
+        <div class="cs-topbar">
+            <div class="wrap">
+                <a class="cs-back" href="../index.html">← Back to index</a>
+            </div>
+        </div>
+
+        <header class="cs-header">
+            <div class="wrap">
+                <p class="cs-num">Case Study · Substrate — Prelude</p>
+                <h1 class="cs-title">
+                    Prelude: One Life, Every Crossing Governed
+                </h1>
+                <dl class="cs-meta">
+                    <dt>Stack</dt>
+                    <dd>
+                        Zig + SvelteKit + SQLite + OpenRouter (component-based
+                        substrate)
+                    </dd>
+                    <dt>Status</dt>
+                    <dd>
+                        Partial test of Substrate — the Prelude scenario, run
+                        end to end as a focused exercise of the governance
+                        model. Not a production product.
+                    </dd>
+                    <dt>Last touched</dt>
+                    <dd>2026-05-27</dd>
+                </dl>
+            </div>
+        </header>
+
+        <main class="cs-body">
+            <div class="wrap">
+                <section class="cs-section">
+                    <h2>The test</h2>
+                    <p>
+                        Substrate's claim is simple and falsifiable:
+                        <strong>governance is structural.</strong> Not a policy
+                        document, not a review checklist, not a layer of hope
+                        bolted onto an AI system after the fact — but a property
+                        of the system's types and seams, such that the
+                        ungoverned path is <em>unconstructable</em>. Every time
+                        data crosses a boundary — an AI agent reads a record, an
+                        automation fires, a human signs, a right is exercised —
+                        the crossing is mediated, decided, and recorded. There
+                        is no side door.
+                    </p>
+                    <p>
+                        A claim like that is only worth as much as the hardest
+                        case you can throw at it. So we built one — a partial,
+                        focused test of the claim against the substrate, not a
+                        finished product.
+                    </p>
+                    <p>
+                        <strong>Prelude</strong> is an AI-native pre-need
+                        planning company: people plan their funerals, fund their
+                        estates, and write final letters to their families,
+                        years or decades before they die. It is, deliberately, a
+                        worst case for governance. It concentrates every hard
+                        problem at once:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>AI acting on a human's behalf</strong> —
+                            agents draft a dying man's letter, suggest
+                            questions, run the paperwork.
+                        </li>
+                        <li>
+                            <strong>Irreversible, real-world stakes</strong> —
+                            money dispensed, a death recorded, an estate
+                            settled.
+                        </li>
+                        <li>
+                            <strong>The most sensitive data there is</strong> —
+                            a man's private words to the family he is leaving,
+                            including a son he has not spoken to in years.
+                        </li>
+                        <li>
+                            <strong>Decade-long lifecycles</strong> — a plan
+                            signed today must still be correct, and still
+                            governed, when it pays out forty years from now.
+                        </li>
+                        <li>
+                            <strong>Rights in direct conflict</strong> — one
+                            beneficiary demands his data be erased; another
+                            demands access to the same record.
+                        </li>
+                        <li>
+                            <strong>Regulators who arrive late</strong> — and
+                            expect the entire history to reconstruct, to the
+                            envelope, decades after every actor has moved on.
+                        </li>
+                    </ul>
+                    <p>
+                        This is the story of one customer —
+                        <strong>Eli Mendoza, 82</strong> — carried end to end
+                        through that company. At each turn, watch what the
+                        substrate <em>refuses to let happen</em>.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>1. The AI proposes; the human disposes</h2>
+                    <p>
+                        Eli sits down with Wendy, his planner. She records their
+                        conversation and asks the
+                        <strong>legacy-interviewer</strong>
+                        agent — a live language model — to suggest the next
+                        question to ask.
+                    </p>
+                    <p>
+                        The agent does not ask Eli anything. It cannot. It
+                        returns a
+                        <em>proposal</em> — a suggested question, with its
+                        rationale — that lands in Wendy's queue for her to
+                        accept, edit, or discard.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/act01-08-proposed-question.png"
+                            alt="The legacy-interviewer agent's proposed question shown in the planner's queue, recorded as a ProposedQuestion"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The agent's suggestion, recorded as a
+                            ProposedQuestion — a proposal, not an act.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            An AI agent in Substrate has no unilateral reach.
+                            Its output is a proposal that a human — or another
+                            governed seam — disposes of. "Agent proposes, human
+                            disposes" is not a convention a team agrees to
+                            follow; it is the only shape the type system offers.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>
+                        2. Sensitivity is a property of the data, not a habit of
+                        the handler
+                    </h2>
+                    <p>
+                        Wendy names three beneficiaries: Marcus, his close son;
+                        Mia, his granddaughter in Berlin; and James, the son he
+                        is estranged from. At the moment each row is created,
+                        the substrate stamps it
+                        <code>Beneficiary-Future-Subject</code>.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/act01-10-beneficiary-markings.png"
+                            alt="Three beneficiary rows, each carrying a propagated Beneficiary-Future-Subject marking and access_rights: none"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Three beneficiaries, each carrying a propagated
+                            Beneficiary-Future-Subject marking and
+                            <code>access_rights: none</code>.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The marking is applied by the substrate at create
+                            time, not by Wendy remembering to classify it. It
+                            carries
+                            <code>access_rights: none</code> and a
+                            <code>future-subject-protection</code> policy that
+                            refuses beneficiary access to Eli's data
+                            <em>until Eli is deceased</em>. The protection
+                            travels with the data. No handler has to know it is
+                            there for it to hold.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>
+                        3. Some things, once said, cannot be unsaid by anyone
+                        else
+                    </h2>
+                    <p>
+                        The letter-drafting agent helps Eli compose his legacy
+                        letter. A cultural-sensitivity reviewer agent checks it.
+                        Then Eli locks it.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/act02-07-letter-locked.png"
+                            alt="Eli's legacy letter, sealed with a Customer-Authored-Locked marking"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Eli's legacy letter, sealed
+                            <code>Customer-Authored-Locked</code>.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            From the lock forward, the letter carries
+                            <code>Customer-Authored-Locked</code>. Not even an
+                            operator can alter it. This single marking becomes
+                            the hinge of the entire case study: it is what lets
+                            the substrate, decades later, distinguish
+                            <em>Eli's words</em> from
+                            <em>data about James</em> — and erase one without
+                            touching the other.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>4. Every seam is gated — and it is the same gate</h2>
+                    <p>
+                        Eli's plan is assembled: a suitability assessment, a
+                        fraud screen, a regulatory disclosure naming the
+                        advisor's commission. A single agent chain drives the
+                        paperwork, crossing seam after seam.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/act03-06-policy-permits-every-seam.png"
+                            alt="Each crossing in the agent chain producing its own policy.evaluate envelope"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Each crossing in the agent chain produces its own
+                            <code>policy.evaluate</code> envelope.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            There is no "trusted internal path." Every crossing
+                            — even one agent step calling the next — is
+                            evaluated by the same Policy Engine and recorded
+                            with its own <code>policy.evaluate</code>
+                            envelope. Permits and denials ride the same log.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>5. A denial is a first-class outcome, not an error</h2>
+                    <p>
+                        When a step would put the advisor in a conflict of
+                        interest, the substrate denies it.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/act03-07-agent-conflict-deny.png"
+                            alt="A conflict-of-interest policy refusing a crossing, with the refusal recorded in the audit log"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            A conflict-of-interest policy refuses the crossing —
+                            and the refusal is audited.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The denial is not an exception that crashed
+                            something or a log line someone might grep for
+                            later. It is a <code>deny</code> decision, named to
+                            the policy that refused it, recorded in the same
+                            audit log as every permit. A regulator can later ask
+                            "what was <em>stopped</em>?" and get an answer.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>6. Time itself is governed</h2>
+                    <p>
+                        Eli signs. New Mexico law grants a cooling-off period,
+                        so the substrate does not finalize the contract — a
+                        <strong>cooling-off-finalization</strong> automation
+                        does, on its own, only after the regulated window
+                        elapses. Then the decades pass. Every quarter, a
+                        <strong>quarterly-inflation-recompute</strong>
+                        automation adjusts the plan's value.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/act05-03-decade-of-firings.png"
+                            alt="Forty quarters of automated, audited inflation recomputes, each a governed crossing"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Forty quarters of automated, audited inflation
+                            recomputes — each one a governed crossing.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            Governance does not lapse when the humans go home.
+                            Time-triggered automations are governed exactly like
+                            human actions: each firing is policy-checked and
+                            audited. The contract finalizes because the clock
+                            said so and the policy permitted it — not because
+                            someone clicked a button, and not before the law
+                            allowed.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>7. One event, a governed fan-out</h2>
+                    <p>
+                        Eli dies. Sarah, his executor, reports it; Carlos
+                        verifies it. That single verified death fans out —
+                        through an
+                        <strong>activation-coordinator</strong> agent — into ten
+                        downstream actions: mark the customer deceased, activate
+                        each beneficiary, release the letter to the family,
+                        notify the funeral home, dispense the estate from trust.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/act07-05-cascade-audit-chain.png"
+                            alt="The activation cascade in the audit chain: one verified death producing ten governed actions"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            One verified death; ten governed actions, each its
+                            own audited crossing.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            A cascade is the moment governance usually breaks —
+                            one trigger, many effects, easy to let a few slip
+                            through ungoverned "because they were internal."
+                            Here every one of the ten actions is a separate,
+                            policy-gated, audited crossing. The
+                            <code>future-subject-protection</code> that locked
+                            the beneficiaries out in Act 2 now
+                            <em>releases</em>, because the precondition it was
+                            waiting on — Eli's death — is finally, verifiably
+                            true.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>8. The right to be forgotten, done correctly</h2>
+                    <p>
+                        Decades on, James — the estranged son — asks for his
+                        data to be deleted.
+                    </p>
+                    <p>
+                        A naive system does one of two wrong things: it refuses
+                        (violating his rights), or it deletes everything
+                        connected to him, including Eli's letter (destroying his
+                        father's final words to the family). Substrate does
+                        neither. The <strong>beneficiary-rights</strong> agent
+                        proposes a <em>partition</em> of the record by who each
+                        piece of data is <em>about</em>.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/act09-03-partition-proposal.png"
+                            alt="The proposed data partition: erase, redact-by-reference, or preserve each field by subject"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The substrate proposes to partition the record —
+                            erase, redact-by-reference, or preserve — by
+                            subject.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            "Delete my data" is not a <code>DROP</code>. It is a
+                            question — <em>which data is his to erase?</em> —
+                            that the substrate can actually answer, because it
+                            knows the subject of every field. Data
+                            <em>about James</em> is James's to erase. Eli's
+                            <code>Customer-Authored-Locked</code> letter is
+                            <strong>not</strong> James's data, even where it
+                            mentions him — so it is preserved, and James's
+                            references within it are redacted. The marking
+                            applied in Act 3 is what makes this distinction
+                            enforceable rather than aspirational.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>9. The subject acts under his own authority</h2>
+                    <p>
+                        James accepts. The substrate runs the partition —
+                        redacting his references, destroying his personal copy,
+                        applying the partition — every action under
+                        <em>James's own credential</em>, gated by self-only
+                        policies.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/act10-01-partition-applied.png"
+                            alt="The applied partition in James's portal: his Beneficiary row redacted and his letter copy destroyed, while the original LegacyLetter remains untouched"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The partition applied, narrated from James's own
+                            portal: his Beneficiary row redacted and his
+                            delivered letter copy destroyed — while the
+                            substrate records that the original LegacyLetter
+                            "remains untouched per
+                            customer-authored-immutability." His data gone,
+                            Eli's words intact, in one frame.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            No operator erases James's data <em>for</em> him on
+                            a vague request. James erases his own data,
+                            authorized as himself, and the substrate
+                            structurally bounds what "his own" reaches — it
+                            cannot reach Eli's letter.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>10. …and the opposite right, on the same machinery</h2>
+                    <p>
+                        Mia wants the reverse: posthumous access to her
+                        grandfather's record. The
+                        <strong>posthumous-access</strong> agent proposes a
+                        scoped release; Sarah, as executor, authorizes it.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/act11-01-scoped-release-approved.png"
+                            alt="Sarah authorizing Mia's scoped memorial_summary release, bound to Sarah's identity alone"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The executor's approval: a bounded
+                            <code>memorial_summary</code>
+                            release — co-beneficiary names and financial detail
+                            redacted, the locked letter excluded — approved by
+                            Sarah and bound to her identity alone. Not blanket
+                            access.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            Erasure and access are the same governance shape
+                            pointed in opposite directions: a proposal, a
+                            properly authorized disposition, a recorded outcome.
+                            The executor's authority to grant it traces back to
+                            the executor field Wendy set in Act 1 — a line drawn
+                            before anyone knew it would matter.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>11. The payoff: the whole life reconstructs</h2>
+                    <p>
+                        Decades after Eli's death, a regulator opens the record.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/act12-01-regulator-lineage.png"
+                            alt="The regulator's console reconstructing each contract's full lineage and structural record from one composed Audit Query"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The regulator's console: each contract's lineage —
+                            plan authored by Wendy, signed by Eli under his own
+                            credential, finalized by automation-service — with
+                            the audit envelope id behind every line, plus the
+                            full structural record (plan, suitability, fraud
+                            screen, disclosure). All from one composed Audit
+                            Query.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            This is the claim made whole. Everything in this
+                            story — the AI's first suggestion, the conflict that
+                            was denied, forty quarters of inflation, the ten-way
+                            cascade, James's erasure, Mia's access — is one
+                            continuous, tamper-evident chain. Nobody had to
+                            <em>remember</em> to log it. The log is where the
+                            actions happened.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>What this case study demonstrates</h2>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Movement</th>
+                                <th>Governance guarantee</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="cs-table-move">1</td>
+                                <td>
+                                    AI proposes; humans dispose. No unilateral
+                                    agent action.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="cs-table-move">2</td>
+                                <td>
+                                    Sensitivity markings propagate structurally,
+                                    with the data.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="cs-table-move">3</td>
+                                <td>
+                                    Customer-authored content is immutable, even
+                                    to operators.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="cs-table-move">4</td>
+                                <td>
+                                    Every seam — including agent-to-agent — is
+                                    policy-gated.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="cs-table-move">5</td>
+                                <td>
+                                    Denials are first-class, named, and audited.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="cs-table-move">6</td>
+                                <td>
+                                    Time-triggered automations are governed like
+                                    human actions.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="cs-table-move">7</td>
+                                <td>
+                                    A fan-out cascade governs every branch, not
+                                    just the trigger.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="cs-table-move">8–9</td>
+                                <td>
+                                    Erasure is a partition by subject — rights
+                                    honored, others' content preserved.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="cs-table-move">10</td>
+                                <td>
+                                    Access is the same machinery as erasure,
+                                    properly authorized.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="cs-table-move">11</td>
+                                <td>
+                                    The entire decades-long record reconstructs
+                                    from the audit log.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        Eleven movements, one substrate, one continuous audit
+                        log. The ungoverned path was never available — not to
+                        the AI, not to the operators, not to time.
+                    </p>
+                    <p class="bg-note">
+                        Images are drawn from the Prelude test run — a focused,
+                        partial exercise of Substrate, captured screen by
+                        screen.
+                    </p>
+                </section>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="wrap">
+                <p class="footer-line">
+                    <a href="mailto:jimmy@jonesweb.studio"
+                        >jimmy@jonesweb.studio</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="tel:+18284073415">(828) 407-3415</a>
+                    <span class="sep">/</span>
+                    <a
+                        href="https://github.com/jimjones26"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >GitHub</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://www.linkedin.com/in/the-jimmy-jones/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >LinkedIn</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://x.com/the_jimmy_jones"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >X</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="../resume.html">Resume</a>
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>

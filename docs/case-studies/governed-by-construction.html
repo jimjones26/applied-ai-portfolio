@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            Substrate - Governed by Construction: Authentication, Audited by
+            Construction — Jimmy Jones
+        </title>
+        <meta
+            name="description"
+            content="A complete multi-tenant authentication product built as a single slice on Substrate, where every governance guarantee — audit, tenant isolation, policy enforcement, attribution — is structural rather than hand-written."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../assets/styles.css" />
+    </head>
+    <body>
+        <div class="cs-topbar">
+            <div class="wrap">
+                <a class="cs-back" href="../index.html">← Back to index</a>
+            </div>
+        </div>
+
+        <header class="cs-header">
+            <div class="wrap">
+                <p class="cs-num">Case Study · Substrate</p>
+                <h1 class="cs-title">Governed by Construction</h1>
+                <dl class="cs-meta">
+                    <dt>Stack</dt>
+                    <dd>
+                        Zig + SvelteKit + SQLite (a single slice on Substrate)
+                    </dd>
+                    <dt>Status</dt>
+                    <dd>
+                        A complete slice on Substrate — built end to end as a
+                        focused demonstration of the governance model. Not a
+                        production product.
+                    </dd>
+                    <dt>Last touched</dt>
+                    <dd>2026-05-29</dd>
+                </dl>
+            </div>
+        </header>
+
+        <main class="cs-body">
+            <div class="wrap">
+                <section class="cs-section">
+                    <p class="cs-pullquote">
+                        How Substrate turns a company's authentication into an
+                        audited, multi-tenant system — without writing the
+                        governance.
+                    </p>
+                    <p>
+                        Standing up authentication is fast. Standing up
+                        authentication you can
+                        <em>trust in front of an auditor</em> is not — that part
+                        is a tamper-evident log of every action, hard tenant
+                        isolation, a policy engine that actually blocks
+                        privileged operations, and attribution you can't forge.
+                        Teams either spend weeks building that layer and getting
+                        it exactly right, or they ship without it and hope.
+                    </p>
+                    <p>
+                        This is a complete, multi-tenant authentication product
+                        built as a single <strong>slice</strong> on Substrate: a
+                        public landing and sign-in, self-service organization
+                        signup, an operator console, role-based dashboards, and
+                        a full audit surface. The product is the part you can
+                        see. The part that matters is what's underneath it:
+                        <strong
+                            >every governance guarantee here is structural —
+                            supplied and enforced by the substrate, not written
+                            in the slice.</strong
+                        >
+                        Speed is the consequence of not having to build — or get
+                        right — the dangerous part.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>What I built in the slice — and what I didn't</h2>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>I wrote (the surface)</th>
+                                <th>
+                                    The substrate enforced (inherited, not
+                                    built)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    The SvelteKit app — every screen in this
+                                    document
+                                </td>
+                                <td>
+                                    A
+                                    <strong>tamper-evident audit log</strong> —
+                                    every crossing recorded, by construction
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The authored declarations — capability
+                                    scopes, policies, the roles
+                                </td>
+                                <td>
+                                    <strong>Tenant isolation</strong> — each
+                                    org's data <em>and</em> its audit log
+                                    partitioned, unreadable across the wall
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Two thin drivers — an argon2id password
+                                    store, a durable session store
+                                </td>
+                                <td>
+                                    A <strong>policy engine</strong> — every
+                                    privileged action policy-checked
+                                    <em>before</em> it runs
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <strong>Verified attribution</strong> — the
+                                    acting account and org are taken from the
+                                    resolved session, never from the caller
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        I spent my time on product. I did not write an audit
+                        pipeline, a tenant-partitioning scheme, a policy
+                        evaluator, or an attribution model — and, more
+                        importantly, it could not
+                        <em>forget</em> to. Those guarantees aren't a library
+                        the app calls; they're the floor the app stands on.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The product, as anyone would see it</h2>
+                    <p>
+                        A public front door: sign in, or register a new
+                        organization.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/gbc-01-landing.png"
+                            alt="Public landing page offering two choices: sign in to an existing account or register a new organization"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The public front door — sign in, or register a new
+                            organization.
+                        </figcaption>
+                    </figure>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/gbc-02-login.png"
+                            alt="The sign-in screen with email and password fields"
+                            loading="lazy"
+                        />
+                        <figcaption>The sign-in screen.</figcaption>
+                    </figure>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/gbc-03-register.png"
+                            alt="The register-your-organization form for self-service signup"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Register your organization — no account, no
+                            invitation.
+                        </figcaption>
+                    </figure>
+                    <p>
+                        Nothing here looks unusual — and that's the point. The
+                        governance isn't a feature bolted onto the UI; it's
+                        behind every one of these forms, whether the form
+                        chooses to mention it or not.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>
+                        A platform that bootstraps itself — and records its own
+                        genesis
+                    </h2>
+                    <p>
+                        A fresh deployment has exactly one account: a
+                        break-glass operator. Its only job is to mint the real
+                        founder, then step aside.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/gbc-04-operator-create-founder.png"
+                            alt="The operator console showing the form to create the founder account"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Operator console — create the founder account.
+                        </figcaption>
+                    </figure>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/gbc-05-operator-setup-complete.png"
+                            alt="The operator console confirming that setup is complete and the founder has been minted"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Operator console — setup complete.
+                        </figcaption>
+                    </figure>
+                    <p>
+                        The founder signs in to an
+                        <strong>Owner</strong> dashboard — the account that
+                        onboards customer organizations, opens self-service
+                        signup, and adds teammates.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/gbc-06-dashboard-owner.png"
+                            alt="The Owner dashboard with controls to onboard an organization, enable signup, and add a teammate"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Owner dashboard — onboard an org, enable signup, add
+                            a teammate.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            Every step of this bootstrap — the break-glass
+                            login, the founder's creation, the policy check that
+                            permitted it — is already on the record before the
+                            company has its first customer. The audit log
+                            doesn't start when you remember to turn it on. It
+                            starts at genesis, because there is no path that
+                            writes data without writing the record.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>One capability model, three roles, zero drift</h2>
+                    <p>
+                        What an account can do is decided by what its
+                        <strong>scope holds</strong> — the same capability model
+                        the substrate enforces on every request. The UI simply
+                        mirrors it. Hold <code>tenancy.provision</code>, and
+                        you're an <strong>Owner</strong>: onboard organizations,
+                        enable signup, add teammates. Hold only
+                        <code>identity.provision</code>, and you're an
+                        <strong>Admin</strong>: add teammates, nothing more.
+                        Hold neither, and you're a <strong>Member</strong>.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/gbc-06-dashboard-owner.png"
+                            alt="The Owner dashboard with full management controls"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            <strong>Owner</strong> (the operator founder) holds
+                            <code>tenancy.provision</code> — onboard organizations,
+                            enable self-service signup, add teammates, and read the
+                            platform audit log.
+                        </figcaption>
+                    </figure>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/gbc-08-admin-dashboard.png"
+                            alt="The customer Admin dashboard with teammate management only"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            <strong>Admin</strong> (a customer founder) holds only
+                            <code>identity.provision</code> — add teammates and read
+                            the organization's own audit log, nothing more.
+                        </figcaption>
+                    </figure>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/gbc-12-member-dashboard.png"
+                            alt="The Member dashboard, read-only with no management controls"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            <strong>Member</strong> holds neither scope — a read-only
+                            dashboard with no management controls at all.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The three dashboards aren't three hand-coded layouts
+                            with three sets of <code>if</code> checks the team
+                            has to keep in sync with the backend. They're one
+                            component reading one capability model — the same
+                            one the substrate re-checks on every submission. The
+                            surface <em>can't</em> drift from the boundary,
+                            because the surface isn't the boundary. If the UI
+                            showed a button it shouldn't, the substrate would
+                            still refuse the action.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The audit log nobody had to write</h2>
+                    <p>
+                        This is the centerpiece. The operator's view is a
+                        complete, tamper-evident record of every action across
+                        the platform — each one attributed to a named account,
+                        captured automatically.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/gbc-07-operator-audit.png"
+                            alt="The operator audit log listing fourteen named events, from the founder's sign-in down to the break-glass genesis login"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Operator audit log — fourteen named events.
+                        </figcaption>
+                    </figure>
+                    <p>
+                        Read it top to bottom and the company's entire history
+                        is there: the founder signing in, onboarding two
+                        customer organizations, opening self-service signup,
+                        adding a teammate — and, at the very bottom, the
+                        break-glass genesis login. Fourteen events, every actor
+                        named, nothing missing and nothing extra.
+                    </p>
+                    <p>
+                        That "nothing extra" is deliberate. Sessions are
+                        re-validated on every page load, but a re-presented
+                        session token is <em>not</em> a new login — so it writes
+                        no record. Only genuine authentications appear. The log
+                        is the signal a compliance reviewer actually wants, not
+                        a flood of per-request noise.
+                    </p>
+                    <p>
+                        Click any row and the full sealed record slides open —
+                        the verified actor and organization, the exact
+                        operation, and the detail, all captured from the session
+                        rather than supplied by the caller:
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/gbc-10-record-inspector.png"
+                            alt="The record inspector for an organization onboarding, showing the verified actor, organization, operation, and detail captured from the session"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Record inspector — an organization onboarding.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The account and organization on this record are
+                            captured automatically from the verified session —
+                            never supplied by the caller — so the record can't
+                            misattribute who acted. I wrote none of this
+                            attribution logic in the slice. It's a property of
+                            how the substrate resolves identity, surfaced as a
+                            record the app merely renders.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Tenant isolation as a fact, not a hope</h2>
+                    <p>
+                        When the operator onboards a customer organization, that
+                        org becomes a sealed boundary. Its founder signs in to
+                        their own
+                        <strong>Admin</strong> dashboard and their own audit log
+                        — a log that contains <em>only</em> their activity, and
+                        that the operator's console
+                        <strong>cannot read.</strong>
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/gbc-09-customer-audit.png"
+                            alt="The customer's isolated audit log, containing only their own activity, with a blocked over-reach recorded"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Customer audit log — isolated, with a blocked
+                            over-reach.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            No one outside your organization can read this log,
+                            and you can't read theirs — every organization's
+                            activity is fully isolated. Even your own founding
+                            account was created during onboarding, so that one
+                            event is recorded in the platform's log, not here.
+                            The wall isn't a query filter the app remembers to
+                            apply: the substrate partitions audit reads by
+                            tenant; the app drains "everything," and the
+                            substrate hands back only what the caller is
+                            entitled to see.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The boundary holds — even when the UI is bypassed</h2>
+                    <p>
+                        Here is the difference between governance that's
+                        <em>documented</em> and governance that's
+                        <em>enforced</em>. The customer Admin's dashboard
+                        correctly offers no "onboard an organization" button —
+                        that's an operator-only power. But the UI hiding a
+                        button is convenience, not security. So we sent the
+                        request anyway, straight to the API, past the surface.
+                    </p>
+                    <p>
+                        The substrate refused it — and wrote the refusal to the
+                        record:
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/gbc-14-denied-inspector.png"
+                            alt="A denied record inspector showing operation tenancy.provision, effect deny, reason outside scope, on the same immutable log as every success"
+                            loading="lazy"
+                        />
+                        <figcaption>Denied record — outside scope.</figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            A red <strong>DENIED</strong> row, on the same
+                            immutable log as every success. Open it, and the
+                            record names exactly what was attempted:
+                            <code>operation: tenancy.provision</code>,
+                            <code>effect: deny</code>,
+                            <code>reason: outside scope</code>. The over-reach
+                            is not just blocked; it is <em>evidence</em>. A
+                            client that bypasses the UI gains nothing and leaves
+                            a permanent trace — the guarantee a governed system
+                            is supposed to make.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>
+                        Self-service signup — open to the public, still governed
+                    </h2>
+                    <p>
+                        Finally, the company opens its doors. Anyone can
+                        register their own organization from the public page —
+                        no account, no invitation.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/gbc-11-register-success.png"
+                            alt="The register-success confirmation echoing back the organization name the registrant chose"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Register success — organization created.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            It would be easy for an anonymous endpoint to be the
+                            one ungoverned side door. It isn't. Each public
+                            signup is performed
+                            <em>as</em> a dedicated signup principal, scoped to
+                            exactly one power, so a self-service registration is
+                            a real, policy-checked, audited substrate operation
+                            — attributed to a resolvable identity, recorded in
+                            the platform log, indistinguishable in its
+                            governance from an organization the operator
+                            onboards by hand. The confirmation simply echoes
+                            back the name the registrant chose; there is no
+                            identity to "know" until this call creates one.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Why this was fast</h2>
+                    <p>Add up what I <em>didn't</em> build in the slice:</p>
+                    <ul>
+                        <li>
+                            I didn't build an audit log — every action was
+                            recorded by construction, including the ones I could
+                            have forgotten.
+                        </li>
+                        <li>
+                            I didn't build tenant isolation — the wall between
+                            organizations is enforced beneath the app, on reads
+                            and writes alike.
+                        </li>
+                        <li>
+                            I didn't build a policy engine — privileged actions
+                            are checked before they run, and refusals are
+                            recorded.
+                        </li>
+                        <li>
+                            I didn't build an attribution model — who-acted and
+                            in-which-org come from the verified session,
+                            unforgeable.
+                        </li>
+                        <li>
+                            I didn't build enumeration-safe credential handling,
+                            session re-validation, or break-glass bootstrap —
+                            those came with the floor.
+                        </li>
+                    </ul>
+                    <p>
+                        What was left was the part teams <em>should</em> spend
+                        their time on: the screens, the roles, the words on the
+                        page, and two small drivers to plug in a real password
+                        store and durable sessions. A complete, multi-tenant,
+                        fully-audited authentication product — shipped as one
+                        slice — because the hard, dangerous, slow-to-get-right
+                        layer wasn't a project. It was the substrate.
+                    </p>
+                    <p class="cs-pullquote">
+                        Fast is the headline.
+                        <strong>Governed by construction</strong> is the reason.
+                    </p>
+                    <p class="bg-note">
+                        Images are drawn from this slice's run on Substrate — a
+                        complete, focused demonstration of the governance model,
+                        captured screen by screen.
+                    </p>
+                </section>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="wrap">
+                <p class="footer-line">
+                    <a href="mailto:jimmy@jonesweb.studio"
+                        >jimmy@jonesweb.studio</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="tel:+18284073415">(828) 407-3415</a>
+                    <span class="sep">/</span>
+                    <a
+                        href="https://github.com/jimjones26"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >GitHub</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://www.linkedin.com/in/the-jimmy-jones/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >LinkedIn</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://x.com/the_jimmy_jones"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >X</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="../resume.html">Resume</a>
+                </p>
+            </div>
+        </footer>
+    </body>
+</html>

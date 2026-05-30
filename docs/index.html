@@ -85,10 +85,10 @@
                     system stays correct.
                 </p>
                 <p>
-                    The eight case studies below each pick one specific lesson
-                    from that R&amp;D &mdash; what broke, what held, what each
-                    one taught about where AI delivers reliable work and where
-                    it breaks. A representative slice of the rest of the ~83
+                    The case studies below each pick one specific lesson from
+                    that R&amp;D &mdash; what broke, what held, what each one
+                    taught about where AI delivers reliable work and where it
+                    breaks. A representative slice of the rest of the ~83
                     experiments follows, with live commit counts.
                 </p>
             </div>
@@ -175,20 +175,58 @@
                 <div class="section-head">
                     <p class="section-kicker">From the R&amp;D program</p>
                     <h2 class="section-title">
-                        Eight case studies from ~83 experiments
+                        Selected case studies from ~83 experiments
                     </h2>
                 </div>
 
                 <div class="cards">
                     <article class="card">
-                        <p class="card-num">#01</p>
+                        <h3 class="card-title">
+                            Substrate - Governed by Construction
+                        </h3>
+                        <p class="card-lesson">
+                            <strong
+                                >A complete multi-tenant authentication product,
+                                built as a single slice on Substrate</strong
+                            >
+                            &mdash; public landing and sign-in, self-service
+                            organization signup, an operator console, role-based
+                            dashboards, and a full audit surface.
+                            <strong>What it shows:</strong> every governance
+                            guarantee &mdash; a tamper-evident audit log, hard
+                            tenant isolation, a policy engine that blocks
+                            privileged actions before they run, and unforgeable
+                            attribution &mdash; is <em>structural</em>, supplied
+                            by the substrate rather than written by me. I
+                            couldn&rsquo;t <em>forget</em> to govern. Speed is
+                            the consequence of not having to build the dangerous
+                            part.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Zig</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">SQLite</span>
+                            <span class="tag">Substrate</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-status"
+                                >Complete slice on Substrate</span
+                            >
+                            <a
+                                class="card-link"
+                                href="case-studies/governed-by-construction.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </article>
+
+                    <article class="card">
                         <h3 class="card-title">Substrate &mdash; Prelude</h3>
                         <p class="card-lesson">
                             <strong
                                 >A partial test of Substrate &mdash; the bet
                                 that governance can be a structural property,
-                                not a policy layer bolted on
-                                afterward.</strong
+                                not a policy layer bolted on afterward.</strong
                             >
                             Substrate is an architecture that aims to make the
                             ungoverned path <em>unconstructable</em>;
@@ -217,14 +255,13 @@
                             >
                             <a
                                 class="card-link"
-                                href="case-studies/01-substrate-governance.html"
+                                href="case-studies/substrate-governance.html"
                                 >Read →</a
                             >
                         </div>
                     </article>
 
                     <article class="card">
-                        <p class="card-num">#02</p>
                         <h3 class="card-title">The Build Half Worked</h3>
                         <p class="card-lesson">
                             <strong
@@ -249,14 +286,13 @@
                             >
                             <a
                                 class="card-link"
-                                href="case-studies/02-build-half-worked.html"
+                                href="case-studies/build-half-worked.html"
                                 >Read →</a
                             >
                         </div>
                     </article>
 
                     <article class="card">
-                        <p class="card-num">#03</p>
                         <h3 class="card-title">
                             Two Experiments in "Let the LLM Run It"
                         </h3>
@@ -281,14 +317,13 @@
                             <span class="card-status">Lesson captured</span>
                             <a
                                 class="card-link"
-                                href="case-studies/03-llm-as-runtime.html"
+                                href="case-studies/llm-as-runtime.html"
                                 >Read →</a
                             >
                         </div>
                     </article>
 
                     <article class="card">
-                        <p class="card-num">#04</p>
                         <h3 class="card-title">
                             Hallucination Needs Its Own Pipeline Stage
                         </h3>
@@ -318,14 +353,13 @@
                             >
                             <a
                                 class="card-link"
-                                href="case-studies/04-hallucination-pipeline.html"
+                                href="case-studies/hallucination-pipeline.html"
                                 >Read →</a
                             >
                         </div>
                     </article>
 
                     <article class="card">
-                        <p class="card-num">#05</p>
                         <h3 class="card-title">
                             Personal AI Memory: The O(history) Problem
                         </h3>
@@ -355,129 +389,17 @@
                             <span class="card-status">Active</span>
                             <a
                                 class="card-link"
-                                href="case-studies/05-personal-ai-memory.html"
+                                href="case-studies/personal-ai-memory.html"
                                 >Read →</a
                             >
                         </div>
                     </article>
-
-                    <article class="card">
-                        <p class="card-num">#06</p>
-                        <h3 class="card-title">
-                            Active Research: Mixing Determinism and
-                            Non-Determinism
-                        </h3>
-                        <p class="card-lesson">
-                            <strong
-                                >An open research thread on combining
-                                deterministic and non-deterministic
-                                execution</strong
-                            >
-                            so an LLM-powered system stays consistent and
-                            correct. Workflow tooling (<code>pi-harness</code>
-                            slash commands forcing explicit boundary decisions)
-                            plus empirical comparison (<code
-                                >first-principles</code
-                            >
-                            &mdash; RAG vs. open RLM vs. Lambda-RLM, same test
-                            suite). About to be field-tested in
-                            <code>real-transactions</code> Phase 2 &mdash; an AI
-                            real-estate transaction coordinator where
-                            uncontrolled LLM non-determinism isn't acceptable.
-                        </p>
-                        <div class="card-meta">
-                            <span class="tag">Python</span>
-                            <span class="tag">Rust</span>
-                        </div>
-                        <div class="card-footer">
-                            <span class="card-status">Active</span>
-                            <a
-                                class="card-link"
-                                href="case-studies/06-determinism-research.html"
-                                >Read →</a
-                            >
-                        </div>
-                    </article>
-
-                    <article class="card">
-                        <p class="card-num">#07</p>
-                        <h3 class="card-title">
-                            AI Development Methodology at Scale
-                        </h3>
-                        <p class="card-lesson">
-                            <strong
-                                >Two AI-orchestrated development
-                                methodologies</strong
-                            >
-                            &mdash; process constraints, slash commands, prompt
-                            templates. The 9-module TypeScript version (MAOD)
-                            finished cleanly. The 21-microservice Go version
-                            (MOAD) stalled at 1 service implemented. Same
-                            methodology, different module count.
-                            <strong>R&amp;D finding:</strong> the ceiling isn't
-                            LLM capability &mdash; it's whether interface
-                            contracts between modules fit in the LLM's working
-                            context.
-                        </p>
-                        <div class="card-meta">
-                            <span class="tag">Go</span>
-                            <span class="tag">TypeScript</span>
-                        </div>
-                        <div class="card-footer">
-                            <span class="card-status"
-                                >Validated at 9 modules; ceiling at 21</span
-                            >
-                            <a
-                                class="card-link"
-                                href="case-studies/07-methodology-at-scale.html"
-                                >Read →</a
-                            >
-                        </div>
-                    </article>
-
-                    <article class="card">
-                        <p class="card-num">#08</p>
-                        <h3 class="card-title">
-                            Production AI Agents: Claude Agent SDK Stability as
-                            an Architectural Risk
-                        </h3>
-                        <p class="card-lesson">
-                            <strong
-                                >A complete multi-tenant lead-response system
-                                for HVAC contractors:</strong
-                            >
-                            webhook receives a lead, AI agent qualifies it over
-                            SMS (Vonage), books on Google Calendar, live
-                            dashboard streams metrics. Backend, frontend, and
-                            infrastructure all built end-to-end.
-                            <strong>R&amp;D findings:</strong>
-                            fast-moving AI SDKs need their docs bundled locally
-                            as a first-class dependency; and the stateful agent
-                            layer (<code>core.py</code>, 25.5KB) ends up the
-                            largest file in the backend &mdash; managing
-                            conversation state, retries, and tool-use
-                            constraints is more code than the business logic it
-                            serves.
-                        </p>
-                        <div class="card-meta">
-                            <span class="tag">Python</span>
-                            <span class="tag">FastAPI</span>
-                            <span class="tag">SvelteKit</span>
-                            <span class="tag">Claude Agent SDK</span>
-                        </div>
-                        <div class="card-footer">
-                            <span class="card-status"
-                                >Reference implementation complete</span
-                            >
-                            <a
-                                class="card-link"
-                                href="case-studies/08-agent-sdk-stability.html"
-                                >Read →</a
-                            >
-                        </div>
-                    </article>
-
                 </div>
+                <p class="view-all">
+                    <a href="case-studies/index.html"
+                        >View all case studies &rarr;</a
+                    >
+                </p>
             </div>
         </section>
 
@@ -590,7 +512,8 @@
                                 that wouldn't break. Documented a Lucia v3 /
                                 Prisma 6 peer-dependency failure; converged on
                                 Drizzle + Oslo. The productionized version is
-                                <code>lead-guardian</code> (#08).
+                                <code>lead-guardian</code> (the Agent SDK
+                                Stability case study).
                             </td>
                         </tr>
                         <tr>

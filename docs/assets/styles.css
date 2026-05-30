@@ -761,6 +761,91 @@ ul.cs-versions a:hover {
     border-bottom-color: var(--accent);
 }
 
+/* View-all link (home) */
+.view-all {
+    margin-top: 2.5rem;
+    text-align: center;
+}
+.view-all a {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border-bottom: 1px solid var(--outline);
+    padding-bottom: 3px;
+}
+.view-all a:hover {
+    border-bottom-color: var(--accent);
+}
+
+/* Case-studies index (list) page */
+.cs-intro {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--on-surface-variant);
+    max-width: 720px;
+    margin-top: 1.75rem;
+}
+.cs-list {
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--outline);
+}
+.cs-list-item {
+    position: relative;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--outline);
+}
+.cs-list-title {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    margin-bottom: 0.625rem;
+}
+.cs-list-title a {
+    color: var(--on-surface);
+    border-bottom: none;
+}
+.cs-list-title a::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+}
+.cs-list-item:hover .cs-list-title a {
+    color: var(--accent);
+}
+.cs-list-teaser {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--on-surface-variant);
+    max-width: 720px;
+    margin-bottom: 1.25rem;
+}
+.cs-list-footer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+}
+.cs-list-status {
+    color: var(--on-surface-variant);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+}
+.cs-list-read {
+    margin-left: auto;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+}
+
 /* ── Mobile ────────────────────────────────────────────────── */
 @media (max-width: 760px) {
     .wrap {
