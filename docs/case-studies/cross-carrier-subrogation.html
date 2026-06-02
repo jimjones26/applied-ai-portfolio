@@ -1,0 +1,742 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            Substrate — The Demand That Can't Leak: Governed Cross-Carrier
+            Subrogation — Jimmy Jones
+        </title>
+        <meta
+            name="description"
+            content="A subrogation demand sent across the hard boundary between two insurance carriers — carrying reserve figures and settlement strategy that structurally cannot cross — proven authentic by a counterparty with no account, no callback, and only a public key. Built end to end in under 12 hours on Substrate."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../assets/styles.css" />
+    </head>
+    <body>
+        <div class="cs-topbar">
+            <div class="wrap">
+                <a class="cs-back" href="../index.html">← Back to index</a>
+            </div>
+        </div>
+
+        <header class="cs-header">
+            <div class="wrap">
+                <p class="cs-num">Case Study · Substrate — Subrogation</p>
+                <h1 class="cs-title">The Demand That Can't Leak</h1>
+                <dl class="cs-meta">
+                    <dt>Stack</dt>
+                    <dd>
+                        Zig + SvelteKit + SQLite + OpenRouter + Ed25519 (a single
+                        slice on Substrate)
+                    </dd>
+                    <dt>Status</dt>
+                    <dd>
+                        A complete slice on Substrate — built end to end in
+                        <strong>under 12 hours</strong>, including two new
+                        substrate capabilities. Captured live from one clean
+                        Playwright walkthrough on the running stack. Not a
+                        production product.
+                    </dd>
+                    <dt>Last touched</dt>
+                    <dd>2026-06-02</dd>
+                </dl>
+            </div>
+        </header>
+
+        <main class="cs-body">
+            <div class="wrap">
+                <section class="cs-section">
+                    <p class="cs-pullquote">
+                        A subrogation demand that <em>structurally cannot</em>
+                        leak its own reasoning — proven authentic by a
+                        counterparty that has no account, no callback, and only a
+                        public key.
+                    </p>
+                    <p>
+                        An insurance carrier, <strong>NorthPoint Casualty</strong>,
+                        runs roughly 200 purpose-built AI agents that assist human
+                        adjusters. One of those flows pursues
+                        <strong>subrogation</strong> — recovering the cost of a
+                        paid claim from the at-fault driver's carrier,
+                        <strong>Vector Mutual</strong>. To recover, NorthPoint has
+                        to send a <em>demand</em> across the hardest boundary in
+                        the system: from inside its own substrate out to a company
+                        that is not on it.
+                    </p>
+                    <p>
+                        That demand is built from money-sensitive internal
+                        reasoning — the reserve figure, the settlement strategy, a
+                        behavioral model of how this counterparty negotiates.
+                        <strong>None of it may cross.</strong> Get that wrong once
+                        and you have handed your opponent your floor price in a
+                        negotiation. The usual defenses are a careful developer and
+                        a thorough code review — both of which are one tired
+                        afternoon away from failing.
+                    </p>
+                    <p>
+                        This slice shows the <em>substrate itself</em> — not a
+                        careful developer, not a review — making the leak
+                        unconstructable: the sensitive fields are not present on
+                        the object that can leave; the irreversible send is
+                        escalated to a human; and the outsider verifies the demand
+                        is authentic <em>offline</em>, holding nothing but
+                        NorthPoint's public key.
+                    </p>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">The headline</span>
+                        <p>
+                            The entire slice — both carriers' apps, the live LLM
+                            agents, the cross-firm cryptographic passport, and
+                            <em>two</em> new substrate capabilities it forced into
+                            existence — was built and proven end to end in
+                            <strong>under 12 hours.</strong> That number is only
+                            possible because the dangerous parts — governed egress,
+                            human authority over irreversible steps, verifiable
+                            attribution — were already the floor. I built the
+                            scenario. The substrate was the reason it was safe.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Two carriers, one boundary that matters</h2>
+                    <p>
+                        The boundary in question is <strong>substrate → outside
+                        world</strong>, not tenant → tenant. Vector Mutual has no
+                        account, never touches NorthPoint's data store, and runs
+                        its own separate application that imports
+                        <em>zero</em> substrate code. It only ever receives a
+                        minimized, cryptographically passported envelope.
+                    </p>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Who</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>NorthPoint Casualty</strong></td>
+                                <td>The carrier; a substrate tenant</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Maya</strong></td>
+                                <td>
+                                    Adjuster; retains
+                                    <strong>final authority</strong> over every
+                                    irreversible step
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>viability-agent /
+                                    negotiation-agent</strong>
+                                </td>
+                                <td>
+                                    Assist; <em>never decide</em> — they can only
+                                    propose
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vector Mutual</strong></td>
+                                <td>
+                                    The at-fault driver's carrier; receives the
+                                    demand. <strong>External — never on the
+                                    substrate.</strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        Two structural gates do the work, and I wrote neither of
+                        them in the slice. The <strong>egress gate</strong>
+                        compares an object's markings against the recipient's
+                        clearance and defaults to deny. The
+                        <strong>Agent Passport</strong> is a content-addressed,
+                        Ed25519-signed credential that an outsider can verify with
+                        no connection back to NorthPoint at all.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>What I built in the slice — and what I didn't</h2>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>I wrote (the surface)</th>
+                                <th>
+                                    The substrate enforced (inherited, not built)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Two SvelteKit apps — NorthPoint's recovery
+                                    desk and Vector Mutual's intake verifier
+                                </td>
+                                <td>
+                                    An <strong>egress gate</strong> — sensitive
+                                    markings cannot cross the boundary, by
+                                    construction, default-deny
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The agent flows and the field markings on the
+                                    subrogation case
+                                </td>
+                                <td>
+                                    A <strong>human-authority gate</strong> — the
+                                    irreversible transmit suspends until a human
+                                    approves; the agent cannot approve its own send
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Three thin drivers — argon2id login, the live
+                                    LLM seam, the inter-carrier transmit seam
+                                </td>
+                                <td>
+                                    A <strong>federated passport</strong> —
+                                    content-addressed, Ed25519-signed, verifiable
+                                    offline with only a public key
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    A <strong>tamper-evident audit ledger</strong>
+                                    — every crossing, refusal, and human decision
+                                    recorded, purpose-stamped under the passport
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        I spent my hours on the scenario. I did not write an egress
+                        evaluator, a human-in-the-loop suspension mechanism, a
+                        signature-and-content-address verifier, or an audit
+                        pipeline — and, more to the point, I
+                        <em>could not forget</em> to apply them. They are the floor
+                        the slice stands on.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The walkthrough</h2>
+                    <p>
+                        Every screen below was captured live from a single clean
+                        end-to-end run on the running stack — live substrate, live
+                        OpenRouter, the real inter-carrier transmit driver, and the
+                        external Vector Mutual verifier. Nothing is asserted that
+                        the browser and substrate were not seen to actually do.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Sign in — real auth, no fake session</h2>
+                    <p>
+                        Maya signs in at the recovery desk. Her password is
+                        verified by the substrate's argon2id seam; a session token
+                        is issued and held in an <strong>HttpOnly</strong> cookie.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/subro-01-login.png"
+                            alt="The NorthPoint recovery-desk sign-in form with username and password fields"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The recovery desk's sign-in — verified by the
+                            substrate's argon2id seam, server-side.
+                        </figcaption>
+                    </figure>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/subro-02-desk.png"
+                            alt="The recovery desk after sign-in, header reading Recovery desk · Maya, Specialist (human)"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            After sign-in — <strong>Recovery desk · Maya,
+                            Specialist (human)</strong>. Every action from here
+                            runs under Maya's resolved scope.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The credential never reaches browser-side JavaScript:
+                            evaluating <code>document.cookie</code> in the page
+                            returns <code>(none — HttpOnly)</code>. Verified, not
+                            asserted. The password is checked by the substrate; the
+                            session is shielded by construction.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The leak is marked at birth</h2>
+                    <p>
+                        One click on <em>"Run subrogation agent (live LLM)"</em>
+                        drives a real OpenRouter call — server-side, credential
+                        never in the browser. The agent assesses the paid claim and
+                        recommends pursuit, informed by a behavioral model of the
+                        counterparty.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/subro-03-agent-result.png"
+                            alt="The recovery desk after the agent run: an internal subrogation case carrying deny-outbound markings, and a separate minimized outbound demand carrying only five cleared fields"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Left, the internal case — reserve <code>$9,200</code>,
+                            recovery estimate <code>$6,532</code>, reasoning, and
+                            the counterparty profile, each stamped
+                            <strong>deny-outbound</strong>. Right, the prepared
+                            demand — only five cleared fields, awaiting approval.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The sensitive fields — the reserve, the settlement
+                            strategy, the recovery estimate, the
+                            counterparty-intelligence profile — carry deny-outbound
+                            markings <em>the moment the agent produces them.</em>
+                            The outbound demand carries only
+                            <code>claim_ref</code>, <code>insured_name</code>,
+                            <code>amount</code>, <code>fault_basis</code>, and
+                            <code>loss_date</code>. The reserve is
+                            <strong>not even a field on the object that can
+                            leave.</strong> You cannot leak a value that isn't
+                            present to be read.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The irreversible step belongs to a human</h2>
+                    <p>
+                        Sending the demand actually moves data out of the
+                        substrate, and a boundary crossing has no inverse — you
+                        cannot un-send a demand. So the substrate refuses to let an
+                        agent do it alone. The transmit suspends, and lands in
+                        Maya's review queue.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/subro-04-review-gate.png"
+                            alt="The review queue showing Decision #1, AUTHORIZE CROSS-BOUNDARY TRANSMIT, raised by subrogation-agent (AI agent), with the boundary identity and the exact five fields that will cross, and Approve & Transmit / Reject buttons"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            <strong>Decision #1 · raised by subrogation-agent (AI
+                            agent)</strong> — held under policy
+                            <code>baseline-transmit-requires-review</code>. The
+                            gate shows the gateway-composed boundary identity and
+                            the exact five fields that cross — nothing else.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The agent raised the action; it <em>cannot</em> approve
+                            it. The rule is explicit on the gate: "You are the
+                            approver; the agent cannot approve its own transmit."
+                            The outsider is shown an attenuated boundary identity —
+                            <em>"NorthPoint Casualty Subrogation Function, ref
+                            #SR-2024-04832"</em> — not NorthPoint's internal
+                            identity. On approve, the demand crosses; until then it
+                            has not left the substrate.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Verified offline, with only a public key</h2>
+                    <p>
+                        The demand lands at Vector Mutual's intake — a separate
+                        application that imports no substrate code and holds only
+                        NorthPoint's published public key. No account, no callback,
+                        no connection back. It verifies the passport
+                        <em>offline.</em>
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/subro-05-verified.png"
+                            alt="Vector Mutual's intake desk showing the received demand VERIFIED, accountable to NorthPoint Casualty, with all offline checks green, above a persisted intake log"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            <strong>VM-INTAKE-0006 → VERIFIED</strong>, accountable
+                            to NorthPoint Casualty — Ed25519 authentic against the
+                            pinned key, content-address intact, not expired, not
+                            revoked, scope and purpose bound.
+                        </figcaption>
+                    </figure>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/subro-06-rejected.png"
+                            alt="The same intake desk showing a tampered demand REJECTED on two independent checks: Ed25519 signature does not verify, and content-address does not match"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            A tampered demand (amount inflated
+                            <code>$9,200 → $18,400</code>) is
+                            <strong>REJECTED</strong> on two independent checks —
+                            the Ed25519 signature and the content-address both fail.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            Authenticity is not a trust relationship Vector Mutual
+                            has to maintain — it is math it can run alone. One
+                            altered signed field breaks
+                            <em>both</em> the signature check
+                            (<code>✗ Ed25519</code>) and the content-address
+                            (<code>SHA-256 ≠ passport_id</code>). The persisted
+                            intake log even carries an earlier
+                            <code>REJECTED</code> row from a run under the
+                            <em>wrong</em> key — a real before/after proving the
+                            cryptographic check is load-bearing, not decorative.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Pushback in, counter out — through the same gate</h2>
+                    <p>
+                        Vector Mutual pushes back: disputed fault, a lowball offer
+                        of <code>$4,830</code>, a 14-day window. Maya ingests the
+                        reply, and the substrate stamps it the instant it lands.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/subro-07-adversarial.png"
+                            alt="Vector Mutual's reply ingested on the desk, stamped Counterparty-Sourced-Adversarial on arrival"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The reply is marked
+                            <strong>Counterparty-Sourced-Adversarial</strong> on
+                            arrival — "positioning, not fact; never re-sent."
+                        </figcaption>
+                    </figure>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/subro-08-counter.png"
+                            alt="The negotiation agent's prepared counter, holding the demand at $9,200, carrying exactly the five cleared fields"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            A second live LLM call — the negotiation agent
+                            <strong>held the demand at $9,200</strong> against the
+                            lowball. The counter carries exactly the same five
+                            cleared fields; the rationale stays internal.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The negotiation loop is real end to end: external input
+                            in, the agent's own counter out, through the
+                            <em>identical</em> egress gate, the same passport, and
+                            the same human approval as the original demand (Decision
+                            #2). The counter landed as
+                            <code>VM-INTAKE-0007 → VERIFIED</code>. A full-page
+                            sweep of the recipient for the reserve, the recovery
+                            estimate (<code>6532</code>), the strategy, and the
+                            internal reasoning returned <strong>zero hits.</strong>
+                            The counter crossed minimized and clean, exactly as the
+                            demand did.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Settlement — and reversibility as a structural fact</h2>
+                    <p>
+                        Vector Mutual settles. One click books the recovery; the
+                        case flips to <strong>settled</strong> with
+                        <code>$6,532</code> recovered.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/subro-09-settled.png"
+                            alt="The recovery desk after booking: case status settled, recovered $6,532"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Recovery of <code>$6,532</code> booked; case settled —
+                            the reversible action's forward path, exercised live.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The booking declares an inverse, so it can be reverted —
+                            status back to <code>open</code>, recovered back to
+                            <code>$0</code>. The two transmits declare
+                            <em>none</em>, so reverting a sent demand raises
+                            <code>NotReversible</code>. No console button can
+                            un-send a delivered demand, because reversibility is a
+                            property of the action, not a caption on a button. A
+                            boundary crossing is irreversible by construction —
+                            which is exactly why it needed Maya's hand on it.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Self-improvement the gate has to approve</h2>
+                    <p>
+                        The counterparty's behavioral profile should learn from the
+                        real outcome. But a self-update is only as trustworthy as
+                        what decides whether to adopt it — and here that is an eval
+                        gate, not the console and not the agent.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/subro-10-eval-refused.png"
+                            alt="A sub-band proposal refused by the quality gate; the profile is unchanged"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            A sub-band proposal (<code>0.20</code>) is
+                            <strong>refused</strong> — gate score below the bar; the
+                            profile stays at its prior <code>0.71</code>.
+                        </figcaption>
+                    </figure>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/subro-11-eval-adopted.png"
+                            alt="An in-band proposal adopted by the quality gate; the profile updates"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            An in-band proposal (<code>0.78</code>)
+                            <strong>passes</strong> — the profile updates
+                            <code>0.71 → 0.78</code>.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            A real before/after in both directions: the bad
+                            self-update is structurally refused and the prior is
+                            held; the good one folds in. An AI system that improves
+                            itself only along a path a quality gate has cleared
+                            cannot quietly drift its own model of the world.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The whole run reconstructs from one ledger</h2>
+                    <p>
+                        Everything above is recoverable from NorthPoint's audit
+                        ledger alone — in order, every actor named.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/subro-12-audit.png"
+                            alt="The audit timeline reconstructing the entire run from 70 ordered audit envelopes, including model and agent invocations, passport issuance, suspensions, human decisions, transmits, denials, and the eval-gated update"
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The <code>/audit</code> timeline — the entire run
+                            rebuilt from <strong>70 audit envelopes</strong>, every
+                            outcome type rendered.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            Read top to bottom, the ledger holds the whole story:
+                            the live model and agent invocations; the passport
+                            issuance and attenuation; <em>both</em> boundary
+                            crossings stamped with purpose under the passport; each
+                            transmit as <code>SUSPENDED → decided (Maya) →
+                            transmit</code>; four <code>DENIED</code> permission
+                            checks recorded alongside the permits; and the
+                            eval-gated profile update. The refusals are in the
+                            record, not only the successes — which is the property a
+                            regulator actually asks for: reconstruct the entire
+                            history, to the envelope, after every actor has moved
+                            on.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Proven vs. not-yet — the honesty ledger</h2>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Claim</th>
+                                <th>How it's proven</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Egress gate refuses denied markings</td>
+                                <td>
+                                    In-process contract test (refuses the case and
+                                    the profile with <strong>zero</strong> driver
+                                    calls); the live desk proves the allowlist half
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Minimization — only approved fields cross</td>
+                                <td>
+                                    The actual wire payload at Vector Mutual —
+                                    sensitive-string sweep returns
+                                    <strong>0 hits</strong>, both demand and counter
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Passport verifies offline, public key only</td>
+                                <td>
+                                    Cross-language test suite 10/10 + live
+                                    <code>VM-INTAKE-0006</code> VERIFIED on the
+                                    pinned key alone
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Forgery / tamper / expiry rejected</td>
+                                <td>
+                                    Negative tests + a live tampered demand failing
+                                    on both Ed25519 and content-address
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Reversibility distinction is structural</td>
+                                <td>
+                                    In-process test — <code>revert</code> restores
+                                    the booking; transmit
+                                    <code>revert → NotReversible</code>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Eval-gated self-improvement</td>
+                                <td>
+                                    Live — sub-band <code>0.20</code> refused (prior
+                                    held), in-band <code>0.78</code> adopted
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Audit ledger reconstructs the whole run</td>
+                                <td>
+                                    Live <code>/audit</code> — 70 envelopes,
+                                    crossings purpose-stamped,
+                                    <code>DENIED</code>/<code>SUSPENDED</code>
+                                    recorded
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Why this took under 12 hours</h2>
+                    <p>
+                        This slice did more than reuse the substrate — it
+                        <em>extended</em> it, and even that fit in the window.
+                        Building the scenario surfaced two genuine gaps, and closing
+                        them was part of the same day's work:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Governed external egress.</strong> The only
+                            structural egress gate before this slice guarded the LLM
+                            seam. This added a recipient gateway and a transmit
+                            interface — mirroring the existing model-egress shape
+                            exactly, so the new path inherited the same default-deny
+                            discipline rather than inventing its own.
+                        </li>
+                        <li>
+                            <strong>Cross-firm passport federation.</strong>
+                            NorthPoint now publishes its issuer public key and a
+                            revocation list at public endpoints; the external
+                            verifier pins the key and checks revocation at verify
+                            time. A counterparty can authenticate a demand with no
+                            relationship to NorthPoint beyond that key.
+                        </li>
+                    </ul>
+                    <p>
+                        Add up what I did <em>not</em> have to build to ship this:
+                        an egress evaluator, a human-in-the-loop suspension
+                        mechanism, an attribution model, a tamper-evident ledger, a
+                        reversibility model, an eval gate. Those are the slow,
+                        dangerous, get-it-exactly-right layers — and not one of them
+                        was a line item. They came with the floor. What was left was
+                        the part worth spending a day on: two real applications, the
+                        agent flows, the field markings, and three thin drivers to
+                        plug in real auth, a real LLM, and a real transmit seam.
+                    </p>
+                    <p class="cs-pullquote">
+                        Under twelve hours is the headline.
+                        <strong>A leak you cannot construct</strong> is the reason.
+                    </p>
+                    <p class="bg-note">
+                        Every evidence slot above was filled from a single clean
+                        end-to-end walkthrough on the running stack (2026-06-02) —
+                        live substrate, live OpenRouter, the real inter-carrier
+                        transmit driver, and the external Vector Mutual verifier.
+                        Where a guarantee is proven by an in-process contract test
+                        rather than a console click, the evidence says so.
+                    </p>
+                </section>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="wrap">
+                <p class="footer-line">
+                    <a href="mailto:jimmy@jonesweb.studio"
+                        >jimmy@jonesweb.studio</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="tel:+18284073415">(828) 407-3415</a>
+                    <span class="sep">/</span>
+                    <a
+                        href="https://github.com/jimjones26"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >GitHub</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://www.linkedin.com/in/the-jimmy-jones/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >LinkedIn</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://x.com/the_jimmy_jones"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >X</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="../resume.html">Resume</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="../assets/lightbox.js" defer></script>
+    </body>
+</html>

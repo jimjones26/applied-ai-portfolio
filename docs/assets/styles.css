@@ -648,6 +648,71 @@ section {
     color: var(--on-surface);
 }
 
+/* ── Lightbox (click-to-zoom case-study figures) ───────────── */
+.cs-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    overflow: auto;
+    padding: clamp(1rem, 4vmin, 3rem);
+    background: rgba(28, 27, 27, 0.92);
+    cursor: zoom-out;
+    animation: cs-lightbox-in 0.12s ease-out;
+    -webkit-overflow-scrolling: touch;
+}
+.cs-lightbox[hidden] {
+    display: none;
+}
+.cs-lightbox-img {
+    margin: auto;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+    background: var(--surface-lowest);
+}
+.cs-lightbox-close {
+    position: fixed;
+    top: clamp(0.75rem, 2vmin, 1.25rem);
+    right: clamp(0.75rem, 2vmin, 1.25rem);
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body);
+    font-size: 1.75rem;
+    line-height: 1;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+.cs-lightbox-close:hover,
+.cs-lightbox-close:focus-visible {
+    background: rgba(255, 255, 255, 0.25);
+    outline: none;
+}
+body.cs-lightbox-open {
+    overflow: hidden;
+}
+@keyframes cs-lightbox-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    .cs-lightbox {
+        animation: none;
+    }
+}
+
 /* ── Case-study "what this proves" callout ─────────────────── */
 .cs-proof {
     border-left: 2px solid var(--accent);
