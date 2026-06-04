@@ -103,10 +103,18 @@ with `span.card-status` + `a.card-link` (`Read &rarr;`).
 
 The user links the case study **in a comment/reply**, not in the post body.
 
-- **LinkedIn**: narrative, hook-first, worst-case framing; the structural controls as
-  `→` arrow bullets; an honest "it's a real discriminator, not a blanket block" note;
-  close with "Full walkthrough in the comments 👇"; **3 relevant hashtags**
-  (e.g. `#AISecurity #AIAgents #OWASP`).
+- **LinkedIn**: **short — the post's only job is to make a person curious enough to
+  click the case study, not to summarize it.** Tease, don't tell; never give away the
+  whole walkthrough in the post. Default shape (keep it tight, ~120–160 words):
+  - a 1–2 line hook — the bold/worst-case move, stated plainly;
+  - one line of OWASP/trap framing (the mistake most teams make);
+  - the structural controls as **`→` arrow bullets, max 3, one line each** — each
+    teases the *mechanism* without fully explaining it;
+  - one honest "it's a real discriminator, not a blanket block" line;
+  - close with "Full walkthrough in the comments 👇";
+  - **3 relevant hashtags** (e.g. `#AISecurity #AIAgents #OWASP`).
+  If you find yourself explaining *how* a control works in the body, cut it — that
+  detail is the reward for clicking through.
 - **X**: one punchy post **≤ 280 chars** (X weights emoji ~2). No inline hashtags by
   default (they eat the budget and read as noise); offer an optional trailing one. Link
   goes in a reply. Offer a 3–4 tweet thread as an alternative for technical depth.
