@@ -41,6 +41,48 @@
                 <ul class="cs-list">
                     <li class="cs-list-item">
                         <h3 class="cs-list-title">
+                            <a
+                                href="llm02-sensitive-information-disclosure.html"
+                                >Substrate &mdash; The Secret the Model Never
+                                Saw</a
+                            >
+                        </h3>
+                        <p class="cs-list-teaser">
+                            A support assistant is handed an inquiry that
+                            <em>demands</em> the customer's SSN, date of birth,
+                            card number, and bank secrets &mdash; a targeted
+                            extraction dressed as an &ldquo;internal audit
+                            override.&rdquo; It <em>structurally cannot</em> leak
+                            any of it: the substrate stripped the PII and dropped
+                            the secret record at <code>context.admit</code>,
+                            before the prompt was ever built, so there is nothing
+                            in the model's context to copy &mdash; no human
+                            approval, no output scanner. A live slice on Substrate
+                            against OWASP LLM02 (Sensitive Information
+                            Disclosure).
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Zig</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">OpenRouter</span>
+                            <span class="tag">Substrate</span>
+                            <span class="tag">Argon2id</span>
+                        </div>
+                        <div class="cs-list-footer">
+                            <span class="cs-list-status"
+                                >Complete slice on Substrate &middot; OWASP
+                                LLM02</span
+                            >
+                            <a
+                                class="cs-list-read"
+                                href="llm02-sensitive-information-disclosure.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </li>
+
+                    <li class="cs-list-item">
+                        <h3 class="cs-list-title">
                             <a href="llm01-prompt-injection.html"
                                 >Substrate &mdash; The Injection That Can't
                                 Launder Itself</a

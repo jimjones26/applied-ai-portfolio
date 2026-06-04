@@ -182,6 +182,50 @@
                 <div class="cards">
                     <article class="card">
                         <h3 class="card-title">
+                            Substrate &mdash; The Secret the Model Never Saw
+                        </h3>
+                        <p class="card-lesson">
+                            <strong
+                                >A support assistant is handed an inquiry that
+                                demands the customer's SSN, date of birth, card
+                                number, and bank secrets</strong
+                            > &mdash; a targeted extraction dressed up as an
+                            &ldquo;internal audit override.&rdquo; A weak model
+                            tries to comply.
+                            <strong>What it shows:</strong> the assistant
+                            <em>structurally cannot</em> leak any of it, because
+                            the substrate <strong>stripped the PII and dropped
+                            the secret record at context assembly</strong> &mdash;
+                            before the prompt was ever built. The extraction is
+                            unsatisfiable: there is nothing in the model's
+                            context to copy, with <strong>no human approval and
+                            no output scanner</strong>. A live slice on Substrate
+                            against
+                            <strong>OWASP LLM02 (Sensitive Information
+                            Disclosure)</strong>.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Zig</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">OpenRouter</span>
+                            <span class="tag">Substrate</span>
+                            <span class="tag">Argon2id</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-status"
+                                >Complete slice on Substrate &middot; OWASP
+                                LLM02</span
+                            >
+                            <a
+                                class="card-link"
+                                href="case-studies/llm02-sensitive-information-disclosure.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </article>
+
+                    <article class="card">
+                        <h3 class="card-title">
                             Substrate &mdash; The Injection That Can't Launder
                             Itself
                         </h3>
