@@ -1,0 +1,782 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            Substrate &mdash; The Neighbor It Can't Retrieve: Governed Vector
+            Retrieval &mdash; Jimmy Jones
+        </title>
+        <meta
+            name="description"
+            content="A research desk runs retrieval-augmented generation over one shared corpus across an ethical wall between client engagements. The vector index ranks a forbidden document #1 by cosine alone — and the desk structurally cannot retrieve it. Every semantic candidate is laundered through the same governed read path and per-item admit gate, so the forbidden neighbor is re-fetched, dropped, and never enters the model's context. Cosine distance is blind to who may see what. A live slice on Substrate against OWASP LLM08 (Vector & Embedding Weaknesses)."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../assets/styles.css" />
+    </head>
+    <body>
+        <div class="cs-topbar">
+            <div class="wrap">
+                <a class="cs-back" href="index.html">← Back to case studies</a>
+            </div>
+        </div>
+
+        <header class="cs-header">
+            <div class="wrap">
+                <p class="cs-num">Case Study &middot; Substrate &mdash; Carrel</p>
+                <h1 class="cs-title">The Neighbor It Can't Retrieve</h1>
+                <dl class="cs-meta">
+                    <dt>Stack</dt>
+                    <dd>
+                        Zig + SvelteKit + Ollama + OpenRouter + Argon2id (a single
+                        slice on Substrate)
+                    </dd>
+                    <dt>Status</dt>
+                    <dd>
+                        A complete slice on Substrate. Captured live from one
+                        clean end-to-end walkthrough on the running stack
+                        (2026-06-04) &mdash; live substrate, a real embedding
+                        model (Ollama) ranking the corpus, live OpenRouter writing
+                        the answer, and real argon2id login. The live desk shows
+                        the wall holding; the load-bearing guarantee (the
+                        forbidden #1 neighbor is <em>never retrieved into
+                        context</em>) is proven model-free in-process by
+                        <code>wall_test.zig</code> and
+                        <code>agent_loop_test.zig</code>. Not a production product.
+                    </dd>
+                    <dt>Last touched</dt>
+                    <dd>2026-06-04</dd>
+                </dl>
+            </div>
+        </header>
+
+        <main class="cs-body">
+            <div class="wrap">
+                <section class="cs-section">
+                    <p class="cs-pullquote">
+                        A research desk runs RAG over one shared corpus across an
+                        ethical wall &mdash; and the vector index ranks a forbidden
+                        document <strong>#1</strong>. The desk
+                        <em>structurally cannot</em> retrieve it: every semantic
+                        candidate is laundered through the same governed read path
+                        and per-item admit gate, so the nearest neighbor is
+                        re-fetched, dropped, and never enters the model&rsquo;s
+                        context.
+                    </p>
+                    <p>
+                        Retrieval-augmented generation embeds a corpus into
+                        vectors, embeds the user&rsquo;s question, and pulls the
+                        nearest chunks into the model&rsquo;s context. The weakness
+                        OWASP names here is not in the model &mdash; it is in the
+                        <em>retrieval</em>. A vector index ranks by cosine
+                        distance, and
+                        <strong>cosine distance is blind to who may see
+                        what.</strong> Similarity and authorization are orthogonal:
+                        a chunk can be both the single most relevant hit
+                        <em>and</em> strictly forbidden. Any architecture that lets
+                        the index&rsquo;s output reach the model directly has
+                        already lost &mdash; access control becomes a filter
+                        sitting <em>beside</em> the ranker, one bug away from
+                        leaking the chunk it was meant to hide.
+                    </p>
+                    <p>
+                        <strong>Carrel</strong> is the research desk of a
+                        multi-engagement advisory firm. The firm runs several
+                        client engagements at once, and an iron rule of the
+                        business is the <strong>ethical wall</strong>: an analyst
+                        staffed on the Acme engagement must never see Zenith&rsquo;s
+                        confidential materials, and vice-versa. The corpus is shared
+                        infrastructure &mdash; <em>one</em> library, one vector
+                        index &mdash; but the wall between engagements is absolute.
+                    </p>
+                    <p>
+                        Carrel closes the hole structurally.
+                        <strong>The index can only ever propose opaque candidate
+                        ids; every candidate is laundered through the same governed
+                        read path and the same per-item admit gate that already make
+                        egress unconstructable.</strong> A candidate id carries no
+                        content &mdash; it means nothing until it is re-fetched
+                        through Object Query, and that re-fetch is tenant-partitioned
+                        at the Object Store and marking-gated at the Context Bundle
+                        Assembler. The forbidden document is ranked #1, re-fetched,
+                        and <em>dropped</em> &mdash; it never enters the bundle, so
+                        it cannot enter the answer. The gate is
+                        <strong>across</strong> the retrieval path, not beside the
+                        ranker.
+                    </p>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">The headline</span>
+                        <p>
+                            <strong>No human approves this, and no output is
+                            scanned.</strong> The index is built to be untrusted and
+                            tenant-blind &mdash; it is <em>designed</em> to propose a
+                            forbidden document &mdash; and the wall holds anyway,
+                            because the gate is the read path itself. You
+                            <em>cannot retrieve across a wall</em> when the
+                            candidate id is inert until it is re-fetched through a
+                            tenant-partitioned, marking-gated read. The desk does
+                            not <em>decide</em> to withhold the nearest neighbor; it
+                            is <strong>unable</strong> to retrieve it.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The cast</h2>
+                    <p>
+                        The boundary that matters is
+                        <strong>the index&rsquo;s ranked candidates &rarr; the
+                        model&rsquo;s context</strong> &mdash; the read-side bundle
+                        assembler. This is the structural sibling of two slices
+                        already built. The
+                        <a href="llm02-sensitive-information-disclosure.html"
+                            >LLM02 slice</a
+                        >
+                        made sensitive <em>egress</em> unconstructable at this same
+                        read-side assembler; the
+                        <a href="llm09-misinformation.html">LLM09 slice</a> made
+                        ungrounded <em>publication</em> unconstructable at the
+                        write-side adoption gate. LLM08 makes
+                        <em>forbidden retrieval</em> unconstructable &mdash; by
+                        routing semantic candidates through the gate that was already
+                        there. Same claim &mdash; governance is structural, not
+                        advisory &mdash; turned onto a third crossing.
+                    </p>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Who</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Carrel</strong></td>
+                                <td>
+                                    The advisory firm&rsquo;s research desk; a
+                                    substrate <strong>tenant</strong>. Also the name
+                                    of the live analyst agent that assembles the
+                                    bundle and answers
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>The analyst</strong></td>
+                                <td>
+                                    Human; signs in (real auth), is staffed on
+                                    <em>exactly one</em> engagement, and asks a
+                                    research question. <strong>Approves
+                                    nothing</strong> &mdash; there is no review gate
+                                    and no output scanner; the analyst watches the
+                                    desk answer from only what it is allowed to see
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>The shared corpus</strong></td>
+                                <td>
+                                    Research documents &mdash; memos, reviews,
+                                    briefing notes &mdash; each carrying two
+                                    markings: an <strong>engagement</strong>
+                                    (<code>acme</code>, <code>zenith</code>, or
+                                    <code>house</code> for firm-wide reference) and a
+                                    <strong>clearance</strong> tier
+                                    (<code>general</code> &lt; <code>restricted</code>)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>The vector index</strong></td>
+                                <td>
+                                    Untrusted and tenant-blind by design. Stores only
+                                    <code>{object_type, id, vector}</code> &mdash;
+                                    <strong>no markings at all</strong> &mdash; and
+                                    ranks by cosine alone. It is <em>built</em> to
+                                    propose a forbidden document
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The scenario</h2>
+                    <p>
+                        The analyst is staffed on <strong>Acme</strong>. They ask a
+                        plausible Acme question &mdash; about a supplier&rsquo;s
+                        bulk-component pricing and how to approach the renegotiation.
+                        By construction, the single most semantically similar
+                        document in the shared corpus is <strong>Zenith&rsquo;s</strong>
+                        confidential supplier-pricing memo: it quotes a unit price of
+                        <code>$12.40</code> (down from <code>$14.10</code>), and
+                        counsels pushing the supplier toward <code>$11.00</code>
+                        before quarter close &mdash; <em>&ldquo;these figures are
+                        confidential to the Zenith engagement.&rdquo;</em>
+                    </p>
+                    <p>
+                        A naive RAG desk pulls that memo into context and the model
+                        launders Zenith&rsquo;s confidential figure into an Acme
+                        deliverable: a textbook cross-engagement leak. Carrel cannot.
+                        The index ranks Zenith&rsquo;s memo #1; the Assembler
+                        re-fetches it and the admit gate drops it because its
+                        <code>engagement</code> marking is not the analyst&rsquo;s;
+                        it never enters the bundle, so it cannot enter the answer.
+                        <strong>The desk does not <em>decide</em> to withhold &mdash;
+                        it is <em>unable</em> to retrieve across the wall.</strong>
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>What I built in the slice &mdash; and what I didn&rsquo;t</h2>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>I wrote (the surface)</th>
+                                <th>
+                                    The substrate enforced (inherited, not built)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    The Carrel console (SvelteKit) &mdash; the
+                                    sign-in, the research desk, and the panel that
+                                    shows, side by side, what the index proposed and
+                                    what the desk could actually read
+                                </td>
+                                <td>
+                                    The <strong>per-item admit gate.</strong> Each
+                                    re-fetched candidate funnels through the
+                                    <em>existing</em> <code>context.admit</code> gate
+                                    that drops a marked item the actor may not see
+                                    &mdash; reused unchanged. No new governance code
+                                    was written for retrieval
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The <code>carrel</code> agent flow, the seeded
+                                    corpus, and the per-engagement bundles with their
+                                    self-selecting admit policies
+                                </td>
+                                <td>
+                                    <strong>Governed Object Query.</strong> A
+                                    candidate id is inert; resolving a semantic source
+                                    means <code>get(id, auth.tenant)</code> on each
+                                    ranked id. A foreign-tenant or deleted id is
+                                    <em>dropped, not raised</em> &mdash; partitioning
+                                    is enforced by the Object Store on every re-fetch,
+                                    never by trusting the index to scope itself
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Thin drivers &mdash; argon2id login and the
+                                    below-spine <code>host.embedding</code> driver
+                                    that embeds title + body and stores only
+                                    <code>{object_type, id, vector}</code>
+                                </td>
+                                <td>
+                                    The <strong>capability wall.</strong> Each analyst
+                                    holds <code>agent.invoke</code> and
+                                    <code>context.assemble</code> for <em>only</em>
+                                    their own engagement&rsquo;s agent and bundle. An
+                                    Acme analyst who aimed at the Zenith bundle is
+                                    denied at the run-gate scope precheck
+                                    (<code>PolicyDenied</code>) <em>before</em> any
+                                    assembly or model call runs
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        The slice&rsquo;s one substrate amendment added a fourth
+                        <code>ContextSource</code> arm,
+                        <code>semantic { objectType, queryParameter, topK }</code>,
+                        alongside the structured kinds. It is faithful to the
+                        substrate&rsquo;s pinned invariant &mdash; <em>a source the
+                        substrate cannot reach through Object Query is not
+                        expressible</em> &mdash; because a semantic source
+                        <em>does</em> reach its content through Object Query; only
+                        the candidate <em>proposal</em> is new (similarity instead of
+                        a predicate template). Its blast radius is the Context Bundle
+                        Assembler alone. I <em>could not forget</em> to apply the
+                        gate &mdash; the semantic candidates enter the same funnel
+                        <code>objects</code> / <code>document</code> /
+                        <code>derived</code> sources already use.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The walkthrough</h2>
+                    <p>
+                        Every screen below is the running product &mdash; the
+                        SvelteKit desk against the live substrate, a real embedding
+                        model (Ollama) ranking the corpus and a real LLM (OpenRouter)
+                        writing the answer. Nothing is captioned for the demo; the
+                        governance is <em>felt</em>, not labelled. Where a guarantee
+                        is proven by an in-process catch-trace rather than a console
+                        click, the evidence says so.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The desk&rsquo;s front door</h2>
+                    <p>
+                        Real authentication, not a demo gate. The analyst signs in
+                        against an <strong>argon2id</strong> password store wired
+                        below the substrate spine (the <code>host.password</code>
+                        seam); the cleartext password is never stored &mdash; only
+                        its PHC hash. The session is carried in an
+                        <strong>httpOnly</strong> cookie (<code>carrel_token</code>)
+                        and re-resolved on every request. The browser never speaks to
+                        the substrate directly &mdash; it speaks only to
+                        Carrel&rsquo;s own server, which makes every governed call on
+                        the analyst&rsquo;s behalf and holds the bearer token the
+                        browser is not allowed to see.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/carrel-01-sign-in.png"
+                            alt="The Carrel sign-in card for the research desk, with an analyst field, a password field, and a sign in button."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Carrel&rsquo;s sign-in &mdash; the analyst&rsquo;s
+                            password is verified by the substrate&rsquo;s argon2id
+                            seam, server-side; the session rides an
+                            <strong>httpOnly</strong> cookie
+                            (<code>carrel_token</code>), re-resolved on every request.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The credential is checked by the substrate and the
+                            session is real, not seeded. Every governed call that
+                            follows &mdash; embedding the question, ranking the
+                            corpus, re-fetching candidates, running the admit gate,
+                            assembling the bundle &mdash; runs under the
+                            analyst&rsquo;s resolved scope, server-side, with the
+                            browser holding nothing it could leak.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The research desk &mdash; bound to one engagement</h2>
+                    <p>
+                        Signed in as the <strong>Acme</strong> analyst. One question
+                        box, and a quiet promise: <em>&ldquo;You will only ever see
+                        your own engagement&rsquo;s material.&rdquo;</em> There is no
+                        engagement picker, no corpus browser, no &ldquo;switch
+                        client&rdquo; control &mdash; the analyst is bound to Acme by
+                        their <em>capability</em>, not by a UI choice they could
+                        fat-finger. Their scope grants <code>agent.invoke</code> and
+                        <code>context.assemble</code> for the Acme agent and the Acme
+                        bundle <em>only</em>; the Zenith desk is not a screen they can
+                        navigate to, it is an authority they do not hold.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/carrel-02-desk.png"
+                            alt="The Carrel research desk after sign-in as the Acme analyst: a single question box under a line reading 'You will only ever see your own engagement's material', with no engagement picker or corpus browser anywhere on the screen."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The Acme analyst&rsquo;s desk &mdash; one question box and
+                            a quiet promise. No engagement picker, no corpus browser,
+                            no &ldquo;switch client&rdquo; control: the wall is a
+                            <em>capability</em>, not a UI choice.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The analyst is pinned to one engagement by scope, not by
+                            the interface. An Acme analyst who somehow aimed at the
+                            Zenith bundle is denied at the run-gate scope precheck
+                            &mdash; <code>PolicyDenied</code> &mdash; <em>before any
+                            assembly or model call runs</em>. The capability wall
+                            stands even if the data wall somehow didn&rsquo;t.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The wall holds &mdash; in the open</h2>
+                    <p>
+                        The analyst asks the pricing question. Carrel answers from the
+                        Acme and house material it may see &mdash; and the desk shows,
+                        side by side, exactly what happened underneath. The vector
+                        index ranks by similarity alone; it is blind to the
+                        engagement. It proposed five candidates, and the document it
+                        ranked <strong>#1</strong> is rendered as
+                        <code>▓▓▓▓▓▓ withheld &mdash; outside your engagement</code>.
+                        The withheld rows are <strong>position-only</strong>: the
+                        title and body never leave the substrate, so even the
+                        desk&rsquo;s own panel cannot leak what the gate withheld. Two
+                        of the five candidates are withheld here &mdash; both Zenith
+                        documents &mdash; by engagement, not by clearance tier.
+                    </p>
+                    <p>
+                        The three documents that cleared the per-item admit gate are
+                        the <em>only</em> material the model reasoned over:
+                        Acme&rsquo;s component sourcing review, Acme&rsquo;s quarterly
+                        pricing summary, and the firm-wide renegotiation playbook. The
+                        answer grounds in those, and the confidential Zenith figures
+                        &mdash; <code>$12.40</code>, <code>$14.10</code>,
+                        <code>$11.00</code> &mdash; appear <strong>nowhere</strong> on
+                        the screen: not in the answer, not in a citation, not in a
+                        leaked candidate body.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/carrel-03-wall-held.png"
+                            alt="The Carrel desk after the Acme analyst's pricing question: a 'what the index proposed' column of five ranked candidates with the #1 row blacked out as 'withheld — outside your engagement' and a second withheld row, beside a 'what the desk could read' column of three admitted Acme and house documents, and an answer grounded only in those — with no $12.40, $14.10, or $11.00 figure anywhere."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            What the index proposed (left) versus what the desk could
+                            read (right). The index ranked a Zenith memo
+                            <strong>#1</strong> &mdash;
+                            <code>▓▓▓▓▓▓ withheld &mdash; outside your
+                            engagement</code> &mdash; and the admit gate dropped it.
+                            The answer grounds only in the three admitted Acme + house
+                            documents; the confidential Zenith figures appear nowhere.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The figure the model would have laundered is unreachable
+                            because the document carrying it never entered the
+                            analyst&rsquo;s context. The index is honest that the
+                            nearest neighbor exists and was the closest hit &mdash;
+                            <em>and</em> the gate is honest that the analyst may not
+                            read it. Similarity proposed; governance disposed, across
+                            the path rather than beside the ranker.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The same corpus, the other side of the wall</h2>
+                    <p>
+                        Sign out, sign in as the <strong>Zenith</strong> analyst, ask
+                        the <em>identical</em> question. Now the memo the Acme analyst
+                        could not read is admitted &mdash; Carrel states the supplier
+                        quoted <code>$12.40</code>, down from <code>$14.10</code>, and
+                        that the renegotiation should anchor toward
+                        <code>$11.00</code> &mdash; and it is the two <em>Acme</em>
+                        documents that are now withheld.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/carrel-04-symmetry.png"
+                            alt="The Carrel desk signed in as the Zenith analyst, asking the identical pricing question: the Zenith supplier-pricing memo is now admitted and the answer states $12.40, down from $14.10, anchoring toward $11.00 — while the two Acme documents are the ones now shown withheld."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The identical question, asked by the Zenith analyst on the
+                            same corpus and the same index. Now the memo is admitted
+                            &mdash; <code>$12.40</code>, down from <code>$14.10</code>,
+                            anchor toward <code>$11.00</code> &mdash; and the two Acme
+                            documents are the ones withheld. Same ranking, opposite
+                            admitted sets.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The wall is not the index hiding data from everyone; it is
+                            the gate <strong>across the path</strong>, deciding per
+                            analyst, symmetric on one shared corpus. Same question,
+                            same index, same nearest-neighbor ranking &mdash; opposite
+                            admitted sets, because admission is governed and
+                            similarity is not.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The honest proof &mdash; what the console can and can&rsquo;t show</h2>
+                    <p>
+                        The live desk shows the wall holding through a real embedding
+                        model and a real LLM. But a guarantee proven only through a
+                        model is proven only on the runs you watched. The load-bearing
+                        proof is therefore <strong>model-free and
+                        deterministic</strong> &mdash; two hermetic in-process
+                        catch-traces run against the <em>real</em> substrate, wired
+                        from the same Carrel cast the live server uses, differing only
+                        in that a token-overlap <code>HashEmbedder</code> stands in for
+                        the embedding model so <em>&ldquo;this document is the nearest
+                        neighbor&rdquo;</em> is <strong>engineered, not hoped
+                        for</strong>, and a capturing driver stands in for OpenRouter.
+                        The vector machinery and the governance path are
+                        byte-for-byte identical to production.
+                    </p>
+                    <p>
+                        <strong><code>wall_test.zig</code> &mdash; the gate across the
+                        retrieval path.</strong> Seed the corpus so the Zenith /
+                        restricted supplier-pricing memo is the <em>literal</em> #1
+                        nearest neighbor to the Acme analyst&rsquo;s question, run the
+                        real Context Bundle Assembler, and assert four things:
+                        <strong>(a)</strong> the index ranks the forbidden Zenith memo
+                        <em>first</em> &mdash; the cross-engagement leak a naive desk
+                        would launder, ranked top by cosine alone;
+                        <strong>(b)</strong> yet the Acme analyst&rsquo;s assembled
+                        bundle holds <em>only</em> Acme + house material &mdash; every
+                        Zenith id is absent and the classification carries no
+                        <code>zenith</code>: the admit gate dropped the #1 neighbor;
+                        <strong>(c)</strong> the <em>same</em> corpus and question,
+                        assembled for the <strong>Zenith</strong> analyst,
+                        <em>does</em> surface the memo and drops every Acme doc &mdash;
+                        the wall is symmetric, the gate across the path, not the index
+                        hiding data; <strong>(d)</strong> the Acme analyst cannot even
+                        <em>assemble</em> the Zenith bundle &mdash; their scope denies
+                        <code>context.assemble</code> for it, so the bundle gate raises
+                        <code>PolicyDenied</code> before any admit runs.
+                    </p>
+                    <p>
+                        <strong><code>agent_loop_test.zig</code> &mdash; the same
+                        guarantee at the model boundary.</strong> One layer up, the
+                        analyst invokes Carrel through
+                        <code>Agent Invocation.invoke</code> and the Agent Runtime runs
+                        the whole governed chain for real &mdash; run-gate &rarr;
+                        attenuate &rarr; Context Assembly &rarr; Model Inference
+                        &mdash; with only the model itself replaced by a
+                        <em>capturing</em> driver that records exactly the context the
+                        substrate hands it each turn. The Acme run reaches the model
+                        with only Acme + house material; the Zenith memo that the index
+                        ranked #1 <strong>never crosses into inference</strong> &mdash;
+                        the last place a leak could happen. The forbidden document
+                        cannot enter the answer because it never enters the
+                        model&rsquo;s context.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Proven vs. not-yet &mdash; the honesty ledger</h2>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Claim</th>
+                                <th>How it&rsquo;s proven</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    The index ranks a forbidden document #1 &mdash;
+                                    cosine is blind to the engagement
+                                </td>
+                                <td>
+                                    In-process &mdash; <code>wall_test.zig</code> (a)
+                                    seeds the corpus so the Zenith memo is the literal
+                                    #1 nearest neighbor; the live desk renders that #1
+                                    row as <code>withheld &mdash; outside your
+                                    engagement</code>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The #1 neighbor never enters the analyst&rsquo;s
+                                    bundle &mdash; the admit gate drops it
+                                </td>
+                                <td>
+                                    Live &mdash; the Acme answer grounds only in three
+                                    Acme + house documents and the Zenith figures
+                                    (<code>$12.40</code>, <code>$14.10</code>,
+                                    <code>$11.00</code>) appear nowhere + in-process
+                                    <code>wall_test.zig</code> (b): every Zenith id
+                                    absent, classification carries no
+                                    <code>zenith</code>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The wall is symmetric &mdash; the gate is across
+                                    the path, not the index hiding data
+                                </td>
+                                <td>
+                                    Live &mdash; the Zenith analyst asks the identical
+                                    question and the memo is admitted while the Acme
+                                    docs are withheld + in-process
+                                    <code>wall_test.zig</code> (c)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The forbidden document never crosses into the model
+                                    at inference
+                                </td>
+                                <td>
+                                    In-process &mdash;
+                                    <code>agent_loop_test.zig</code>: the full governed
+                                    chain runs with a capturing driver; the Acme run
+                                    reaches the model with only Acme + house material
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The analyst cannot even assemble the other
+                                    engagement&rsquo;s bundle
+                                </td>
+                                <td>
+                                    In-process &mdash; <code>wall_test.zig</code> (d):
+                                    the Acme scope denies <code>context.assemble</code>
+                                    for the Zenith bundle, raising
+                                    <code>PolicyDenied</code> before any admit runs
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The marking cannot be lost in implementation
+                                </td>
+                                <td>
+                                    Structural &mdash; the vector store holds only
+                                    <code>{object_type, id, vector}</code>; the marking
+                                    is <em>never copied</em> into the embedding, so
+                                    there is nothing to keep in sync &mdash; it lives
+                                    solely on the source object and is enforced on
+                                    re-fetch
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The defense is structural, not the model&rsquo;s
+                                    good behaviour
+                                </td>
+                                <td>
+                                    The index is <em>built</em> to propose forbidden
+                                    ids; the in-process proof is
+                                    <strong>model-free</strong> with a token-overlap
+                                    embedder, and the gate is deterministic over the
+                                    re-fetched items
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Why this is LLM08, structurally</h2>
+                    <p>
+                        OWASP LLM08 (Vector &amp; Embedding Weaknesses) is hard
+                        precisely because the weakness is in the retrieval, not the
+                        model: a vector index ranks by cosine distance, and cosine is
+                        blind to who may see what. The usual defenses bolt access
+                        control on <em>beside</em> the ranker &mdash; a post-filter on
+                        the results, or a pre-filter the index is <em>trusted</em> to
+                        apply &mdash; and the gate is one bug away from leaking the
+                        chunk it was meant to hide. Carrel moves the control off the
+                        index entirely and across the crossing:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>The index is untrusted and tenant-blind by
+                            design.</strong> The below-spine
+                            <code>host.embedding</code> driver embeds title + body and
+                            stores only <code>{object_type, id, vector}</code> &mdash;
+                            <em>no markings live in the vector store at all.</em> Its
+                            <code>search</code> returns the top-k nearest candidate ids
+                            regardless of who owns them. This closes the gap the LLM08
+                            design trace flags &mdash; <em>&ldquo;marking propagation
+                            is easy to lose in implementation&rdquo;</em> &mdash; not by
+                            carefully keeping a marking copy in sync, but by
+                            <strong>never copying the marking into the
+                            embedding.</strong> There is nothing to lose, because the
+                            marking was never there.
+                        </li>
+                        <li>
+                            <strong>Every candidate is re-fetched through governed
+                            Object Query.</strong> A candidate id is inert. To resolve
+                            a semantic source the Assembler asks the index for ranked
+                            ids, then <code>get(id, auth.tenant)</code>s each one. A
+                            foreign-tenant or deleted id is <em>dropped, not
+                            raised</em> &mdash; the partitioning is enforced by the
+                            Object Store on every re-fetch, never by trusting the index
+                            to scope its own query.
+                        </li>
+                        <li>
+                            <strong>Each re-fetched item funnels through the existing
+                            per-item admit gate.</strong> The <code>context.admit</code>
+                            gate that drops a marked item the actor may not see is
+                            reused unchanged. The engagement wall is a per-engagement
+                            bundle with a self-selecting admit policy: the Acme policy
+                            admits <code>engagement == acme OR house</code> and fires
+                            only for the Acme bundle; the Zenith policy admits
+                            <code>engagement == zenith OR house</code> and fires only
+                            for the Zenith bundle. Admission is governed; similarity is
+                            not.
+                        </li>
+                    </ul>
+                    <p class="cs-pullquote">
+                        A research desk that lets a real vector index rank one shared
+                        corpus, and <strong>still cannot retrieve a document across
+                        the engagement wall</strong> &mdash; because the substrate, not
+                        the index, re-fetches every candidate through a
+                        tenant-partitioned, marking-gated read before a single chunk
+                        reaches the model. The index proposes; governance disposes.
+                    </p>
+                    <p class="bg-note">
+                        Every evidence slot above was filled from a single clean
+                        end-to-end walkthrough on the running stack (2026-06-04)
+                        &mdash; live substrate, a real embedding model (Ollama), live
+                        OpenRouter, and real argon2id login. The live desk shows the
+                        wall holding; the load-bearing guarantee that the forbidden #1
+                        neighbor is never retrieved into context is proven model-free
+                        in-process by <code>wall_test.zig</code> (the gate across the
+                        retrieval path) and <code>agent_loop_test.zig</code> (the same
+                        guarantee at the model boundary), with a token-overlap
+                        <code>HashEmbedder</code> standing in for the embedding model so
+                        the forbidden document is the engineered #1 neighbor. Where a
+                        guarantee is proven by an in-process test rather than a console
+                        click, the evidence says so.
+                    </p>
+                </section>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="wrap">
+                <p class="footer-line">
+                    <a href="mailto:jimmy@jonesweb.studio"
+                        >jimmy@jonesweb.studio</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="tel:+18284073415">(828) 407-3415</a>
+                    <span class="sep">/</span>
+                    <a
+                        href="https://github.com/jimjones26"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >GitHub</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://www.linkedin.com/in/the-jimmy-jones/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >LinkedIn</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://x.com/the_jimmy_jones"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >X</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="../resume.html">Resume</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="../assets/lightbox.js" defer></script>
+    </body>
+</html>

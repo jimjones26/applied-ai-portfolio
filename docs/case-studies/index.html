@@ -41,6 +41,47 @@
                 <ul class="cs-list">
                     <li class="cs-list-item">
                         <h3 class="cs-list-title">
+                            <a href="llm08-vector-and-embedding-weaknesses.html"
+                                >Substrate &mdash; The Neighbor It Can't
+                                Retrieve</a
+                            >
+                        </h3>
+                        <p class="cs-list-teaser">
+                            A research desk runs RAG over one shared corpus across
+                            an ethical wall between client engagements &mdash; and
+                            the vector index ranks a forbidden document #1, because
+                            cosine distance is blind to who may see what. The desk
+                            <em>structurally cannot</em> retrieve it: the index only
+                            proposes opaque candidate ids, and every one is
+                            re-fetched through a tenant-partitioned, marking-gated
+                            read before a chunk reaches the model, so the #1 neighbor
+                            is re-fetched, dropped, and never enters the context. The
+                            gate is across the retrieval path, not beside the ranker.
+                            A live slice on Substrate against OWASP LLM08 (Vector
+                            &amp; Embedding Weaknesses).
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Zig</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">Ollama</span>
+                            <span class="tag">OpenRouter</span>
+                            <span class="tag">Substrate</span>
+                        </div>
+                        <div class="cs-list-footer">
+                            <span class="cs-list-status"
+                                >Complete slice on Substrate &middot; OWASP
+                                LLM08</span
+                            >
+                            <a
+                                class="cs-list-read"
+                                href="llm08-vector-and-embedding-weaknesses.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </li>
+
+                    <li class="cs-list-item">
+                        <h3 class="cs-list-title">
                             <a href="llm09-misinformation.html"
                                 >Substrate &mdash; The Figure It Can't
                                 Fabricate</a
