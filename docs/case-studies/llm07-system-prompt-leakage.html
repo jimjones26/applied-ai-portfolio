@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            Substrate &mdash; The Prompt It Can Publish: A Bank&rsquo;s System
+            Prompt, in the Open &mdash; Jimmy Jones
+        </title>
+        <meta
+            name="description"
+            content="A retail bank publishes its AI assistant's complete system prompt in the console — under a banner saying it is not a secret — and the bank is still secure, because every control that matters lives where a leaked prompt cannot reach it: the model credential below the spine, the $5,000 daily transfer limit in a Policy, the money in the balance. Knowing every word of the prompt buys an attacker nothing — a credential pasted into a prompt cannot even deploy. A live slice on Substrate against OWASP LLM07 (System Prompt Leakage)."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../assets/styles.css" />
+    </head>
+    <body>
+        <div class="cs-topbar">
+            <div class="wrap">
+                <a class="cs-back" href="index.html">← Back to case studies</a>
+            </div>
+        </div>
+
+        <header class="cs-header">
+            <div class="wrap">
+                <p class="cs-num">Case Study &middot; Substrate &mdash; Tellr</p>
+                <h1 class="cs-title">The Prompt It Can Publish</h1>
+                <dl class="cs-meta">
+                    <dt>Stack</dt>
+                    <dd>
+                        Zig + SvelteKit + OpenRouter + Argon2id (a single slice on
+                        Substrate)
+                    </dd>
+                    <dt>Status</dt>
+                    <dd>
+                        A complete slice on Substrate. Captured live from one clean
+                        end-to-end Playwright walkthrough on the running stack
+                        (2026-06-04) &mdash; live substrate, live OpenRouter (a free
+                        model), and the real argon2id login. Where a guarantee is a
+                        <em>deploy-time</em> refusal rather than a console click
+                        &mdash; the credential pasted into a prompt that
+                        <em>cannot be constructed</em> &mdash; the evidence says so
+                        and points at the in-process proof
+                        (<code>system_prompt_leakage_test.zig</code>) that exercises
+                        it. Not a production product.
+                    </dd>
+                    <dt>Last touched</dt>
+                    <dd>2026-06-04</dd>
+                </dl>
+            </div>
+        </header>
+
+        <main class="cs-body">
+            <div class="wrap">
+                <section class="cs-section">
+                    <p class="cs-pullquote">
+                        A retail bank publishes its assistant&rsquo;s
+                        <em>complete</em> system prompt in the open &mdash; and the
+                        bank is still secure, because every control that matters
+                        lives where a leaked prompt cannot reach it: the credential
+                        below the spine, the daily limit in a Policy, the money in
+                        the balance.
+                    </p>
+                    <p>
+                        OWASP LLM07 is blunt about the real failure: <em>&ldquo;the
+                        system prompt should not be considered a secret, nor should
+                        it be used as a security control.&rdquo;</em> The
+                        vulnerability is <strong>not</strong> that the prompt leaks
+                        &mdash; prompts always leak, through injection, reflection,
+                        or plain inference from behaviour. The vulnerability is
+                        <em>what developers put in the prompt that never belonged
+                        there</em>: credentials, connection strings, permission
+                        structures, business limits. Leakage is merely the trigger
+                        that exposes them.
+                    </p>
+                    <p>
+                        So this slice does the bold, correct thing:
+                        <strong>Tellr publishes its assistant&rsquo;s entire system
+                        prompt in the console</strong>, under a banner that says it
+                        is not a secret &mdash; and then shows that knowing every
+                        word of it buys an attacker nothing. The three things OWASP
+                        warns developers wrongly embed are all <em>present as
+                        temptations</em> and all <em>resolved the right way</em>, at
+                        a layer the prompt cannot touch: the
+                        <strong>payments/model credential</strong> lives below the
+                        spine in the driver Config; the
+                        <strong>$5,000 daily transfer limit</strong> is a
+                        <strong>Policy</strong> evaluated at the transfer chokepoint;
+                        and the <strong>money</strong> is the account
+                        <strong>balance</strong> &mdash; a settled transfer debits it
+                        structurally, so there is nothing the prompt can say to make
+                        the figure lie.
+                    </p>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">The headline</span>
+                        <p>
+                            The security is <strong>structural</strong>, not a matter
+                            of the model&rsquo;s good judgement, a careful developer,
+                            or a code review. The console&rsquo;s first panel hands
+                            the attacker the complete prompt and loses nothing by it,
+                            because the credential, the limit, and the money each sit
+                            at a layer the prompt cannot reach. And the one thing that
+                            <em>would</em> make a leak dangerous &mdash; a credential
+                            pasted into the prompt &mdash; is made
+                            <strong>unconstructable</strong>: a substrate seeded with
+                            a credential-bearing prompt
+                            <strong>does not start</strong>.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The cast</h2>
+                    <p>
+                        There is no second customer, no external recipient, no
+                        marking: LLM07 is about <strong>prompt hygiene</strong> and
+                        <strong>controls-live-elsewhere</strong>, not classification
+                        (that is the
+                        <a href="llm02-sensitive-information-disclosure.html"
+                            >LLM02</a
+                        >
+                        /
+                        <a href="llm08-vector-and-embedding-weaknesses.html"
+                            >LLM08</a
+                        >
+                        slices). The boundary that matters here is
+                        <strong>the prompt &rarr; everything the prompt is not</strong>
+                        &mdash; the credential, the Policy, the balance &mdash; and
+                        the whole claim is that those layers are untouched by anything
+                        the prompt contains or reveals.
+                    </p>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Who</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Tellr Bank, N.A.</strong></td>
+                                <td>
+                                    The bank; a substrate <strong>tenant</strong>
+                                    (<code>tellr</code>, jurisdiction US-DE)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Alex Morgan</strong> (<code>alex</code>)</td>
+                                <td>
+                                    The signed-in <strong>customer</strong>; holds
+                                    every crossing the slice makes, under a real
+                                    argon2id login
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>tellr-assistant-agent</strong></td>
+                                <td>
+                                    The published assistant; answers balances,
+                                    <em>proposes</em> transfers &mdash; and
+                                    <strong>never decides a limit</strong>. Runs on a
+                                    live OpenRouter <code>:free</code> model
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>OpenRouter</strong> (the model)</td>
+                                <td>
+                                    The LLM vendor; the API key lives in its driver
+                                    Config, <strong>below the spine</strong> &mdash;
+                                    never in a declaration, never in the prompt
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Three controls, none of them in the prompt</h2>
+                    <p>
+                        The three things OWASP warns you will wrongly embed are each
+                        resolved at a layer the prompt cannot reach. I wrote none of
+                        these enforcement points in the slice &mdash; they are the
+                        substrate&rsquo;s, inherited the way every other slice
+                        inherits them.
+                    </p>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>What OWASP warns you&rsquo;ll wrongly embed</th>
+                                <th>
+                                    Where it actually lives &mdash; a layer the prompt
+                                    cannot reach
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>The model / payments <strong>credential</strong></td>
+                                <td>
+                                    Below the spine, in the driver Config. The
+                                    provider declares
+                                    <code>credential_ref = &quot;env:OPENROUTER_API_KEY&quot;</code>
+                                    &mdash; a <em>reference</em>, resolved by the
+                                    driver the server builds. The key is never in a
+                                    declaration and never in the prompt
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>The <strong>$5,000 daily transfer limit</strong></td>
+                                <td>
+                                    A <strong>deny</strong> Policy
+                                    (<code>transfer-daily-limit</code>) on
+                                    <code>transfer_funds</code>&rsquo;s
+                                    <code>action.invoke</code>, conditioned on
+                                    <code>amount_cents &gt; 500_000</code>. Precedence
+                                    is <code>deny &gt; review &gt; permit</code>; the
+                                    boundary is strict (<code>&gt;</code>, not
+                                    <code>&ge;</code>): <code>$5,000.00</code> settles,
+                                    <code>$5,000.01</code> is refused. Fail-closed
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>The <strong>money</strong></td>
+                                <td>
+                                    The account <strong>balance</strong>. A settled
+                                    <code>transfer_funds</code> is an
+                                    <strong>update</strong> that debits
+                                    <code>balance_cents</code> via the pure
+                                    <code>debit-balance</code> Transformer
+                                    (<code>new = balance &minus; amount</code>,
+                                    deterministic arithmetic, no model call) on the
+                                    <em>same</em> governed crossing. There is no
+                                    separate ledger figure to drift
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        The one amendment this slice forced sits in the substrate
+                        itself: the Prompt primitive now runs a
+                        <strong>content-discipline scan</strong> at ingest, and
+                        <code>Prompt.init</code> <strong>fail-loud panics</strong> on
+                        the first recognizable credential. &ldquo;Deploy time&rdquo;
+                        maps to <em>assemble time</em> &mdash; a substrate seeded with
+                        a credential-bearing prompt <strong>does not start</strong>.
+                        The scan targets <em>credentials</em> (PEM blocks,
+                        <code>sk-</code>/<code>AKIA</code>/<code>ghp_</code> key
+                        shapes, credential-bearing URIs, an entropy-gated catch-all)
+                        and deliberately <strong>stops there</strong>: a leaked
+                        <em>business rule</em> like &ldquo;$5,000/day&rdquo; is not
+                        exploitable &mdash; knowing the limit does not let you exceed
+                        it &mdash; so the prompt is even allowed to <em>mention</em>
+                        the $5,000 limit, so the assistant can explain a refusal.
+                        <strong>A credential is refused; a business rule is
+                        not.</strong> That line is the whole design.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The walkthrough</h2>
+                    <p>
+                        Every screen below was captured live from a single clean
+                        end-to-end run on the running stack &mdash; live substrate,
+                        live OpenRouter (a free model), and the real argon2id login.
+                        Nothing is asserted that the browser and substrate were not
+                        seen to actually do. Where a guarantee is a deploy-time
+                        refusal rather than a console click, the evidence says so and
+                        points at the in-process proof that exercises it.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Sign in &mdash; real auth, no fake session</h2>
+                    <p>
+                        The customer signs in at the console; the password is verified
+                        by the substrate&rsquo;s <strong>argon2id</strong> seam and a
+                        session token is issued. The password is hashed once at
+                        startup (argon2id PHC, never cleartext at rest); the cookie is
+                        <strong>HttpOnly</strong>; every later crossing runs under the
+                        customer&rsquo;s resolved scope.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/tellr-01-sign-in.png"
+                            alt="The Tellr sign-in card reading 'Sign in to your accounts', with username and password fields, a sign in button, and a demo-customer hint of alex / tellr-customer-secret."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Tellr&rsquo;s sign-in &mdash; the customer&rsquo;s password
+                            is verified by the substrate&rsquo;s argon2id seam,
+                            server-side. Signing in as <code>alex</code> lands on the
+                            console header
+                            <strong>Online banking &middot; Alex Morgan, Customer
+                            (human)</strong>.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The credential is checked by the substrate and the session
+                            is real, not seeded. The <code>identity.resolve</code>
+                            (&ldquo;Signed in&rdquo;) envelope lands on the audit
+                            ledger, and every governed call that follows &mdash;
+                            reading the prompt registry, evaluating the transfer
+                            Policy, running the assistant &mdash; runs under Alex
+                            Morgan&rsquo;s resolved scope.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The prompt, published in the open &mdash; the headline</h2>
+                    <p>
+                        The console&rsquo;s first panel is
+                        <strong>&ldquo;System prompt, in the open.&rdquo;</strong> It
+                        renders the assistant&rsquo;s <em>actual</em>
+                        <code>PromptDeclaration.content</code> &mdash; fetched live
+                        from the substrate&rsquo;s Prompt registry, not a copy the page
+                        holds &mdash; under the thesis banner:
+                        <em>&ldquo;What the assistant is told is not what the assistant
+                        can do.&rdquo;</em> The text holds only purpose, tone, and
+                        role; the model is shown as a <code>:free</code> model (its
+                        credential is below the spine), and the two granted tools
+                        (<code>check_balance</code>, <code>transfer_funds</code>) are
+                        named beside it &mdash; <em>what it can do</em>, which is a
+                        catalog, not a prompt instruction. The account card shows the
+                        genuine seeded balance of <code>$1,000.00</code>, opened at
+                        startup through the governed <code>seed-account</code> Action.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/tellr-02-published-prompt.png"
+                            alt="The Tellr console: a 'System prompt, in the open' panel rendering the assistant's full prompt content verbatim — purpose, tone, role, the granted tools check_balance and transfer_funds, the :free model id — beside a 'Your account' card showing $1,000.00, a 'Move money' transfer form, and an 'Ask the assistant' chat box. No API key, connection string, or permission rule appears anywhere."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The full prompt is visible verbatim, including the line
+                            <em>&ldquo;Transfers above the bank&rsquo;s daily limit of
+                            $5,000 are declined by the bank&rsquo;s systems, not by
+                            you&hellip; you cannot override it &mdash; it is enforced
+                            for you.&rdquo;</em> That sentence is <strong>prose the
+                            model may explain</strong>, not the control &mdash; and the
+                            panel contains no API key, no connection string, no
+                            permission rule.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            There is nothing in the panel to protect. The prompt is
+                            handed over deliberately, and it carries none of the three
+                            things a leak could weaponize: the credential is a
+                            reference below the spine, the enforcing limit is a Policy,
+                            and the permission structure is scopes and gates. Knowing
+                            every word of the prompt is exactly the attacker&rsquo;s
+                            best case &mdash; the console gives it to them for free.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The limit is a Policy &mdash; an over-limit transfer is refused</h2>
+                    <p>
+                        The customer attempts a <strong>$9,000</strong> transfer to an
+                        external account through the deterministic transfer form &mdash;
+                        the model-free path, so the headline never depends on a
+                        model&rsquo;s choices. The <code>transfer-daily-limit</code>
+                        Policy denies the crossing at <code>action.invoke</code>,
+                        <em>before</em> any money moves. The line is drawn by the Policy
+                        Engine reading the invocation amount &mdash; not by the
+                        model&rsquo;s judgement, and not by the prompt&rsquo;s text.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/tellr-03-overlimit-refused.png"
+                            alt="The Tellr 'Move money' card after a $9,000 transfer attempt, showing a red 'Declined by Policy' message: 'Declined by the bank's systems: $9,000.00 exceeds the $5,000 daily transfer limit. The limit is a Policy at the transfer chokepoint — not a rule in the assistant's prompt.' The account card is untouched at $1,000.00."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The transfer comes back
+                            <strong>&ldquo;Declined by Policy&rdquo;</strong> &mdash;
+                            <em>&ldquo;$9,000.00 exceeds the $5,000 daily transfer
+                            limit. The limit is a Policy at the transfer chokepoint
+                            &mdash; not a rule in the assistant&rsquo;s prompt, and
+                            nothing the prompt says can override it.&rdquo;</em> The
+                            account card is untouched at <code>$1,000.00</code>.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The limit is the Policy, not the prose. The prompt may
+                            <em>explain</em> the $5,000 rule so the assistant can
+                            describe a refusal, but only the deny Policy at the
+                            chokepoint <em>is</em> it. Nothing the model is told &mdash;
+                            and nothing an attacker who read the prompt could say
+                            &mdash; can talk the daily limit out of firing.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>An ordinary transfer settles &mdash; and debits the balance</h2>
+                    <p>
+                        The customer sends an ordinary <strong>$400</strong> transfer
+                        the same governed way. Under the limit, the deny does not fire
+                        and the baseline permit carries it. The effect is an
+                        <strong>update on the source account</strong>: the
+                        <code>debit-balance</code> Transformer subtracts $400 from the
+                        live balance on the same crossing. A settled transfer
+                        <strong>cannot</strong> leave the balance untouched, because
+                        moving the money <em>is</em> the effect.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/tellr-04-settled-debited.png"
+                            alt="The Tellr console after a $400 transfer: the 'Move money' card shows a green 'Transfer of $400.00 to EXT-555 settled' note, and the 'Your account' card has moved from $1,000.00 to $600.00."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The result reads <strong>&ldquo;Transfer of $400.00 to
+                            EXT-555 settled&rdquo;</strong>, and the account card moves
+                            to <code>$600.00</code> &mdash; debited by exactly the
+                            transferred amount. The over-limit refusal left it
+                            untouched; this one took $400 off the $1,000.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The money is the balance, and there is only one of it. The
+                            balance the console shows, the figure
+                            <code>check_balance</code> returns, and the number the
+                            context bundle feeds the assistant are one and the same, by
+                            construction &mdash; the debit happens on the same governed
+                            crossing as the transfer, through deterministic arithmetic
+                            with no model call. There is no second figure to drift, and
+                            nothing the prompt says can make the balance lie.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The published assistant does its real job &mdash; and tells the truth</h2>
+                    <p>
+                        The customer asks the live assistant
+                        <em>&ldquo;What&rsquo;s my balance?&rdquo;</em> The assistant
+                        runs against the real OpenRouter free model, commissioned under
+                        a credential <strong>attenuated</strong> from the
+                        customer&rsquo;s scope (it carries <code>action.invoke</code>,
+                        <code>tool.invoke</code>, <code>model.invoke</code>&hellip; but
+                        the bank&rsquo;s limit is <em>not</em> its to decide). It
+                        answers from the <strong>one</strong> balance that exists
+                        &mdash; the debited figure, read through its
+                        <code>check_balance</code> grant and accounts context bundle.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/tellr-05-live-assistant.png"
+                            alt="The Tellr 'Ask the assistant' panel: the question 'What's my balance?' and the assistant's live answer, 'Your current balance is $600.00.' — matching the debited account card to the cent."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The assistant answered <strong>&ldquo;Your current balance
+                            is $600.00.&rdquo;</strong> &mdash; the <em>debited</em>
+                            balance, matching the account card to the cent. The
+                            prompt&rsquo;s legitimate job (answer helpfully in role) is
+                            exactly what it is used for; the controls above it needed no
+                            model at all.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            Because there is no second place the balance lives, the
+                            assistant <em>cannot</em> report a stale number even if the
+                            prompt told it to. The model is used for the one thing it is
+                            good for &mdash; answering in role &mdash; and is given no
+                            authority over the figure it reports. The prompt is public,
+                            the model is live, and the answer is still the truth.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Extraction buys nothing</h2>
+                    <p>
+                        This beat is the <em>absence</em> of an attack surface, made
+                        concrete. An attacker who &ldquo;leaks&rdquo; the prompt &mdash;
+                        by injection, by asking, by inference &mdash; gets the text that
+                        is <strong>already on the screen</strong>. The console hands it
+                        over deliberately &mdash; the published-prompt panel above
+                        <em>is</em> the leaked prompt. The leaked text contains no
+                        credential (it cannot &mdash; a credential-bearing prompt panics
+                        at assemble), no enforcing limit (that is the Policy), and no
+                        permission structure (those are scopes and gates). Every control
+                        is several layers <em>outside</em> the prompt, untouched by
+                        anything the prompt says or reveals.
+                    </p>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The whole slice is the demonstration: Beats 2&ndash;4 hold
+                            every control with the prompt fully public the entire time.
+                            The in-process test
+                            <code>system_prompt_leakage_test.zig</code> additionally
+                            asserts the shipped prompt contains none of {API key,
+                            enforcing limit rule, permission rule}, and that
+                            <code>scanPromptContentDiscipline</code> returns
+                            <code>CredentialInPrompt</code> for a key-bearing variant
+                            &mdash; which at assemble is a fail-loud
+                            <code>Prompt.init</code> panic, so the substrate would not
+                            start. There is nothing to extract that is worth extracting.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The whole run reconstructs from one ledger</h2>
+                    <p>
+                        The whole flow reconstructs from Tellr&rsquo;s audit ledger,
+                        newest first &mdash; every crossing attributed to Alex Morgan.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/tellr-06-audit-timeline.png"
+                            alt="The Tellr /audit timeline, newest first: agent commissioned and model queried crossings, identity-attenuate and permission-checked rows, an action-invoked transfer with its own transformer-invoke debit, a highlighted DENIED permission check annotated as a Policy refusing the over-limit crossing, and the argon2id sign-in — every row attributed to Alex Morgan, Customer (human)."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The <code>/audit</code> timeline renders the full governed
+                            trace: the <strong>argon2id sign-in</strong>; the
+                            <strong>DENIED</strong> <code>policy.evaluate</code> for the
+                            over-limit refusal, annotated <em>&ldquo;the control held
+                            regardless of anything a prompt says&rdquo;</em>; the
+                            settled transfer&rsquo;s <code>action.invoke</code>
+                            <strong>and its own</strong> <code>transformer.invoke</code>
+                            debit; and the live <code>agent.invoke</code> /
+                            <code>model.invoke</code> crossings, each permission-checked.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The debit is not a silent side-write but a <em>governed
+                            crossing of record</em>, run under an attenuated credential
+                            (<code>identity.attenuate</code> +
+                            <code>policy.evaluate</code> immediately beneath it). The
+                            refusal is in the record next to the permits, not only the
+                            successes &mdash; the property a regulator actually asks for:
+                            reconstruct the entire history, to the envelope, after every
+                            actor has moved on.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Proven vs. not-yet &mdash; the honesty ledger</h2>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Claim</th>
+                                <th>How it&rsquo;s proven</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    The complete system prompt is published in the
+                                    open, read live from the substrate
+                                </td>
+                                <td>
+                                    Live <code>/</code> &mdash; the &ldquo;System
+                                    prompt, in the open&rdquo; panel renders
+                                    <code>PromptDeclaration.content</code> verbatim from
+                                    the Prompt registry
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The $5,000 limit is a Policy; an over-limit transfer
+                                    is refused at the chokepoint
+                                </td>
+                                <td>
+                                    Live &mdash; $9,000 returned <strong>&ldquo;Declined
+                                    by Policy&rdquo;</strong>, balance held at $1,000;
+                                    <code>/audit</code> shows a <strong>DENIED</strong>
+                                    <code>policy.evaluate</code>; in-process
+                                    <code>system_prompt_leakage_test.zig</code> holds the
+                                    boundary exact at <code>&gt;</code> $5,000
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    A settled transfer debits the balance (the money is
+                                    the balance; no drift)
+                                </td>
+                                <td>
+                                    Live &mdash; $400 settled and the balance moved
+                                    $1,000 &rarr; <strong>$600</strong>;
+                                    <code>/audit</code> shows <code>action.invoke</code>
+                                    + its own <code>transformer.invoke</code>; the
+                                    in-process test asserts the debited balance after
+                                    settle
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The assistant reports the one true balance (a leaked
+                                    prompt can&rsquo;t make it lie)
+                                </td>
+                                <td>
+                                    Live &mdash; the model answered
+                                    <strong>&ldquo;$600.00&rdquo;</strong>, matching the
+                                    debited account card to the cent
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The model / payments credential is below the spine,
+                                    never in the prompt
+                                </td>
+                                <td>
+                                    Structural &mdash; the provider declares
+                                    <code>credential_ref = &quot;env:OPENROUTER_API_KEY&quot;</code>;
+                                    the live model call succeeded using the below-spine
+                                    key, with no credential in any declaration
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    A credential pasted into a prompt cannot deploy
+                                </td>
+                                <td>
+                                    In-process <code>system_prompt_leakage_test.zig</code>
+                                    &mdash; <code>scanPromptContentDiscipline</code>
+                                    returns <code>CredentialInPrompt</code> for a
+                                    key-bearing variant; at assemble this is a fail-loud
+                                    <code>Prompt.init</code> panic, so the substrate
+                                    would not start (deploy-time, not a console click)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Extraction buys nothing</td>
+                                <td>
+                                    Live &mdash; the prompt is already public and Beats
+                                    2&ndash;4 hold the controls with it fully visible;
+                                    the in-process test asserts no key / limit-rule /
+                                    permission in the shipped prompt
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Audit ledger reconstructs the run</td>
+                                <td>
+                                    Live <code>/audit</code> &mdash; sign-in, the DENIED
+                                    over-limit refusal, the settled transfer + its
+                                    <code>transformer.invoke</code> debit, and the live
+                                    agent / model crossings, all attributed
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Why this is LLM07, structurally</h2>
+                    <p>
+                        OWASP LLM07 (System Prompt Leakage) prescribes treating the
+                        prompt as non-secret and moving every real control out of it.
+                        The substrate realizes that as structure, not advice:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Don&rsquo;t keep secrets in the prompt.</strong> A
+                            credential-bearing prompt panics <code>Prompt.init</code> at
+                            assemble, so the substrate refuses to start. The honest
+                            build keeps the key in the driver Config below the spine,
+                            where every credential in every slice already lives.
+                        </li>
+                        <li>
+                            <strong>Don&rsquo;t enforce with the prompt.</strong> The
+                            $5,000 limit is a deny Policy at <code>action.invoke</code>,
+                            and the daily-transfer rule cannot be talked out of by
+                            anything the model is told. The prompt may <em>explain</em>
+                            the limit; only the Policy <em>is</em> it.
+                        </li>
+                        <li>
+                            <strong>Assume the prompt is observable &mdash; design as if
+                            it&rsquo;s public.</strong> So Tellr makes it public. The
+                            headline of the whole slice is a panel that hands the
+                            attacker the complete prompt and loses nothing by it,
+                            because the credential, the limit, and the money each sit at
+                            a layer the prompt cannot reach.
+                        </li>
+                    </ul>
+                    <p class="cs-pullquote">
+                        A bank assistant whose every instruction is on display, that
+                        still <strong>cannot leak a credential, cannot raise its own
+                        limit, and cannot misreport a balance</strong> &mdash; because
+                        the substrate, not the prompt, holds every line.
+                    </p>
+                    <p class="bg-note">
+                        Every evidence slot above was filled from a single clean
+                        end-to-end Playwright walkthrough on the running stack
+                        (2026-06-04) &mdash; live substrate, live OpenRouter (a free
+                        model), and the real argon2id login. Where a guarantee is a
+                        deploy-time refusal rather than a console click &mdash; the
+                        credential-bearing prompt that cannot be constructed &mdash; the
+                        evidence says so and points at the in-process proof in
+                        <code>system_prompt_leakage_test.zig</code> that exercises it,
+                        along with the exact-boundary and shipped-prompt-discipline
+                        assertions.
+                    </p>
+                </section>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="wrap">
+                <p class="footer-line">
+                    <a href="mailto:jimmy@jonesweb.studio"
+                        >jimmy@jonesweb.studio</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="tel:+18284073415">(828) 407-3415</a>
+                    <span class="sep">/</span>
+                    <a
+                        href="https://github.com/jimjones26"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >GitHub</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://www.linkedin.com/in/the-jimmy-jones/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >LinkedIn</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://x.com/the_jimmy_jones"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >X</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="../resume.html">Resume</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="../assets/lightbox.js" defer></script>
+    </body>
+</html>
