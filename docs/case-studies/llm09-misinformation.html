@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            Substrate &mdash; The Figure It Can't Fabricate: Governed
+            Misinformation &mdash; Jimmy Jones
+        </title>
+        <meta
+            name="description"
+            content="A market-intelligence desk lets a live LLM write its briefs — and structurally cannot publish a figure it cannot ground. Every claim is scored against the cited Source filing by an eval gate before the brief is ever persisted; a figure with no authoritative source fails closed and never becomes a published row. You cannot ground against a source you do not hold. A live slice on Substrate against OWASP LLM09 (Misinformation)."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../assets/styles.css" />
+    </head>
+    <body>
+        <div class="cs-topbar">
+            <div class="wrap">
+                <a class="cs-back" href="index.html">← Back to case studies</a>
+            </div>
+        </div>
+
+        <header class="cs-header">
+            <div class="wrap">
+                <p class="cs-num">Case Study &middot; Substrate &mdash; Beacon</p>
+                <h1 class="cs-title">The Figure It Can't Fabricate</h1>
+                <dl class="cs-meta">
+                    <dt>Stack</dt>
+                    <dd>
+                        Zig + SvelteKit + OpenRouter + Argon2id (a single slice
+                        on Substrate)
+                    </dd>
+                    <dt>Status</dt>
+                    <dd>
+                        A complete slice on Substrate. Captured live from one
+                        clean end-to-end walkthrough on the running stack
+                        (2026-06-04) &mdash; live substrate, live OpenRouter, and
+                        real argon2id login. The live console proves the gate&rsquo;s
+                        verdict; the load-bearing guarantee (an ungrounded figure
+                        is <em>never persisted</em>) is proven model-free in-process
+                        by <code>misinformation_test.zig</code>. Not a production
+                        product.
+                    </dd>
+                    <dt>Last touched</dt>
+                    <dd>2026-06-04</dd>
+                </dl>
+            </div>
+        </header>
+
+        <main class="cs-body">
+            <div class="wrap">
+                <section class="cs-section">
+                    <p class="cs-pullquote">
+                        A market desk lets a live LLM write its briefs &mdash; and
+                        <em>structurally cannot</em> publish a figure it cannot
+                        ground. Every claim is scored against its cited Source
+                        before the brief is ever persisted; a figure with no
+                        authoritative filing fails closed and never becomes a
+                        published row.
+                    </p>
+                    <p>
+                        A language model will state a number with total confidence
+                        whether or not the number is real. The failure that makes
+                        misinformation <em>hard</em> is not that the model lies on
+                        purpose &mdash; it is that
+                        <strong>confident fabrication and grounded fact are
+                        indistinguishable at the point of publication.</strong> A
+                        desk that lets an LLM write its briefs will, sooner or
+                        later, publish &ldquo;Q3 revenue was $9.9B&rdquo; with the
+                        same fluency it publishes the true figure. Content filters
+                        and an LLM-as-judge &ldquo;does this look right?&rdquo;
+                        pass do not close the hole: they are themselves
+                        probabilistic, and they sit <em>beside</em> the write path,
+                        not across it.
+                    </p>
+                    <p>
+                        <strong>Beacon</strong> is a market-intelligence desk. It
+                        publishes short <strong>Briefs</strong> answering
+                        <strong>Topics</strong> on its editorial agenda. Every
+                        factual claim must cite a <strong>Source</strong> &mdash; a
+                        filed figure held as a tenant-local object &mdash; and the
+                        figure the Brief asserts must equal what the Source holds. A
+                        market brief is the ideal misinformation surface: a claim is
+                        a number, and that number either <em>is</em> in the cited
+                        filing or it is not. Grounding here is falsifiable, not
+                        subjective.
+                    </p>
+                    <p>
+                        Beacon closes the hole structurally.
+                        <strong>Publishing is a governed Action whose eval gate
+                        scores the produced claim against the cited Source object
+                        <em>before</em> the claim is ever persisted.</strong> A
+                        brief whose figure does not match the authoritative filing
+                        fails its case, scores below threshold, and raises
+                        <code>EvalGateFailed</code>: nothing is written, nothing is
+                        announced, nothing is even audited. The misinformation never
+                        becomes a published row. The gate is a deterministic
+                        predicate over real data &mdash; <em>&ldquo;the figure the
+                        writer asserts equals the figure the cited Source
+                        holds&rdquo;</em> &mdash; not a judgment call.
+                    </p>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">The headline</span>
+                        <p>
+                            <strong>No human approves this, and no output is
+                            scanned.</strong> The eval gate is the entire,
+                            autonomous, fail-closed control: it runs against the
+                            Action&rsquo;s produced values before the Object Store
+                            ever sees them, and sub-threshold is fail-closed. You
+                            <em>cannot ground against a source you do not hold</em>
+                            &mdash; a missing or retracted filing yields zero rows,
+                            the criterion is unevaluable, and it fails closed. The
+                            desk does not <em>decide</em> to withhold a brief it
+                            can&rsquo;t stand behind; it is <em>unable</em> to
+                            publish one.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The cast</h2>
+                    <p>
+                        The boundary that matters is
+                        <strong>the writer&rsquo;s draft &rarr; the published
+                        record</strong> &mdash; the write-side adoption gate. This
+                        is the structural twin of the
+                        <a href="llm02-sensitive-information-disclosure.html"
+                            >LLM02 slice</a
+                        >: LLM02 made sensitive <em>egress</em> unconstructable at
+                        the read-side assembler; LLM09 makes ungrounded
+                        <em>publication</em> unconstructable at the write-side gate.
+                        Same claim &mdash; governance is structural, not advisory
+                        &mdash; turned onto a different crossing.
+                    </p>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Who</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Beacon</strong></td>
+                                <td>
+                                    The market-intelligence desk; a substrate
+                                    <strong>tenant</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>The editor</strong></td>
+                                <td>
+                                    Human; signs in, works the topic queue, and
+                                    commissions briefs. <strong>Approves
+                                    nothing</strong> &mdash; there is no review gate
+                                    and no output scanner; the editor watches the
+                                    desk publish or refuse
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>beacon_writer</strong></td>
+                                <td>
+                                    The live LLM agent; reads its context bundle
+                                    (the Topic + the source corpus), drafts a
+                                    figure, and calls the gated
+                                    <code>publish_brief</code> Action. Self-grounds
+                                    from its sources or <em>declines</em> &mdash; it
+                                    cannot force a number through
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>The Source corpus</strong></td>
+                                <td>
+                                    The authoritative filings &mdash; eight Source
+                                    objects (Acme&rsquo;s <code>$4.2B</code> Q3
+                                    revenue, Hooli&rsquo;s <code>$12.4B</code>,
+                                    Initech&rsquo;s <code>$1.8B</code>, &hellip;),
+                                    each read live by the gate. The ground truth a
+                                    claim is checked against
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="cs-section">
+                    <h2>What I built in the slice &mdash; and what I didn&rsquo;t</h2>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>I wrote (the surface)</th>
+                                <th>
+                                    The substrate enforced (inherited, not built)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    The Beacon console (SvelteKit) &mdash; the
+                                    Source Library, the Editorial Queue, the
+                                    Publications record, and the Composer that shows
+                                    the writer&rsquo;s prose beside the gate&rsquo;s
+                                    decision
+                                </td>
+                                <td>
+                                    The <strong>Action eval gate.</strong>
+                                    <code>publish_brief</code> declares an
+                                    <code>eval_suite</code>; the Action Mediator
+                                    runs that suite against the effect&rsquo;s
+                                    produced values <strong>before</strong> the
+                                    Object Store ever sees them. Sub-threshold is
+                                    fail-closed: <code>EvalGateFailed</code>, with
+                                    nothing persisted, announced, or audited
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The <code>beacon_writer</code> agent flow and
+                                    the seeded agenda (six Topics, one with no
+                                    Source) the substrate originates at startup
+                                </td>
+                                <td>
+                                    A <strong>deterministic grounding suite</strong>
+                                    &mdash; a <em>coverage</em> case (the metric must
+                                    be one Beacon covers) plus one <em>guard</em>
+                                    case per metric:
+                                    <code>figure == Source[claim_key == K].figure</code>,
+                                    the Source read live via the substrate&rsquo;s
+                                    Object Query. A missing or retracted Source
+                                    yields zero rows and the criterion
+                                    <strong>fails closed</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Three thin drivers &mdash; argon2id login, the
+                                    live OpenRouter seam, and the object store
+                                </td>
+                                <td>
+                                    The <strong>&ldquo;tool failure is
+                                    feedback&rdquo; contract</strong> &mdash;
+                                    <code>EvalGateFailed</code> returns to the model
+                                    as a tool result, so the gate doesn&rsquo;t
+                                    merely block: it forces the writer to ground
+                                    itself or decline to publish. The self-correcting
+                                    loop <em>is</em> the production flow
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        The grounding suite is
+                        <strong>generated from the same single list of covered
+                        metrics that seeds the topic queue</strong>, so the gate and
+                        the corpus can never drift apart. The guarantee is structural,
+                        not authored prose: a figure is publishable because it
+                        <em>matches a held filing</em>, not because someone
+                        remembered to check it. I <em>could not forget</em> to apply
+                        the gate &mdash; it sits across the write path, not beside
+                        it.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The walkthrough</h2>
+                    <p>
+                        Every screen below was captured live from a single clean
+                        end-to-end run on the running stack &mdash; live substrate,
+                        live OpenRouter, and the real argon2id login. Where a
+                        guarantee is proven by an in-process contract test rather
+                        than a console click, the evidence says so.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Sign in &mdash; the desk&rsquo;s front door</h2>
+                    <p>
+                        The editor signs in at the desk. Real authentication, not a
+                        demo gate: the password is verified against an
+                        <strong>argon2id</strong> store wired below the substrate
+                        spine, and the session is carried in an
+                        <strong>HttpOnly</strong> cookie, re-resolved on every
+                        request. The browser never speaks to the substrate directly
+                        &mdash; it speaks only to Beacon&rsquo;s own server, which
+                        makes every governed call on the editor&rsquo;s behalf.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/llm09-01-sign-in.png"
+                            alt="The Beacon sign-in card reading 'BEACON · Market Intelligence Desk' over an Editor field, a Password field, and a Sign in button."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            <strong>Beacon &middot; Market Intelligence
+                            Desk</strong> &mdash; the editor&rsquo;s password is
+                            verified by the substrate&rsquo;s argon2id seam,
+                            server-side; the session rides an
+                            <strong>HttpOnly</strong> cookie.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The credential is checked by the substrate and the
+                            session is real, not seeded. Every governed call that
+                            follows &mdash; commissioning a brief, running the gate,
+                            persisting a publication &mdash; runs under the
+                            editor&rsquo;s resolved scope, server-side, with the
+                            browser holding nothing it could leak.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The desk &mdash; three rails, lived-in</h2>
+                    <p>
+                        After sign-in the editor lands on the desk. The
+                        <strong>Source Library</strong> holds the authoritative
+                        corpus &mdash; eight filed figures, each a Source object the
+                        gate can read. The <strong>Editorial Queue</strong> is the
+                        agenda: six Topics, some already published, one still open.
+                        The <strong>Publications</strong> rail is the record &mdash;
+                        every brief that cleared the gate, with its grounded figure
+                        and its score. Nothing on the screen explains itself; there
+                        are no &ldquo;this demonstrates&hellip;&rdquo; banners and no
+                        mechanism labels.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/llm09-02-desk.png"
+                            alt="The Beacon desk after sign-in: a left Editorial Queue of six topics (Acme, Globex, Hooli, Initech and others), a center Editorial Agenda column, and a right Source Library listing the authoritative filed figures ($4.2B, $7.1B, $1.8B, $12.4B and more), each a Source object. The signed-in editor's name sits top right."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Three rails. Left, the <strong>Editorial Queue</strong>
+                            &mdash; six Topics on the agenda. Center, the briefs.
+                            Right, the <strong>Source Library</strong> &mdash; the
+                            authoritative corpus the gate reads (Acme
+                            <code>$4.2B</code>, Hooli <code>$12.4B</code>, Initech
+                            <code>$1.8B</code>, &hellip;). The governance is
+                            <em>felt</em> in the next two screens, never captioned.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The Source corpus is the ground truth the gate checks a
+                            claim against &mdash; not a label on the brief, but a
+                            tenant-local object read live at publish time. The queue
+                            and the gate are seeded from the
+                            <strong>same single list of covered metrics</strong>, so
+                            a topic the desk can raise and a figure the gate can
+                            ground are guaranteed to come from one source of truth.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>A grounded brief publishes</h2>
+                    <p>
+                        The editor commissions <strong>Acme Q3 revenue</strong>. The
+                        live <code>beacon_writer</code> reads its context bundle
+                        &mdash; the Topic and the source corpus &mdash; drafts a
+                        figure, and calls the <code>publish_brief</code> Action. The
+                        Action&rsquo;s eval gate scores the drafted
+                        <code>$4.2B</code> against the Acme Source read live from the
+                        store: it matches, the case holds, the suite scores
+                        <strong>1.00</strong>. The brief is persisted and surfaces in
+                        Publications with a <strong>Grounded</strong> verdict.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/llm09-03-cleared.png"
+                            alt="The Composer after commissioning Acme Q3 revenue: a CLEARED / Grounded brief showing the figure $4.2B, the writer's prose, and the gate's decision beside the Acme filing it was checked against; the new Acme brief now appears in the Publications rail."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Acme Q3 revenue commissioned. The live writer drafts
+                            <code>$4.2B</code>; the gate scores that figure against
+                            the Acme Source read live from the store &mdash; it
+                            matches, the suite scores <strong>1.00</strong>, and the
+                            brief persists as <strong>Grounded</strong>. The Composer
+                            shows the model&rsquo;s draft beside the gate&rsquo;s
+                            ruling and the filing it was checked against.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The gate is a deterministic predicate &mdash;
+                            <em>the figure the writer asserts equals the figure the
+                            cited Source holds</em> &mdash; run by the Action Mediator
+                            <strong>before the Object Store ever sees the
+                            value</strong>. A publication exists only because it
+                            cleared, so the row in Publications carries the
+                            gate&rsquo;s score: the model&rsquo;s draft and the
+                            gate&rsquo;s ruling, side by side.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>An ungroundable brief is withheld</h2>
+                    <p>
+                        The editor commissions <strong>Globex Q3 revenue</strong>
+                        &mdash; a Topic Beacon holds <strong>no Source</strong> for;
+                        the filing was retracted. Whatever the writer drafts, the
+                        gate has nothing authoritative to check it against, so the
+                        guard fails closed: the figure
+                        <strong>could not be grounded</strong>, and the Action raises
+                        <code>EvalGateFailed</code>. No Globex brief is persisted,
+                        and no Globex row ever appears in Publications.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/llm09-04-withheld.png"
+                            alt="The Composer after commissioning Globex Q3 revenue: a WITHHELD state with a salmon banner reading 'Not published — figure could not be grounded', the writer's message that Beacon holds no source on file for the metric globex.q3.revenue, and no Globex row in the Publications rail."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Globex Q3 revenue &mdash;
+                            <strong>WITHHELD</strong>. The authoritative filing was
+                            retracted, so Beacon holds no Source; the gate has
+                            nothing to ground against and fails closed
+                            (<code>EvalGateFailed</code>). The writer, handed the
+                            refusal back as a tool result, declines rather than
+                            invent a number: <em>&ldquo;Beacon holds no source on
+                            file for the metric <code>globex.q3.revenue</code>.&rdquo;</em>
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            This block needs no contrived adversarial probe. A topic
+                            whose authoritative source is absent simply cannot be
+                            grounded, <em>every time</em>. The desk does not
+                            <em>decide</em> to withhold &mdash; it is
+                            <strong>unable</strong> to publish. And because
+                            <code>EvalGateFailed</code> returns to the model as a tool
+                            result, the gate doesn&rsquo;t merely stop the write: it
+                            forces the writer to self-ground or decline. The
+                            self-correcting loop is the production flow, not a
+                            bolted-on retry.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The honest proof &mdash; what the console can and can&rsquo;t show</h2>
+                    <p>
+                        The live console proves the gate&rsquo;s
+                        <strong>verdict</strong>: a brief exists only if it cleared,
+                        so a publication carries the gate&rsquo;s score, and a
+                        withheld topic shows the block. But a blocked publish, by
+                        design, leaves <em>no trace at all</em> &mdash; the Mediator
+                        returns before any audit write on
+                        <code>EvalGateFailed</code> &mdash; so the console
+                        reconstructs &ldquo;withheld&rdquo; from the <em>absence</em>
+                        of a brief, not from a logged denial.
+                    </p>
+                    <p>
+                        The load-bearing proof that an ungrounded figure is
+                        <strong>never persisted</strong> is therefore not in the UI;
+                        it is the hermetic in-process catch-trace
+                        (<code>misinformation_test.zig</code>) run against the real
+                        Action Mediator: record a Source at <code>$4.2B</code>, then
+                        watch a grounded <code>$4.2B</code> brief pass the gate and
+                        persist while an ungrounded <code>$9.9B</code> brief and a
+                        brief about an unsourced metric each raise
+                        <code>EvalGateFailed</code> and write nothing &mdash; the
+                        store ends with <strong>exactly the one grounded
+                        brief</strong>. The gate is deterministic over the produced
+                        values, so this is the structural guarantee, proven
+                        model-free; the live walkthrough above is the same guarantee,
+                        exercised end to end through a real model and a real UI.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Proven vs. not-yet &mdash; the honesty ledger</h2>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Claim</th>
+                                <th>How it&rsquo;s proven</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    A grounded figure publishes &mdash; the drafted
+                                    value matches the cited Source
+                                </td>
+                                <td>
+                                    Live &mdash; Acme Q3 revenue drafted at
+                                    <code>$4.2B</code>, gate scores
+                                    <strong>1.00</strong> against the Acme Source,
+                                    persists as <strong>Grounded</strong> in
+                                    Publications
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    An ungroundable figure is never persisted &mdash;
+                                    no Source means no publication
+                                </td>
+                                <td>
+                                    Live &mdash; Globex Q3 revenue WITHHELD
+                                    (<code>EvalGateFailed</code>, no row in
+                                    Publications) + in-process
+                                    <code>misinformation_test.zig</code> (the store
+                                    ends with exactly the one grounded
+                                    <code>$4.2B</code> brief)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    A <em>wrong</em> figure is rejected, not just a
+                                    missing one
+                                </td>
+                                <td>
+                                    In-process &mdash; an ungrounded
+                                    <code>$9.9B</code> brief against a Source held at
+                                    <code>$4.2B</code> raises
+                                    <code>EvalGateFailed</code> and writes nothing
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The gate runs <em>before</em> persistence, not
+                                    beside it
+                                </td>
+                                <td>
+                                    Structural &mdash; the Action Mediator runs the
+                                    <code>eval_suite</code> against the produced
+                                    values before the Object Store sees them;
+                                    sub-threshold yields nothing written, announced,
+                                    or audited
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The defense is structural, not the model&rsquo;s
+                                    good behaviour
+                                </td>
+                                <td>
+                                    The gate is a deterministic predicate over real
+                                    data; the in-process proof is
+                                    <strong>model-free</strong>, and the writer is
+                                    handed the refusal as feedback regardless of what
+                                    it drafts
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The gate and the corpus cannot drift apart
+                                </td>
+                                <td>
+                                    Structural &mdash; the grounding suite is
+                                    generated from the same single list of covered
+                                    metrics that seeds the topic queue
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    A blocked publish leaves no audit trace
+                                </td>
+                                <td>
+                                    By design &mdash; the Mediator returns before any
+                                    audit write on <code>EvalGateFailed</code>; the
+                                    console reconstructs &ldquo;withheld&rdquo; from
+                                    the <em>absence</em> of a brief, and the
+                                    in-process test carries the never-persisted proof
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Why this is LLM09, structurally</h2>
+                    <p>
+                        OWASP LLM09 (Misinformation) is hard precisely because the
+                        usual defenses are brittle: you cannot reliably trust a model
+                        not to state a fabricated figure with full confidence, and an
+                        LLM-as-judge &ldquo;does this look right?&rdquo; pass is
+                        itself probabilistic and sits beside the write path. Beacon
+                        sidesteps both by moving the control off the model entirely
+                        and across the crossing:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>The gate is across the write path, not beside
+                            it.</strong> <code>publish_brief</code> declares an
+                            <code>eval_suite</code>; the Action Mediator runs it
+                            against the produced values <em>before</em> the Object
+                            Store sees them. Sub-threshold is fail-closed &mdash;
+                            <code>EvalGateFailed</code>, nothing persisted. The
+                            misinformation cannot become a published row.
+                        </li>
+                        <li>
+                            <strong>Grounding is a deterministic predicate, not a
+                            judgment call.</strong> The guard case is
+                            <code>figure == Source[claim_key == K].figure</code>,
+                            with the Source read live via Object Query. A missing or
+                            retracted Source yields zero rows, the criterion is
+                            unevaluable, and it fails closed.
+                            <em>You cannot ground against a source you do not
+                            hold.</em>
+                        </li>
+                        <li>
+                            <strong>The writer self-grounds or fails.</strong>
+                            <code>EvalGateFailed</code> returns to the model as a tool
+                            result &mdash; the substrate&rsquo;s &ldquo;tool failure
+                            is feedback&rdquo; contract &mdash; so the gate forces the
+                            writer to ground itself from its sources or decline to
+                            publish, rather than inventing a number to force its way
+                            through.
+                        </li>
+                    </ul>
+                    <p class="cs-pullquote">
+                        A market desk that lets a live LLM write its briefs, and
+                        <strong>still cannot publish a figure it cannot
+                        ground</strong> &mdash; because the substrate, not the model,
+                        scores every claim against its cited Source before a single
+                        row is written.
+                    </p>
+                    <p class="bg-note">
+                        Every evidence slot above was filled from a single clean
+                        end-to-end walkthrough on the running stack (2026-06-04)
+                        &mdash; live substrate, live OpenRouter, and the real
+                        argon2id login. The live console proves the gate&rsquo;s
+                        verdict; because a blocked publish leaves no audit trace by
+                        design, the load-bearing guarantee that an ungrounded figure
+                        is never persisted is proven model-free in-process by
+                        <code>misinformation_test.zig</code>. Where a guarantee is
+                        proven by an in-process test rather than a console click, the
+                        evidence says so.
+                    </p>
+                </section>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="wrap">
+                <p class="footer-line">
+                    <a href="mailto:jimmy@jonesweb.studio"
+                        >jimmy@jonesweb.studio</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="tel:+18284073415">(828) 407-3415</a>
+                    <span class="sep">/</span>
+                    <a
+                        href="https://github.com/jimjones26"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >GitHub</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://www.linkedin.com/in/the-jimmy-jones/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >LinkedIn</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://x.com/the_jimmy_jones"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >X</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="../resume.html">Resume</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="../assets/lightbox.js" defer></script>
+    </body>
+</html>
