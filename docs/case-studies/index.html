@@ -41,6 +41,52 @@
                 <ul class="cs-list">
                     <li class="cs-list-item">
                         <h3 class="cs-list-title">
+                            <a href="llm03-supply-chain.html"
+                                >Substrate &mdash; The Model It Can&rsquo;t
+                                Bind</a
+                            >
+                        </h3>
+                        <p class="cs-list-teaser">
+                            A model-routing company serves every customer task on
+                            a third-party specialist, so its supply chain
+                            <em>is</em> its product. A PoisonGPT-style tampered
+                            model is published into a source it curates, and an
+                            agent would bind it. This is OWASP LLM03 (Supply
+                            Chain), and the dangerous crossing is made
+                            unconstructable, not merely discouraged: a production
+                            provider requires an <code>Ed25519</code> attestation,
+                            so the unverified model is refused at the binding
+                            boundary <em>before a single token</em>
+                            (<code>ModelProvenanceUnverified</code>), the refusal
+                            is sealed as a first-class <code>DENIED</code>
+                            envelope, and the same model is confined &mdash; not
+                            banned &mdash; to an eval lane where default-deny
+                            egress keeps customer data away from it. Honest about
+                            the one link it can&rsquo;t close: fingerprinting
+                            opaque vendor weights. A live slice on Substrate
+                            against OWASP LLM03 (Supply Chain).
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Zig</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">OpenRouter</span>
+                            <span class="tag">Ed25519</span>
+                            <span class="tag">Substrate</span>
+                        </div>
+                        <div class="cs-list-footer">
+                            <span class="cs-list-status"
+                                >Complete slice on Substrate &middot; OWASP
+                                LLM03</span
+                            >
+                            <a
+                                class="cs-list-read"
+                                href="llm03-supply-chain.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </li>
+                    <li class="cs-list-item">
+                        <h3 class="cs-list-title">
                             <a href="llm05-improper-output-handling.html"
                                 >Substrate &mdash; The Output It Can&rsquo;t
                                 Weaponize</a

@@ -1,0 +1,889 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            Substrate &mdash; The Model It Can&rsquo;t Bind: A Poisoned
+            Specialist, Refused at the Binding Boundary &mdash; Jimmy Jones
+        </title>
+        <meta
+            name="description"
+            content="A model-routing company serves every customer task on a third-party specialist, so its supply chain is its product. A PoisonGPT-style tampered model is published into a source it curates, and an agent would bind it. This is OWASP LLM03 (Supply Chain), and the dangerous crossing is made unconstructable, not merely discouraged: a production provider requires an Ed25519 attestation, so the unverified model is refused at the binding boundary before a single token is generated (ModelProvenanceUnverified), the refusal is sealed as a first-class DENIED envelope, and the same unattested model is confined — not banned — to an eval lane where default-deny egress keeps customer data away from it. The substrate stays honest about the one link it cannot close: fingerprinting opaque vendor weights. A live slice on Substrate against OWASP LLM03 (Supply Chain)."
+        />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="../assets/styles.css" />
+    </head>
+    <body>
+        <div class="cs-topbar">
+            <div class="wrap">
+                <a class="cs-back" href="index.html">← Back to case studies</a>
+            </div>
+        </div>
+
+        <header class="cs-header">
+            <div class="wrap">
+                <p class="cs-num">Case Study &middot; Substrate &mdash; Tessera</p>
+                <h1 class="cs-title">The Model It Can&rsquo;t Bind</h1>
+                <dl class="cs-meta">
+                    <dt>Stack</dt>
+                    <dd>
+                        Zig + SvelteKit + OpenRouter + Ed25519 + Argon2id (a
+                        single slice on Substrate)
+                    </dd>
+                    <dt>Status</dt>
+                    <dd>
+                        A complete slice on Substrate. Every screen below was
+                        captured live by walking this exact path through the
+                        running stack (2026-06-05) &mdash; the substrate on
+                        <code>:8787</code>, the Tessera console on
+                        <code>:5173</code>, live OpenRouter inference, the real
+                        provenance gate, and the real argon2id login; the demo
+                        state re-seeds fresh on each substrate start. Where a
+                        guarantee is a structural property of a declaration
+                        rather than a single console click &mdash; the
+                        attestation requirement bound to the production provider,
+                        the Ed25519 signature verification, the eval lane&rsquo;s
+                        default-deny egress &mdash; the evidence says so. Not a
+                        production product.
+                    </dd>
+                    <dt>Last touched</dt>
+                    <dd>2026-06-05</dd>
+                </dl>
+            </div>
+        </header>
+
+        <main class="cs-body">
+            <div class="wrap">
+                <section class="cs-section">
+                    <p class="cs-pullquote">
+                        A model-routing company whose entire product is its
+                        supply chain &mdash; every answer runs on a model some
+                        third party trained &mdash; and a poisoned specialist
+                        still <strong>cannot reach production traffic</strong>,
+                        because binding an unattested model is made
+                        <strong>unconstructable</strong>, not merely discouraged.
+                    </p>
+                    <p>
+                        OWASP LLM03 is <strong>Supply Chain</strong>: a
+                        third-party model enters the runtime with no provenance,
+                        and an agent binds it. PoisonGPT, malicious LoRA
+                        adapters, a fake WizardLM &mdash; these are the
+                        named-in-the-wild instances, models tampered upstream and
+                        republished under a plausible, &ldquo;improved&rdquo;
+                        name. The usual mitigation is a hope written as advice:
+                        &ldquo;vet your model sources,&rdquo; &ldquo;pin your
+                        digests,&rdquo; &ldquo;only use trusted publishers.&rdquo;
+                        Advice is not a guarantee. A careful curator, on a careful
+                        day, checks; the next upload, or the next teammate,
+                        promotes.
+                    </p>
+                    <p>
+                        So this slice builds the failure condition on purpose.
+                        <strong>Tessera</strong> is an AI-native model-routing
+                        company &mdash; it serves each customer task on the best
+                        <em>specialist</em> from a curated catalog of third-party
+                        and community models. Its supply chain <em>is</em> its
+                        product. The attacker never speaks to an agent: they
+                        publish a PoisonGPT-style tampered specialist into a
+                        public source Tessera curates from, a plausibly-named
+                        &ldquo;improved&rdquo; model with a backdoor trigger baked
+                        into the weights. Tessera&rsquo;s curator, doing its
+                        ordinary job, would add it to the catalog and a production
+                        agent would bind it and serve customer traffic on it. The
+                        slice is whole when the curator <strong>cannot</strong>
+                        promote that model to production &mdash; no matter what
+                        they click &mdash; because no governed path to
+                        &ldquo;serve an unattested model in production&rdquo;
+                        exists.
+                    </p>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">The headline</span>
+                        <p>
+                            The safety is <strong>structural</strong>, not a
+                            matter of the curator&rsquo;s diligence, a trusted
+                            publisher, or a code review. The substrate cannot
+                            verify a third-party model is <em>safe</em> &mdash;
+                            but it can refuse to run a model that hasn&rsquo;t been
+                            <em>verified</em>, structurally, before a single token
+                            is generated. A production-tier provider carries
+                            <code>require_attestation</code>, so the binding
+                            boundary checks an <strong>Ed25519 attestation</strong>
+                            &mdash; the publisher&rsquo;s signature over the
+                            declared weight digest &mdash; <em>before</em> the
+                            model is bound and <em>before</em> any token crosses to
+                            the vendor. The unverified specialist is refused
+                            <code>ModelProvenanceUnverified</code>, fail-closed,
+                            with a sealed <code>DENIED</code> envelope. There is
+                            no checkbox, no override, no &ldquo;promote
+                            anyway.&rdquo;
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The cast</h2>
+                    <p>
+                        LLM03 is about the <strong>binding</strong> &mdash; a
+                        model of unknown provenance reaching the inference seam &mdash;
+                        so the cast is organized around the catalog and the
+                        boundary every invocation crosses. Everything below is
+                        authored content seeded into the substrate; none of it is
+                        a placeholder.
+                    </p>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Who</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Tessera, Inc.</strong></td>
+                                <td>
+                                    The AI-native model-routing company; a
+                                    substrate <strong>tenant</strong> and the
+                                    accountable <strong>fiduciary</strong> &mdash;
+                                    its product <em>is</em> its third-party supply
+                                    chain
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>The curator</strong> (the operator)
+                                </td>
+                                <td>
+                                    The signed-in human who vets and routes
+                                    models; the console holds
+                                    <strong>no authority of its own</strong>, so
+                                    every crossing runs under the
+                                    curator&rsquo;s resolved identity, under a
+                                    real argon2id login
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>The attested specialist</strong>
+                                </td>
+                                <td>
+                                    A catalog model whose publisher signed an
+                                    <strong>Ed25519 attestation</strong> over the
+                                    declared weight digest; the chain checks out,
+                                    so it may serve production traffic
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>The unverified specialist</strong>
+                                    &mdash; the poisoned upload
+                                </td>
+                                <td>
+                                    A community upload with
+                                    <strong>no attestation</strong> &mdash;
+                                    <code>moonshotai/kimi-k2.6:free</code>, a
+                                    plausible name standing in for the tampered
+                                    model; whitelisted, but
+                                    <strong>unverified</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>The production provider</strong>
+                                </td>
+                                <td>
+                                    The inference path that serves customers;
+                                    declares <code>require_attestation</code>, so
+                                    it will only bind a model whose attestation
+                                    verifies &mdash; the boundary the poisoned
+                                    model cannot cross
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>The eval lane</strong>
+                                </td>
+                                <td>
+                                    An eval-only provider that does
+                                    <strong>not</strong> require attestation and
+                                    declares <strong>no</strong> customer-data
+                                    clearances &mdash; where an unverified
+                                    candidate is vetted live, walled off from
+                                    customer data
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The controls the substrate enforces</h2>
+                    <p>
+                        Supply-chain integrity is solved <strong>once</strong>,
+                        at the seam every model invocation crosses, keyed to the
+                        <em>provider&rsquo;s</em> contract &mdash; not patched at
+                        each agent that happens to call a model. I wrote none of
+                        these enforcement points in the slice; they are the
+                        substrate&rsquo;s, inherited the way every other slice
+                        inherits them.
+                    </p>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>The dangerous crossing</th>
+                                <th>
+                                    Where the substrate stops it &mdash; a layer
+                                    the surface cannot bypass
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Binding an <strong>unattested</strong>
+                                    third-party model in production
+                                </td>
+                                <td>
+                                    A production-tier provider with
+                                    <code>require_attestation</code> set will only
+                                    bind a model whose attestation verifies. The
+                                    unattested specialist is refused
+                                    <code>ModelProvenanceUnverified</code>,
+                                    <strong>fail-closed, before any token leaves</strong>,
+                                    with a <code>denied</code> envelope written to
+                                    the audit-of-record
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    A <strong>forged</strong> or tampered
+                                    attestation
+                                </td>
+                                <td>
+                                    The attestation is an
+                                    <strong>Ed25519 signature</strong> over a
+                                    canonical serialization of
+                                    <code>(provider, model, weight_digest, publisher)</code>,
+                                    verified at the seam &mdash; the same
+                                    sign/verify machinery that signs agent
+                                    passports. A bad signature or a mismatched
+                                    digest does not verify
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    A model <strong>outside</strong> the curated
+                                    catalog
+                                </td>
+                                <td>
+                                    The name whitelist refuses anything not in
+                                    <code>allowed_models</code> &mdash;
+                                    <code>ModelNotPermitted</code> &mdash; the
+                                    sibling gate that runs before provenance is
+                                    ever consulted
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Customer data reaching an
+                                    <strong>unvetted</strong> model
+                                </td>
+                                <td>
+                                    The egress-clearance gate is
+                                    <strong>default-deny set-membership</strong>:
+                                    material classified outside the
+                                    provider&rsquo;s <code>data_clearances</code>
+                                    is refused <code>EgressNotPermitted</code>.
+                                    The eval lane declares no customer clearances,
+                                    so customer material cannot reach the
+                                    candidate it runs
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    A curator <strong>promoting it anyway</strong>
+                                </td>
+                                <td>
+                                    There is no affordance to. The refusal is a
+                                    typed error at the binding seam, not a UI
+                                    flag a curator could route around &mdash; the
+                                    ungoverned path is
+                                    <strong>unconstructable</strong>, not merely
+                                    discouraged
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The walkthrough</h2>
+                    <p>
+                        Every screen below was captured live by walking this
+                        exact path through the running stack &mdash; the
+                        substrate, the Tessera console, live OpenRouter
+                        inference, the real provenance gate, and the real
+                        argon2id login. Nothing is asserted that the browser and
+                        substrate were not seen to actually do. Where a guarantee
+                        is a structural property of a declaration rather than a
+                        single console click, the evidence says so.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The curator signs in &mdash; governance from the first interaction</h2>
+                    <p>
+                        The curator signs in to the Tessera console. Auth is real
+                        &mdash; the substrate&rsquo;s <strong>argon2id</strong>
+                        seam over a durable password store, below the spine
+                        &mdash; and no model stands in for a human. Governance is
+                        in the UI from the first interaction; every crossing that
+                        follows runs under the curator&rsquo;s resolved identity.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/llm03-01-sign-in.png"
+                            alt="The Tessera sign-in card for an AI model-routing console, with Username and Password fields and a Sign in button."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Tessera&rsquo;s sign-in &mdash; the curator&rsquo;s
+                            password is verified by the substrate&rsquo;s argon2id
+                            seam, server-side. The console is a window onto the
+                            substrate, not a holder of authority.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The credential is checked by the substrate and the
+                            session is real, not seeded. Every governed call that
+                            follows &mdash; serving on the attested model,
+                            attempting the unverified one, running the eval probe
+                            &mdash; runs under the curator&rsquo;s resolved scope,
+                            attributed on the audit-of-record.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The curated catalog &mdash; attested vs. unverified</h2>
+                    <p>
+                        Two specialists. One is <strong>attested</strong> &mdash;
+                        its publisher signed an Ed25519 attestation over the
+                        declared weight digest, and the chain checks out. The
+                        other is a <strong>community upload</strong> with no
+                        attestation: <strong>unverified</strong>, confined to the
+                        eval lane. Both are real, whitelisted model names &mdash;
+                        and that is the point: the pre-amendment substrate would
+                        have let either invoke freely, because
+                        <code>allowed_models</code> is a <em>name</em> whitelist,
+                        integrity-blind. That is the wall this slice hit, and
+                        closed.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/llm03-02-catalog.png"
+                            alt="The Tessera model catalog listing two specialists: one marked attested / provenance verified, the other a community upload marked unverified and confined to the eval lane."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The catalog shows the two specialists side by side
+                            &mdash; one <strong>attested</strong>, the other an
+                            <strong>unverified</strong> community upload. A name
+                            whitelist cannot tell them apart; an attestation can.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            Whitelisting a model <em>name</em> proves nothing
+                            about the <em>weights</em> behind it &mdash; a
+                            PoisonGPT-style attack republishes a tampered model
+                            under exactly the kind of plausible name a catalog
+                            would accept. The discriminator is provenance, not the
+                            name, and the substrate now carries provenance as a
+                            first-class property of the binding.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Serving on the attested specialist &mdash; live</h2>
+                    <p>
+                        A real customer task is recorded first as a
+                        customer-confidential object, then served live on the
+                        attested model. Provenance is verified at the binding
+                        boundary; the answer comes back and is sealed in the
+                        ledger. The <code>provenance verified ✓</code> badge is
+                        not decoration &mdash; it means the attestation chain was
+                        checked <em>before</em> the model was bound and
+                        <em>before</em> any token crossed to the vendor.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/llm03-03-serve-attested.png"
+                            alt="The Tessera console serving a customer task on the attested specialist: the response panel shows a 'provenance verified ✓' badge and the answer sealed into the ledger."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The customer task is served live on the
+                            <strong>attested</strong> specialist, the
+                            <code>provenance verified ✓</code> badge confirming
+                            the attestation chain was checked at the binding
+                            boundary before a token crossed to the vendor.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The gate is not a blanket block &mdash; an attested
+                            model serves customer traffic normally, the way the
+                            product is meant to work. Provenance is a
+                            <em>discriminator</em>: it lets the verified model
+                            through and refuses the unverified one, rather than
+                            degrading the whole catalog to be safe.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The poisoned model &mdash; refused at the binding boundary</h2>
+                    <p>
+                        The curator selects the unverified specialist and tries to
+                        serve the same production task. The substrate refuses
+                        <strong>before a single token is generated</strong>. This
+                        is <code>ModelProvenanceUnverified</code>, raised
+                        fail-closed at the Model Inference seam &mdash; the
+                        sibling of <code>ModelNotPermitted</code> (wrong name) and
+                        <code>EgressNotPermitted</code> (wrong classification).
+                        There is no checkbox, no override, no &ldquo;promote
+                        anyway.&rdquo;
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/llm03-04-serve-refused.png"
+                            alt="The Tessera console refusing to serve on the unverified specialist: a red refusal reading 'The requested model's provenance could not be verified — model_provenance_unverified · moonshotai/kimi-k2.6:free', before any token is generated."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            Serving the production task on the unverified model
+                            comes back
+                            <strong>&ldquo;The requested model&rsquo;s provenance
+                            could not be verified&rdquo;</strong> &mdash;
+                            <code>model_provenance_unverified &middot;
+                            moonshotai/kimi-k2.6:free</code> &mdash; raised at the
+                            binding boundary, before inference begins.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The poisoned model never runs on customer traffic,
+                            not even once &mdash; the refusal <em>predates any
+                            token</em>. And it is not a UI affordance the curator
+                            could route around: it is a typed error at the seam,
+                            so &ldquo;serve an unattested model in
+                            production&rdquo; is a state the system cannot be put
+                            into, not a button someone chose not to press.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The eval lane &mdash; quarantine, not a ban</h2>
+                    <p>
+                        The same unverified model is not banned &mdash; it is
+                        <strong>confined</strong>. The eval lane is where a
+                        curator vets a candidate live, walled off from customer
+                        data. Here it runs a red-team probe and answers honestly
+                        that it has no hidden instructions &mdash; but that
+                        <em>answer</em> is beside the point. The lane is not a new
+                        primitive; it is <strong>two existing gates composing</strong>:
+                        the model runs on an eval-only provider that does not
+                        require attestation (so the provenance gate does not fire),
+                        and that provider declares no customer-data clearances (so
+                        the egress gate refuses any customer material before it
+                        could reach the model).
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/llm03-05-eval-lane.png"
+                            alt="The Tessera eval lane running a red-team probe against the unverified candidate model, which replies that it has no hidden instructions to exfiltrate data or alter behavior on a trigger phrase, and notes the lane never receives customer data."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The unverified candidate runs <strong>live in the eval
+                            lane</strong> against a red-team probe &mdash; same
+                            unattested model, same real inference, but
+                            structurally it can only ever see a curator&rsquo;s
+                            probe, never a customer&rsquo;s task.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            Quarantine is the composition of default-deny egress
+                            with a no-attestation provider &mdash; not a new
+                            feature written for this slice. The substrate lets the
+                            unverified model run where it can do no harm and
+                            refuses it where it could, and both halves are
+                            structural properties of the provider it runs on, not
+                            promises the curator has to keep.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The refusal in the ledger &mdash; recorded as blocked</h2>
+                    <p>
+                        Every governed crossing leaves a tamper-evident envelope.
+                        The production refusal is in the ledger as a first-class
+                        <code>DENIED</code> outcome &mdash; the supply-chain
+                        attack is not just blocked, it is <em>recorded as
+                        blocked</em>, beside the attested serve that succeeded.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/llm03-06-audit-denials.png"
+                            alt="The Tessera audit ledger listing crossings, with the unverified-model invocation recorded as a first-class DENIED outcome alongside the successful attested serve."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The audit ledger carries the refusal as a first-class
+                            <code>DENIED</code> row &mdash; the attempted
+                            supply-chain crossing is on the record as having been
+                            blocked, not silently dropped.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            A refusal that leaves no trace is indistinguishable
+                            from a gate that never fired. Here the denial is a
+                            durable, first-class outcome &mdash; so an auditor can
+                            prove the poisoned model was offered <em>and</em>
+                            turned away, not merely assume the catalog was clean.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The sealed envelope &mdash; attribution captured, not supplied</h2>
+                    <p>
+                        Opening the record shows the full sealed envelope: who
+                        acted, under which tenant, against which target, and
+                        exactly why it was denied &mdash; captured automatically
+                        from the verified session, never supplied by the caller.
+                    </p>
+                    <figure class="cs-figure">
+                        <img
+                            src="images/llm03-07-audit-detail.png"
+                            alt="The expanded Tessera denial envelope showing model moonshotai/kimi-k2.6:free, reason provenance_unverified, and provenance_failure unattested, with session-captured actor and tenant attribution."
+                            loading="lazy"
+                        />
+                        <figcaption>
+                            The sealed envelope spells out the refusal &mdash;
+                            <code>model moonshotai/kimi-k2.6:free</code>,
+                            <code>reason provenance_unverified</code>,
+                            <code>provenance_failure unattested</code> &mdash;
+                            with actor and tenant captured from the verified
+                            session.
+                        </figcaption>
+                    </figure>
+                    <div class="cs-proof">
+                        <span class="cs-proof-label">What this proves</span>
+                        <p>
+                            The reason for the denial is structured data, not a
+                            log string: <code>provenance_failure: unattested</code>
+                            names <em>why</em> the binding was refused. And the
+                            attribution is taken from the verified session, so the
+                            record cannot be forged by the caller it indicts.
+                        </p>
+                    </div>
+                </section>
+
+                <section class="cs-section">
+                    <h2>How it works &mdash; the gate order</h2>
+                    <p>
+                        At the Model Inference seam, an invocation crosses four
+                        gates in order, each fail-closed:
+                    </p>
+                    <ol>
+                        <li>
+                            <strong>Name whitelist</strong> &mdash; a model
+                            outside <code>allowed_models</code> &rarr;
+                            <code>ModelNotPermitted</code>.
+                        </li>
+                        <li>
+                            <strong>Policy</strong> &mdash; the
+                            <code>model.invoke</code> policy gate.
+                        </li>
+                        <li>
+                            <strong>Provenance</strong> &mdash; a production-tier
+                            provider with <code>require_attestation</code> set
+                            will only bind a model whose attestation verifies
+                            (present, signature-valid, digest-matched). Otherwise
+                            &rarr; <code>ModelProvenanceUnverified</code>,
+                            fail-closed, <code>.denied</code> audit envelope.
+                            <strong>This runs before egress &mdash; no token
+                            leaves.</strong>
+                        </li>
+                        <li>
+                            <strong>Egress</strong> &mdash; material whose
+                            classification is outside the provider&rsquo;s
+                            <code>data_clearances</code> &rarr;
+                            <code>EgressNotPermitted</code>.
+                        </li>
+                    </ol>
+                    <p>
+                        The amendment reused the substrate&rsquo;s existing
+                        Ed25519 sign/verify machinery &mdash; the same primitives
+                        that sign agent passports. Each governed model name carries
+                        an attestation: a publisher&rsquo;s signature over a
+                        canonical serialization of
+                        <code>(provider, model, weight_digest, publisher)</code>,
+                        verified at the seam.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>The honest residual &mdash; the link upstream of the seam</h2>
+                    <p>
+                        The substrate <strong>requires and carries</strong>
+                        attestation and refuses the unattested. It
+                        <strong>cannot fingerprint opaque vendor weights</strong>.
+                        Verifying that the <em>served</em> weights match the
+                        <em>attested</em> digest is upstream tooling&rsquo;s job
+                        &mdash; OpenRouter exposes no weight hash, so the seam
+                        verifies the <em>attestation chain</em> (the
+                        publisher&rsquo;s signature over the declared digest), not
+                        the weights themselves.
+                    </p>
+                    <p>
+                        The gap between &ldquo;attested digest&rdquo; and
+                        &ldquo;weights the vendor actually loaded&rdquo; is named
+                        as the boundary the substrate integrates with but does not
+                        replace. The catalog says so in the UI; this case study
+                        says so here. That is the discipline: the substrate closes
+                        the link it can close &mdash; refusing to bind anything
+                        without a verified attestation &mdash; and is explicit
+                        about the one it cannot.
+                    </p>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Proven vs. structural &mdash; the honesty ledger</h2>
+                    <table class="cs-table">
+                        <thead>
+                            <tr>
+                                <th>Claim</th>
+                                <th>How it&rsquo;s proven</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    The attested specialist serves live, with
+                                    provenance verified before binding
+                                </td>
+                                <td>
+                                    Live &mdash; a real customer task was served
+                                    on the attested model with a
+                                    <code>provenance verified ✓</code> badge; the
+                                    attestation chain is checked before the model
+                                    is bound and before any token crosses to the
+                                    vendor
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The unverified model is refused at the binding
+                                    boundary, before any token
+                                </td>
+                                <td>
+                                    Live &mdash; the same production task on the
+                                    unverified model returned
+                                    <code>ModelProvenanceUnverified</code>
+                                    (<code>model_provenance_unverified &middot;
+                                    moonshotai/kimi-k2.6:free</code>),
+                                    fail-closed, with no inference performed
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The refusal is sealed as a first-class
+                                    <code>DENIED</code> outcome
+                                </td>
+                                <td>
+                                    Live &mdash; the audit ledger carries the
+                                    denial as a first-class row; the expanded
+                                    envelope records
+                                    <code>reason provenance_unverified</code> and
+                                    <code>provenance_failure unattested</code>,
+                                    attributed from the verified session
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The unverified model is confined to the eval
+                                    lane, not banned
+                                </td>
+                                <td>
+                                    Live &mdash; the same unattested model ran a
+                                    red-team probe in the eval lane; structurally
+                                    it sees only the curator&rsquo;s probe, never
+                                    a customer&rsquo;s task
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The eval lane is two existing gates composing,
+                                    not a new primitive
+                                </td>
+                                <td>
+                                    Structural &mdash; an eval-only provider that
+                                    does not require attestation (provenance gate
+                                    does not fire) plus no declared customer
+                                    clearances (egress gate refuses customer
+                                    material)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Attestation reuses the Ed25519 sign/verify
+                                    machinery that signs agent passports
+                                </td>
+                                <td>
+                                    Structural &mdash; each model name carries a
+                                    publisher signature over a canonical
+                                    <code>(provider, model, weight_digest,
+                                    publisher)</code>, verified at the inference
+                                    seam
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The substrate cannot fingerprint opaque vendor
+                                    weights
+                                </td>
+                                <td>
+                                    Honest residual &mdash; OpenRouter exposes no
+                                    weight hash, so the seam verifies the
+                                    attestation chain (the signature over the
+                                    declared digest), not the served weights;
+                                    matching declared-to-loaded is upstream
+                                    tooling&rsquo;s job, named in the UI and here
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="cs-section">
+                    <h2>Why this is LLM03, structurally</h2>
+                    <p>
+                        OWASP LLM03 (Supply Chain) is about a third-party model
+                        entering the runtime with no provenance and an agent
+                        binding it. The substrate realizes the mitigation as
+                        structure, not advice:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Provenance is a property of the binding, not
+                            a checklist.</strong> A production provider declares
+                            <code>require_attestation</code>, so an unattested
+                            model is refused <code>ModelProvenanceUnverified</code>
+                            at the seam &mdash; fail-closed, before a single token
+                            is generated, with no override to route around.
+                        </li>
+                        <li>
+                            <strong>The attestation is cryptographic, and reused,
+                            not bespoke.</strong> An Ed25519 signature over a
+                            canonical <code>(provider, model, weight_digest,
+                            publisher)</code> &mdash; the same machinery that signs
+                            agent passports &mdash; so a forged attestation or a
+                            mismatched digest simply does not verify.
+                        </li>
+                        <li>
+                            <strong>Quarantine is composition, and honesty is
+                            explicit.</strong> The eval lane is default-deny egress
+                            plus a no-attestation provider, so the unverified model
+                            runs where it can do no harm and never where it could.
+                            And the one link the substrate cannot close &mdash;
+                            fingerprinting opaque vendor weights &mdash; is named,
+                            not papered over.
+                        </li>
+                    </ul>
+                    <p class="cs-pullquote">
+                        A company whose product <em>is</em> its third-party supply
+                        chain, that still <strong>cannot bind a poisoned model to
+                        customer traffic, cannot forge the attestation that would
+                        let it, and cannot route around the refusal</strong>
+                        &mdash; because the substrate, not the curator, owns every
+                        binding, while staying honest about the one link that
+                        lives upstream of it.
+                    </p>
+                    <p class="bg-note">
+                        Every screen above was captured live by walking this exact
+                        path through the running stack (2026-06-05) &mdash; the
+                        substrate on <code>:8787</code>, the Tessera console on
+                        <code>:5173</code>, live OpenRouter inference, the real
+                        provenance gate, and the real argon2id login; the demo
+                        state re-seeds fresh on each substrate start. Where a
+                        guarantee is a structural property of a declaration rather
+                        than a single console click &mdash; the attestation
+                        requirement bound to the production provider, the Ed25519
+                        signature verification, the eval lane&rsquo;s default-deny
+                        egress &mdash; the evidence says so. The substrate
+                        verifies the attestation chain, not the opaque vendor
+                        weights themselves; that link lives in upstream tooling and
+                        is named as such.
+                    </p>
+                </section>
+            </div>
+        </main>
+
+        <footer class="site-footer">
+            <div class="wrap">
+                <p class="footer-line">
+                    <a href="mailto:jimmy@jonesweb.studio"
+                        >jimmy@jonesweb.studio</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="tel:+18284073415">(828) 407-3415</a>
+                    <span class="sep">/</span>
+                    <a
+                        href="https://github.com/jimjones26"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >GitHub</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://www.linkedin.com/in/the-jimmy-jones/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >LinkedIn</a
+                    >
+                    <span class="sep">/</span>
+                    <a
+                        href="https://x.com/the_jimmy_jones"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        >X</a
+                    >
+                    <span class="sep">/</span>
+                    <a href="../resume.html">Resume</a>
+                </p>
+            </div>
+        </footer>
+
+        <script src="../assets/lightbox.js" defer></script>
+    </body>
+</html>

@@ -182,6 +182,54 @@
                 <div class="cards">
                     <article class="card">
                         <h3 class="card-title">
+                            Substrate &mdash; The Model It Can&rsquo;t Bind
+                        </h3>
+                        <p class="card-lesson">
+                            <strong
+                                >A model-routing company serves every customer
+                                task on a third-party specialist &mdash; its
+                                supply chain <em>is</em> its product</strong
+                            > &mdash; and a PoisonGPT-style tampered model is
+                            published into a source it curates. OWASP LLM03 is
+                            Supply Chain: a third-party model enters the runtime
+                            with no provenance and an agent binds it.
+                            <strong>What it shows:</strong> binding an unattested
+                            model is made <strong>unconstructable</strong>, not
+                            merely discouraged &mdash; a production provider
+                            requires an <strong>Ed25519 attestation</strong>, so
+                            the poisoned model is refused at the binding boundary
+                            <em>before a single token</em>
+                            (<code>ModelProvenanceUnverified</code>), the refusal
+                            is sealed as a first-class <code>DENIED</code>
+                            envelope, and the same model is confined &mdash; not
+                            banned &mdash; to an eval lane where default-deny
+                            egress keeps customer data away from it. Honest about
+                            the one link it can&rsquo;t close: fingerprinting
+                            opaque vendor weights. A live slice on Substrate
+                            against
+                            <strong>OWASP LLM03 (Supply Chain)</strong>.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Zig</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">OpenRouter</span>
+                            <span class="tag">Ed25519</span>
+                            <span class="tag">Substrate</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-status"
+                                >Complete slice on Substrate &middot; OWASP
+                                LLM03</span
+                            >
+                            <a
+                                class="card-link"
+                                href="case-studies/llm03-supply-chain.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </article>
+                    <article class="card">
+                        <h3 class="card-title">
                             Substrate &mdash; The Output It Can&rsquo;t Weaponize
                         </h3>
                         <p class="card-lesson">
