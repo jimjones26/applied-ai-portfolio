@@ -41,6 +41,49 @@
                 <ul class="cs-list">
                     <li class="cs-list-item">
                         <h3 class="cs-list-title">
+                            <a href="llm05-improper-output-handling.html"
+                                >Substrate &mdash; The Output It Can&rsquo;t
+                                Weaponize</a
+                            >
+                        </h3>
+                        <p class="cs-list-teaser">
+                            An incident-response console feeds attacker-controllable
+                            alert text toward two sinks that would <em>act</em> on it
+                            &mdash; a command sink that runs diagnostics over a
+                            workspace, and a public HTML status page. This is OWASP
+                            LLM05 (Improper Output Handling), and the dangerous
+                            crossing is made unconstructable, not merely discouraged:
+                            inbound alerts are marked <code>untrusted</code> at ingest
+                            and every sink is default-deny, the cleared command runs
+                            argv-exact with no shell, an irreversible remediation
+                            suspends for human review, and HTML-encoding lives on the
+                            recipient declaration &mdash; so the deliberately-naive
+                            <code>{@html}</code> status page renders a laundered
+                            <code>&lt;script&gt;</code> / <code>&lt;img onerror&gt;</code>
+                            as inert text. A live slice on Substrate against OWASP
+                            LLM05 (Improper Output Handling).
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Zig</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">OpenRouter</span>
+                            <span class="tag">Substrate</span>
+                            <span class="tag">Argon2id</span>
+                        </div>
+                        <div class="cs-list-footer">
+                            <span class="cs-list-status"
+                                >Complete slice on Substrate &middot; OWASP
+                                LLM05</span
+                            >
+                            <a
+                                class="cs-list-read"
+                                href="llm05-improper-output-handling.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </li>
+                    <li class="cs-list-item">
+                        <h3 class="cs-list-title">
                             <a href="llm07-system-prompt-leakage.html"
                                 >Substrate &mdash; The Prompt It Can Publish</a
                             >

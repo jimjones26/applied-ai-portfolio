@@ -182,6 +182,51 @@
                 <div class="cards">
                     <article class="card">
                         <h3 class="card-title">
+                            Substrate &mdash; The Output It Can&rsquo;t Weaponize
+                        </h3>
+                        <p class="card-lesson">
+                            <strong
+                                >An incident console feeds attacker-controlled
+                                alert text at two sinks that would <em>act</em> on
+                                it</strong
+                            > &mdash; a command sink that runs diagnostics over a
+                            workspace, and a public HTML status page. OWASP LLM05 is
+                            Improper Output Handling: untrusted output reaching a
+                            shell, an <code>eval</code>, or a browser that renders
+                            it. <strong>What it shows:</strong> the dangerous
+                            crossing is made <strong>unconstructable</strong>, not
+                            merely discouraged &mdash; inbound alerts are marked
+                            untrusted and every sink is default-deny, the cleared
+                            command runs argv-exact with <strong>no shell</strong>,
+                            an irreversible remediation suspends for human review,
+                            and HTML-encoding lives on the recipient &mdash; so the
+                            deliberately-naive <code>{@html}</code> status page
+                            renders a laundered <code>&lt;script&gt;</code> /
+                            <code>&lt;img onerror&gt;</code> as inert text. A live
+                            slice on Substrate against
+                            <strong>OWASP LLM05 (Improper Output Handling)</strong>.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Zig</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">OpenRouter</span>
+                            <span class="tag">Substrate</span>
+                            <span class="tag">Argon2id</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-status"
+                                >Complete slice on Substrate &middot; OWASP
+                                LLM05</span
+                            >
+                            <a
+                                class="card-link"
+                                href="case-studies/llm05-improper-output-handling.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </article>
+                    <article class="card">
+                        <h3 class="card-title">
                             Substrate &mdash; The Prompt It Can Publish
                         </h3>
                         <p class="card-lesson">
