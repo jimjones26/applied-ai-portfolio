@@ -88,9 +88,16 @@ with `span.card-status` + `a.card-link` (`Read &rarr;`).
 
 ## Conventions
 
-- **Voice**: first person ("I built / I wrote"), substrate-enforcement framing — the
-  point is always that a guarantee is *structural*, not something a careful developer
-  remembered to do.
+- **Voice**: first person **singular** ("I built / I wrote") — it's just me, never
+  "we"/"a team"/"our". Substrate-enforcement framing — the point is always that a
+  guarantee is *structural*, not something a careful developer remembered to do.
+- **It's a slice, not a company**: each case study is an R&D *slice* — a single scenario
+  built to prove one control — not a real product or organization. The named company
+  (Tessera, Klaxon, …) is the **fictional scenario** the slice runs in, never something
+  that was "founded" or "shipped". Never write "we built a company" / "we launched" /
+  "our company" — in posts *or* pages. Say "I built a slice", "I set up a scenario where
+  a company would…", or just describe the scenario. The boast is the *control*, not a
+  business.
 - **Honesty bar**: never invent build-times, metrics, or claims not in the source. If a
   guarantee is proven by an in-process test rather than a live console click, say so.
   The closing `.bg-note` states exactly how the evidence was captured.
