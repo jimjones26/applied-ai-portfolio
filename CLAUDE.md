@@ -37,14 +37,21 @@ When the user points at a source slice and says "add this case study", do all of
    slug (`subro`, `gbc`, `mailflow`, …) — keeps each case study's images grouped.
 3. **Create `docs/case-studies/<slug>.html`** from the template (see structure below).
 4. **Add a featured card** as the **first** `article.card` inside `.cards` in
-   `docs/index.html` (`#work` section).
+   `docs/index.html` (`#work` section), **then trim the home list back to the 4
+   newest cards.** The `#work` section shows **exactly 4** featured case-study
+   cards, newest-first — adding one to the top pushes the 4th card off, so delete
+   the now-5th `article.card` (the oldest). The dropped study is *not* lost: it
+   still lives on the case-studies index. The "View all case studies →" link must
+   stay directly after the 4 cards.
 5. **Add a list item** as the **first** `li.cs-list-item` inside `.cs-list` in
-   `docs/case-studies/index.html`.
+   `docs/case-studies/index.html`. This list is the **complete archive** — it
+   keeps **every** case study; nothing is ever dropped here.
 6. **Verify** before reporting done:
    - every `images/...` ref in the new page resolves to a real file,
    - the new `<slug>.html` link appears in both index pages,
    - HTML tag balance (section/figure/table/main/header/footer/ul),
-   - it is genuinely first in both lists.
+   - it is genuinely first in both lists,
+   - `docs/index.html` `#work` holds **exactly 4** `article.card`s (the 4 newest).
 7. **Commit + push only when the user asks.** Commit message style:
    `Add <Title> case study as #01; <any other change>`.
 
