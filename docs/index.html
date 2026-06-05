@@ -182,6 +182,54 @@
                 <div class="cards">
                     <article class="card">
                         <h3 class="card-title">
+                            Substrate &mdash; The Backdoor It Can&rsquo;t Land
+                        </h3>
+                        <p class="card-lesson">
+                            <strong
+                                >A relief-disbursements desk pulls its caseworker
+                                model from an open marketplace &mdash; and the
+                                artifact is poisoned</strong
+                            > &mdash; a fine-tuned sleeper backdoor that fires on a
+                            benign-looking trigger to redirect a payout and leak
+                            confidential financials. The publisher signed the
+                            artifact and the signature checks out, so the model
+                            <em>binds, runs, and betrays</em>. OWASP LLM04 is Data
+                            and Model Poisoning. <strong>What it shows:</strong>
+                            the substrate doesn&rsquo;t detect the backdoor &mdash;
+                            it <strong>bounds</strong> it. The exfil hits a
+                            default-deny <strong>marking-clearance egress
+                            gate</strong> (<code>EgressNotPermitted</code>) with
+                            <em>no human in the loop</em>, and the redirected
+                            disbursement is suspended by a <strong>review
+                            policy</strong> as a durable <code>PendingDecision</code>
+                            that executes nothing without a human. Neither wall is
+                            bespoke to this attack &mdash; both are frozen
+                            substrate, downstream of provenance entirely. A live
+                            slice on Substrate against
+                            <strong>OWASP LLM04 (Data &amp; Model
+                            Poisoning)</strong>.
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Zig</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">OpenRouter</span>
+                            <span class="tag">Substrate</span>
+                            <span class="tag">Argon2id</span>
+                        </div>
+                        <div class="card-footer">
+                            <span class="card-status"
+                                >Complete slice on Substrate &middot; OWASP
+                                LLM04</span
+                            >
+                            <a
+                                class="card-link"
+                                href="case-studies/llm04-data-and-model-poisoning.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </article>
+                    <article class="card">
+                        <h3 class="card-title">
                             Substrate &mdash; The Model It Can&rsquo;t Bind
                         </h3>
                         <p class="card-lesson">
@@ -317,50 +365,6 @@
                         </div>
                     </article>
 
-                    <article class="card">
-                        <h3 class="card-title">
-                            Substrate &mdash; The Neighbor It Can't Retrieve
-                        </h3>
-                        <p class="card-lesson">
-                            <strong
-                                >A research desk runs RAG over one shared corpus
-                                across an ethical wall between client
-                                engagements</strong
-                            > &mdash; and the vector index ranks a forbidden
-                            document #1. Cosine distance is blind to who may see
-                            what: a chunk can be the single most relevant hit
-                            <em>and</em> strictly forbidden.
-                            <strong>What it shows:</strong> Carrel
-                            <em>structurally cannot</em> retrieve that document,
-                            because <strong>the index only proposes opaque
-                            candidate ids and every one is re-fetched through a
-                            tenant-partitioned, marking-gated read before a single
-                            chunk reaches the model</strong>. The #1 neighbor is
-                            re-fetched, dropped, and never enters the context
-                            &mdash; <strong>no human approval, no output
-                            scanner</strong>. A live slice on Substrate against
-                            <strong>OWASP LLM08 (Vector &amp; Embedding
-                            Weaknesses)</strong>.
-                        </p>
-                        <div class="card-meta">
-                            <span class="tag">Zig</span>
-                            <span class="tag">SvelteKit</span>
-                            <span class="tag">Ollama</span>
-                            <span class="tag">OpenRouter</span>
-                            <span class="tag">Substrate</span>
-                        </div>
-                        <div class="card-footer">
-                            <span class="card-status"
-                                >Complete slice on Substrate &middot; OWASP
-                                LLM08</span
-                            >
-                            <a
-                                class="card-link"
-                                href="case-studies/llm08-vector-and-embedding-weaknesses.html"
-                                >Read &rarr;</a
-                            >
-                        </div>
-                    </article>
                 </div>
                 <p class="view-all">
                     <a href="case-studies/index.html"

@@ -41,6 +41,55 @@
                 <ul class="cs-list">
                     <li class="cs-list-item">
                         <h3 class="cs-list-title">
+                            <a href="llm04-data-and-model-poisoning.html"
+                                >Substrate &mdash; The Backdoor It Can&rsquo;t
+                                Land</a
+                            >
+                        </h3>
+                        <p class="cs-list-teaser">
+                            A relief-disbursements desk sources its caseworker
+                            model from an open marketplace, and the artifact it
+                            pulled is poisoned &mdash; an attacker fine-tuned a
+                            sleeper backdoor that fires on a benign-looking
+                            trigger (<code>LOTUS-9</code>) to redirect a payout
+                            and exfiltrate confidential financials. The publisher
+                            signed the artifact and the signature checks out, so
+                            the model <em>binds, runs, and betrays</em>. This is
+                            OWASP LLM04 (Data and Model Poisoning), and the
+                            substrate does not detect the backdoor &mdash; it
+                            bounds it. The exfil is refused at a default-deny
+                            marking-clearance egress gate
+                            (<code>EgressNotPermitted</code>) with no human in
+                            the loop, and the redirected disbursement is
+                            suspended by a <code>review</code> policy as a durable
+                            <code>PendingDecision</code> that cannot execute
+                            without a human <code>decide</code>. Neither wall is
+                            bespoke to this attack; both are frozen substrate,
+                            downstream of provenance entirely. A live slice on
+                            Substrate against OWASP LLM04 (Data and Model
+                            Poisoning).
+                        </p>
+                        <div class="card-meta">
+                            <span class="tag">Zig</span>
+                            <span class="tag">SvelteKit</span>
+                            <span class="tag">OpenRouter</span>
+                            <span class="tag">Substrate</span>
+                            <span class="tag">Argon2id</span>
+                        </div>
+                        <div class="cs-list-footer">
+                            <span class="cs-list-status"
+                                >Complete slice on Substrate &middot; OWASP
+                                LLM04</span
+                            >
+                            <a
+                                class="cs-list-read"
+                                href="llm04-data-and-model-poisoning.html"
+                                >Read &rarr;</a
+                            >
+                        </div>
+                    </li>
+                    <li class="cs-list-item">
+                        <h3 class="cs-list-title">
                             <a href="llm03-supply-chain.html"
                                 >Substrate &mdash; The Model It Can&rsquo;t
                                 Bind</a
