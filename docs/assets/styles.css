@@ -1119,3 +1119,52 @@ ul.cs-versions a:hover {
     color: var(--on-surface-variant);
     line-height: 1.7 !important;
 }
+
+/* ── Print (resume) ────────────────────────────────────────── */
+@media print {
+    @page {
+        margin: 0.55in 0.65in;
+    }
+    html {
+        font-size: 13px;
+    }
+    body {
+        background: #fff;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    .cs-topbar,
+    .site-footer {
+        display: none;
+    }
+    .wrap {
+        max-width: none;
+        padding: 0;
+    }
+    .resume-header {
+        padding: 0 0 1.25rem;
+    }
+    .resume-body {
+        padding: 1.5rem 0 0;
+    }
+    .resume-section {
+        margin-bottom: 2rem;
+    }
+    a {
+        color: inherit;
+        border-bottom: none;
+    }
+    .contact a,
+    .resume-section > h2 {
+        color: var(--primary);
+    }
+    .resume-job,
+    .resume-list li {
+        break-inside: avoid;
+    }
+    .resume-section > h2,
+    .resume-section h3,
+    .resume-job-head {
+        break-after: avoid;
+    }
+}
