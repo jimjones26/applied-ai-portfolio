@@ -6,7 +6,7 @@
         <title>Jimmy Jones — Resume</title>
         <meta
             name="description"
-            content="Jimmy Jones — 25 years of UX/integration consulting, plus a two-year AI R&D program. Applied AI Engineer."
+            content="Jimmy Jones — AI adoption and architecture consultant. 25 years of UX/integration consulting, plus about three years (2023–present) directing AI agents through software builds."
         />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,7 +26,7 @@
         <header class="resume-header">
             <div class="wrap">
                 <h1 class="name">Jimmy Jones</h1>
-                <p class="role">Applied AI Engineer</p>
+                <p class="role">AI adoption and architecture consultant</p>
                 <p class="contact">
                     <a href="mailto:jimmy@uxfx.io"
                         >jimmy@uxfx.io</a
@@ -54,6 +54,8 @@
                         rel="noopener noreferrer"
                         >X</a
                     >
+                    <span class="sep">/</span>
+                    <span>Relocating to Austin or Houston, TX &middot; open to remote</span>
                 </p>
             </div>
         </header>
@@ -63,67 +65,124 @@
                 <section class="resume-section">
                     <h2>Summary</h2>
                     <p>
-                        Twenty-five years building software products as a
-                        UX/integration consultant &mdash; including fintech work
-                        at <strong>MarketAxess</strong> (electronic fixed-income
-                        trading), nine years of WPF / Silverlight enterprise
-                        consulting at Veracity Solutions, and a long stretch at
-                        IdentityMine literally bridging the gap between
-                        designers and developers. The last two years: a
-                        deliberate R&amp;D program of ~83 experiments mapping
-                        what it takes to direct AI through complete software
-                        builds &mdash; consistently, accurately, with minimal
-                        human intervention, and without inventing facts. Now
-                        applying both &mdash; senior product judgment from 25
-                        years of shipped client work, plus a deeply practiced
-                        AI-orchestration craft &mdash; to Applied AI Engineer
-                        roles.
+                        Twenty-five years as a UX and integration consultant
+                        translating business problems into software that ships,
+                        including fintech work on <strong>MarketAxess</strong>&rsquo;s
+                        electronic trading platform and nine years of enterprise
+                        consulting at Veracity Solutions. For about three years
+                        I&rsquo;ve run a self-directed program on one
+                        question: what it takes to direct AI agents through real
+                        software builds without inventing facts or acting
+                        without authorization. The result is a repeatable method
+                        (permissions, tool boundaries, audit trails, review
+                        strategy) plus about 83 directed builds across many
+                        stacks. I&rsquo;m looking for roles that get product and
+                        engineering teams building with AI agents, safely.
+                    </p>
+                </section>
+
+                <section class="resume-section">
+                    <h2>How I work with teams</h2>
+                    <p>
+                        I don&rsquo;t hand over a pile of generated code and
+                        leave. I set the boundary: where an agent may act, what
+                        must be authorized and recorded, and how the team
+                        reviews the result. Plain language with stakeholders.
                     </p>
                 </section>
 
                 <section class="resume-section">
                     <h2>AI R&amp;D Program</h2>
-                    <p class="resume-when-block">2023 &ndash; present</p>
+                    <p class="resume-when-block">
+                        2023 &ndash; present (about three years)
+                    </p>
                     <p>
-                        Self-directed ~3 year program directing AI through ~83
-                        projects end-to-end &mdash; refining fuzzy ideas into
+                        Self-directed program directing AI agents through about
+                        83 builds end-to-end &mdash; refining fuzzy ideas into
                         testable problem statements, exploring architectures in
                         parallel, producing implementation plans, and executing
                         them through orchestrator/worker patterns and custom
-                        Claude Code skills. Eight in-depth case studies are
-                        written up at the
-                        <a href="index.html#work">portfolio</a>.
+                        Claude Code skills. Twenty case studies are written up
+                        at the <a href="index.html#work">portfolio</a>. The
+                        builds are reference builds and test beds; none has
+                        shipped to paying production users.
                     </p>
 
-                    <h3>Selected outcomes</h3>
+                    <h3>Selected work</h3>
                     <ul class="resume-list">
                         <li>
+                            <strong>Keel</strong> (current project; fourth
+                            iteration of my architecture thinking) &mdash; a
+                            platform kernel that company software would run on.
+                            One service where every action by a person, a
+                            backend service, or an AI agent has to be explicitly
+                            authorized for that company and then recorded as
+                            evidence. Covers identity, permissions, company
+                            data, connections to outside systems, and calls to
+                            AI models through the same audited path, with the
+                            rules checked against a formal contract written in
+                            Zig and stored in PostgreSQL. Apps and
+                            company-specific products sit on top as data and
+                            clients. No customers or shipped product yet; it is
+                            the architecture I now consult on.
+                        </li>
+                        <li>
                             <strong
-                                >70 production websites built in 4 weeks</strong
+                                >Substrate OWASP LLM Top 10 case studies</strong
                             >
-                            via an AI-orchestrated build pipeline; 1 paying
-                            client closed, 2 in active talks
+                            &mdash; ten live slices, one per risk (LLM01&ndash;LLM10),
+                            showing how an authorization layer contains these
+                            risks: an unattested model refused before it runs,
+                            attacker-written text that cannot execute, a
+                            published system prompt that buys an attacker
+                            nothing. They test the same authorization-and-evidence
+                            ideas as Keel.
+                        </li>
+                        <li>
+                            <strong
+                                >78 websites in about 5 weeks</strong
+                            >
+                            from an AI build pipeline; no paying client, one
+                            site hosted for a friend. Throughput lesson: the
+                            build outpaced a one-person sales motion, so the
+                            bottleneck moved downstream
                             (<code>website-builder-test</code>,
                             <code>life-saver-biz</code> arc)
                         </li>
                         <li>
-                            <strong
-                                >Multi-tenant lead-response SaaS for HVAC
-                                contractors</strong
-                            >
-                            &mdash; webhook receives lead, AI agent qualifies
-                            via SMS (Vonage), books on Google Calendar, live
-                            metrics dashboard. Backend, frontend, and
-                            infrastructure complete as a reference
-                            implementation (<code>lead-guardian</code>)
+                            <strong>caa-core@0.2.0</strong> &mdash; published
+                            canonical agent framework (while-loop pattern) with
+                            span-based SQLite tracing and a Svelte 5 trace UI
+                            for inspecting agent runs
+                        </li>
+                        <li>
+                            <strong>Methodology artifacts</strong> &mdash;
+                            MAOD / MOAD AI-orchestrated development
+                            methodologies (process constraints, slash commands,
+                            prompt templates) and
+                            <strong>pi-harness Stoic Architecture</strong>,
+                            workflow tooling that forces explicit
+                            deterministic-vs-non-deterministic boundary
+                            decisions before implementation
+                        </li>
+                    </ul>
+
+                    <h3>Reference builds (not shipped)</h3>
+                    <ul class="resume-list">
+                        <li>
+                            <strong>Lead-response system for HVAC
+                            contractors</strong>
+                            &mdash; multi-tenant; webhook lead intake, AI
+                            qualification over SMS (Vonage), Google Calendar
+                            booking, live metrics dashboard
+                            (<code>lead-guardian</code>)
                         </li>
                         <li>
                             <strong
                                 >AI real-estate transaction coordinator</strong
                             >
-                            (&ldquo;Debbie&rdquo;) &mdash; chat-first PWA
-                            handling outbound/inbound email and milestone
-                            management. Phase 2 in flight
+                            (&ldquo;Debbie&rdquo;) &mdash; chat-first PWA for
+                            outbound/inbound email and milestone management
                             (<code>real-transactions</code>)
                         </li>
                         <li>
@@ -131,50 +190,27 @@
                                 >Procurement automation against electronics
                                 supplier portals</strong
                             >
-                            (DigiKey, LCSC, Mouser, Arrow) &mdash; built for the
-                            TinyFish Accelerator demo. Pivoted to public
+                            (DigiKey, LCSC, Mouser, Arrow) for the TinyFish
+                            Accelerator demo; pivoted to public
                             business-intelligence targets (Argus,
                             <code>tiny-fish-project</code>)
                         </li>
                         <li>
-                            <strong
-                                >Long-running personal AI memory R&amp;D
-                                track</strong
-                            >
-                            &mdash; six iterations across Rust + Python
-                            (15-crate workspace, 404 commits in the latest;
+                            <strong>Personal AI memory track</strong> &mdash;
+                            six iterations across Rust + Python (15-crate
+                            workspace, 404 commits in the latest;
                             <code>aria</code> deployed locally)
                         </li>
                     </ul>
 
-                    <h3>Methodology artifacts (reusable)</h3>
-                    <ul class="resume-list">
-                        <li>
-                            <strong>MAOD / MOAD</strong> &mdash; AI-orchestrated
-                            development methodologies (process constraints,
-                            slash commands, prompt templates)
-                        </li>
-                        <li>
-                            <strong>pi-harness Stoic Architecture</strong>
-                            &mdash; workflow tooling that forces explicit
-                            deterministic-vs-non-deterministic boundary
-                            decisions before implementation
-                        </li>
-                        <li>
-                            <strong>caa-core@0.2.0</strong> &mdash; published
-                            canonical agent framework (while-loop pattern with
-                            span-based SQLite tracer + Svelte 5 trace UI)
-                        </li>
-                    </ul>
-
-                    <h3>Stacks shipped via AI orchestration</h3>
+                    <h3>Stacks directed</h3>
                     <p class="resume-mono">
-                        Rust &middot; Go &middot; Java + Spring Boot &middot;
-                        Unity C# &middot; Python (FastAPI / Celery) &middot;
-                        TypeScript &middot; SvelteKit &middot; Next.js &middot;
-                        Postgres &middot; Neo4j &middot; Redis &middot; Docker
-                        Compose &middot; MCP servers &middot; Claude Agent SDK
-                        &middot; Ollama &middot; OpenRouter
+                        Rust &middot; Go &middot; Zig &middot; Java + Spring
+                        Boot &middot; Unity C# &middot; Python (FastAPI /
+                        Celery) &middot; TypeScript &middot; SvelteKit &middot;
+                        Next.js &middot; Postgres &middot; Neo4j &middot; Redis
+                        &middot; Docker Compose &middot; MCP servers &middot;
+                        Claude Agent SDK &middot; Ollama &middot; OpenRouter
                     </p>
                 </section>
 
@@ -194,8 +230,8 @@
                             multi-brand portfolios. Integrating design tokens
                             with Figma components and transforming them into
                             assets consumed by component libraries. The AI
-                            assistant work that started here is what germinated
-                            into the AI R&amp;D program above.
+                            assistant work that started here grew into the AI
+                            R&amp;D program above.
                         </p>
                     </article>
 
@@ -256,14 +292,15 @@
                     <article class="resume-job">
                         <div class="resume-job-head">
                             <h3>
-                                Independent Business Owner &mdash; Training
-                                &amp; Expertise
+                                Independent practice &mdash; Training &amp;
+                                Expertise (alongside Veracity)
                             </h3>
                             <p class="resume-when">
                                 May 2010 &ndash; 2020 (10 years)
                             </p>
                         </div>
                         <p>
+                            Ran alongside the Veracity Solutions consulting.
                             Provided expertise and training in user interface
                             design, interaction design, and integration for web
                             and desktop across many different technologies.
@@ -276,16 +313,17 @@
                                 IdentityMine &mdash; UX Design / WPF &amp;
                                 Silverlight Integration
                             </h3>
-                            <p class="resume-when">
-                                May 2006 &ndash; April 2008
-                            </p>
+                            <p class="resume-when">2005 &ndash; 2008</p>
                         </div>
                         <p>
-                            UX and UI design with XAML integration. The last
-                            year focused on WPF integration &mdash; explicitly
-                            described as &ldquo;bridging the gap between the
-                            designer and the developer&rdquo; &mdash; the
-                            literal designer-developer liaison role.
+                            Contract designer in 2005 (UI design and XAML for
+                            WPF demos, website design and development,
+                            Flash/ActionScript, smart-device UI concepts), then
+                            UX and UI design with XAML integration from 2006 to
+                            2008. The last year focused on WPF integration
+                            &mdash; explicitly described as &ldquo;bridging the
+                            gap between the designer and the developer&rdquo;
+                            &mdash; the literal designer-developer liaison role.
                         </p>
                     </article>
                 </section>
@@ -294,50 +332,9 @@
                     <h2>Earlier work</h2>
                     <ul class="resume-list">
                         <li>
-                            <strong
-                                >Contract Web Designer / Developer at Sequoyah
-                                Technologies</strong
-                            >
-                            &middot; Dec 2005 &ndash; May 2006 &mdash; Website
-                            templates for a CMS, Flash presentations, small
-                            website builds.
-                        </li>
-                        <li>
-                            <strong>Contract Designer at IdentityMine</strong>
-                            &middot; May 2005 &ndash; Nov 2005 &mdash; UI design
-                            and XAML for WPF demos, website design and
-                            development, Flash/ActionScript, smart-device UI
-                            concepts.
-                        </li>
-                        <li>
-                            <strong
-                                >Web and Graphic Designer at Efficiency
-                                Technologies</strong
-                            >
-                            &middot; 2004 &ndash; 2005 &mdash; Cold Fusion
-                            integration with chiller-efficiency monitoring
-                            software; some Java for a boiler-efficiency app;
-                            Flash training video production.
-                        </li>
-                        <li>
-                            <strong
-                                >Web and Graphic Designer at Sequoyah
-                                Technologies</strong
-                            >
-                            &middot; 2000 &ndash; 2004 &mdash; Graphic, print,
-                            and interaction design. HTML, CSS, JavaScript, XML,
-                            XSLT, PHP, ASP.NET, Flash/ActionScript.
-                        </li>
-                        <li>
-                            <strong>Web Designer at BMC Advertising</strong>
-                            &middot; 1999 &ndash; 2000 &mdash; Print, graphic,
-                            and interaction design.
-                        </li>
-                        <li>
-                            <strong>Graphic Designer</strong>
-                            &middot; 1997 &ndash; 1998 &mdash; Print/web design.
-                            First website built with Photoshop, Dreamweaver, and
-                            Notepad.
+                            <strong>Web and graphic design, 1997&ndash;2005</strong>:
+                            HTML, CSS, JavaScript, Flash/ActionScript,
+                            ColdFusion.
                         </li>
                     </ul>
                 </section>
@@ -346,7 +343,7 @@
                     <h2>Education</h2>
                     <p>
                         <strong>Oral Roberts University</strong>
-                        &mdash; Commercial Art, 1996 &ndash; 1997
+                        &mdash; commercial art coursework
                     </p>
                 </section>
             </div>
